@@ -24,6 +24,18 @@ export default function Header() {
                         >
                             About
                         </NavLink>
+                         <NavLink
+                            exact
+                            to="/register"
+                        >
+                            Registrieren
+                        </NavLink>
+                         <NavLink
+                            exact
+                            to="/login"
+                        >
+                            LogIn
+                        </NavLink>
                     </section>
                 </nav>
             </Container>        

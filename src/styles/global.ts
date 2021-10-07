@@ -87,6 +87,7 @@ select {
   --light-green: #D7FCD4;
   --white: #fff;
   --black: #000;
+  --dark-grey: #5f5e5e;
 }
 
 /*-- Global Styles --*/

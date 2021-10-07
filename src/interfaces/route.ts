@@ -4,5 +4,6 @@ export default interface IRoute {
     component: any,
     exact: boolean, 
     props?: any,
+    protected?: boolean,
 }
 

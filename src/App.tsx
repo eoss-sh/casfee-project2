@@ -1,14 +1,10 @@
-import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Switch, RouteComponentProps } from 'react-router-dom';
 import GlobalStyle from './styles/global';
 import Header from './components/Header/Header';
-import logging from './config/logging';
 import routes from './config/routes';
+import AuthRoute from './components/AuthRoute';
 
-const App: React.FunctionComponent<{}> = props => {
-  useEffect(() => { 
-    logging.info('loading application')
-  }, [])
+const App = () => {
 
   return (
     <>
@@ -16,24 +12,23 @@ const App: React.FunctionComponent<{}> = props => {
       <div className="App">
         <BrowserRouter>
           <Header />
-          <switch>
+          <Switch>
             {routes.map((route, index) => { 
               return (
                 <Route
                   key={index}
                   path={route.path}
                   exact={route.exact}
-                  render={(props:RouteComponentProps<any>) => (
-                    <route.component
-                      name={ route.name}
-                        {...props}
-                        {...route.props}
-                      />
-                  )}
+                  render={(routeProps: RouteComponentProps<any>) => {
+                    if (route.protected) {
+                      return <AuthRoute><route.component {...routeProps} /></AuthRoute>
+                    }
+                    return <route.component {...routeProps} />
+                  }}
                 />
               )
             })}
-          </switch>
+          </Switch>
         </BrowserRouter>
 
       </div>

@@ -1,3 +1,4 @@
+import { useAppSelector } from './helpers/hooks';
 import { BrowserRouter, Route, Switch, RouteComponentProps } from 'react-router-dom';
 import GlobalStyle from './styles/global';
 import Header from './components/Header/Header';
@@ -6,12 +7,16 @@ import AuthRoute from './components/AuthRoute';
 
 const App = () => {
 
+  const currentUser = useAppSelector((state) => state.auth.user.email)
+
+
   return (
     <>
       <GlobalStyle />
       <div className="App">
         <BrowserRouter>
           <Header />
+          <h1>Current User: { currentUser}</h1>
           <Switch>
             {routes.map((route, index) => { 
               return (

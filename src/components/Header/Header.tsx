@@ -36,6 +36,18 @@ export default function Header() {
                         >
                             LogIn
                         </NavLink>
+                        <NavLink
+                            exact
+                            to="/change"
+                        >
+                            Passwort ändern
+                        </NavLink>
+                          <NavLink
+                            exact
+                            to="/logout"
+                        >
+                            Logout
+                        </NavLink>
                     </section>
                 </nav>
             </Container>        

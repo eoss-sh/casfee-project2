@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { login } from '../../features/auth/authSlice'
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import ErrorText from '../../components/ErrorText';
@@ -9,35 +7,34 @@ import logging from '../../config/logging';
 import IPage from '../../interfaces/page';
 import { FormContainer, Input, Button } from '../../styles/forms';
 
-const LoginPage: React.FunctionComponent<IPage> = props => { 
-    const [logedin, setLogin] = useState<boolean>(false);
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
+const ChangePwPage: React.FunctionComponent<IPage> = props => { 
+    const [changing, setChanging] = useState<boolean>(false);
+    const [newPassword, setNewPassword] = useState<string>('');
+    const [newPasswordConfirm, setNewPasswordConfirm] = useState<string>('');
     const [error, setError] = useState<string>('');
-    const dispatch = useDispatch();
 
     const history = useHistory();
 
-    const logInEmailPassword = () => {
-
+    const changePassword = () => {
+        if (newPassword !== newPasswordConfirm) {
+            setError('Die eingegebenen Passwörter stimmen nicht überein.')
+            return
+        }
         if (error !== '') setError('');
         
-        setLogin(true);
-
-        auth.signInWithEmailAndPassword(email, password)
-            .then((userCredential) => {
-                dispatch(
-                    login({
-                        email: userCredential.user?.email,
-                        uid: userCredential.user?.uid
-                    })
-                )
-                history.push('/')
+        setChanging(true);
+        const user = auth.currentUser;
+        user?.updatePassword(newPassword)
+            .then(() => {
+                logging.info('Passwort gäendert.');
+                history.push('/login');
             })
             .catch((error) => {
                 logging.error(error);
                 if (error.code.includes('auth/wrong-password')) {
                     setError('Das angegebene Passwort ist nicht korrekt.')
+                } else  if (error.code.includes('auth/weak-password')) {
+                    setError('Bitte verwenden Sie ein strengeres Passwort.')
                 }
                 else if (error.code.includes('auth/user-not-found')) {
                     setError('Die eingegebene Email-Adresse existierst nicht.')
@@ -45,33 +42,33 @@ const LoginPage: React.FunctionComponent<IPage> = props => {
                 else {
                     setError('Im Moment können Sie sich nicht anmelden. Bitte probieren Sie es später wieder.')
                 }
-                setLogin(false);
+                setChanging(false);
             })
     }
     return (
         <FormContainer>
-            <h2>LogIn</h2>
+            <h2>Passwort ändern</h2>
             <Input
                 large
-                type="email"
-                name="email"
-                id="email"
-                placeholder="Email"
-                onChange={event => setEmail(event.target.value)}
-                value={email}
+                type="password"
+                name="newPassword"
+                id="newPassword"
+                placeholder="Neues Passwort"
+                onChange={event => setNewPassword(event.target.value)}
+                value={newPassword}
             />
             <Input
                 large
                 type="password"
-                name="password"
-                id="password"
-                placeholder="Passwort"
-                onChange={event => setPassword(event.target.value)}
-                value={password}
+                name="newPasswordConfirm"
+                id="newPasswordCOnfirm"
+                placeholder="Neues Passwort bestätigen"
+                onChange={event => setNewPasswordConfirm(event.target.value)}
+                value={newPasswordConfirm}
             />
             <Button
-                disabled={logedin}
-                onClick={() => logInEmailPassword()}
+                disabled={changing}
+                onClick={() => changePassword()}
             >
                 Anmelden
             </Button>
@@ -81,4 +78,4 @@ const LoginPage: React.FunctionComponent<IPage> = props => {
     )
 }
 
-export default LoginPage;
+export default ChangePwPage;

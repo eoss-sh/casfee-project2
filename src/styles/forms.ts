@@ -24,6 +24,7 @@ export const Input = styled.input`
 
 export const Button = styled.button`
     padding: 10px 20px;
+    margin: 10px 20px;
     background-color: var(--dark-purple);
     color: var(--white);
     border: none; 

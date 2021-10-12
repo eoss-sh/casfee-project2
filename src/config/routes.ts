@@ -3,6 +3,9 @@ import AboutPage from "../pages/about";
 import RegisterPage from "../pages/auth/register";
 import LoginPage from "../pages/auth/login";
 import HomePage from "../pages/home";
+import ChangePwPage from "../pages/auth/change";
+import LogOutPage from "../pages/auth/logout";
+import ForgotPwPage from "../pages/auth/forgot";
 
 const routes: IRoute[] = [
     {
@@ -17,7 +20,7 @@ const routes: IRoute[] = [
         name: 'About Page',
         component: AboutPage,
         exact: true,
-        protected: false,
+        protected: true,
     },
       {
         path: '/register',
@@ -32,7 +35,28 @@ const routes: IRoute[] = [
         component: LoginPage,
         exact: true,
         protected: false,
-    }
+    },
+        {
+        path: '/change',
+        name: 'Passwort Change Page',
+        component: ChangePwPage,
+        exact: true,
+        protected: true,
+    },
+        {
+        path: '/logout',
+        name: 'Logout',
+        component: LogOutPage,
+        exact: true,
+        protected: true,
+    },
+        {
+        path: '/forgot',
+        name: 'Forgot PW Page',
+        component: ForgotPwPage,
+        exact: true,
+        protected: true,
+    },
 ]
 
 export default routes; 

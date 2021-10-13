@@ -12,8 +12,8 @@ const LoginPage: React.FunctionComponent<IPage> = props => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
+    
     const dispatch = useDispatch();
-
     const history = useHistory();
 
     const logInEmailPassword = () => {
@@ -22,6 +22,7 @@ const LoginPage: React.FunctionComponent<IPage> = props => {
         dispatch(loginWithUsernameAndPassword({ email, password }))
         history.push('/');
     }
+    
     return (
         <FormContainer>
             <h2>LogIn</h2>

@@ -18,7 +18,7 @@ export const Input = styled.input`
     width: ${(props: InputProps) => props.large ? "35%" : "20%"};
     padding: 5px 7px;
     border-radius: 5px;
-    border: 1.5px solid var(--dark-grey);
+    border: 1.5px solid red;
     margin-bottom: 1%;
 `
 

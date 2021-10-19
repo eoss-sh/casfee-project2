@@ -44,7 +44,6 @@ export const loginWithUsernameAndPassword = createAsyncThunk(
             // it has to be done so that we can compare the error to the firebase errormessages
             // to render different Messages per Error
             const msg = (error + '');
-            console.log(error)
             let output:string = ''; 
             if (msg.includes('auth/invalid-email')) { 
                 output = 'Der angegebene Nutzer existiert nicht. Bitte prüfe die Eingabe.'
@@ -64,7 +63,7 @@ export const logout = createAsyncThunk(
     'auth/logout',
     async () => {
         try {
-            await auth.signOut
+            await auth.signOut();
         }
         catch (error) {
             logging.error(error)

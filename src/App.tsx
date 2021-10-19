@@ -3,6 +3,7 @@ import { useAppSelector } from './helpers/hooks';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter, Route, Switch, RouteComponentProps } from 'react-router-dom';
 import { auth } from './config/firebase'
+import { database, storage } from './config/firebase';
 import { login, logout } from './features/auth/authSlice'
 import GlobalStyle from './styles/global';
 import Header from './components/Header/Header';
@@ -13,6 +14,7 @@ const App = () => {
 
   const dispatch = useDispatch();
   const currentUser = useAppSelector((state) => state.auth.user.email)
+
 
   // useEffect to persist Login on Refreshs
   useEffect(() => {

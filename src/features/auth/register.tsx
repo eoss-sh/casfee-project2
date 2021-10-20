@@ -4,10 +4,9 @@ import { Link } from 'react-router-dom';
 import ErrorText from '../../components/ErrorText';
 import { auth } from '../../config/firebase';
 import logging from '../../config/logging';
-import IPage from '../../interfaces/page';
 import { FormContainer, Input, Button } from '../../styles/forms';
 
-const RegisterPage: React.FunctionComponent<IPage> = props => { 
+const RegisterPage = () => { 
     const [registering, setRegistering] = useState<boolean>(false);
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');

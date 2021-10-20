@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import ErrorText from '../../components/ErrorText';
 import { auth } from '../../config/firebase';
-import logging from '../../config/logging';
-import IPage from '../../interfaces/page';
 import { FormContainer, Input, Button } from '../../styles/forms';
 
-const ForgotPwPage: React.FunctionComponent<IPage> = props => { 
+const ForgotPwPage = () => { 
     const [sending, setSending] = useState<boolean>(false);
     const [sent, setSent] = useState<boolean>(false);
     const [email, setEmail] = useState<string>('');

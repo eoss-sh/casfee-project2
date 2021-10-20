@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { loginWithUsernameAndPassword } from '../../features/auth/authSlice'
+import { loginWithUsernameAndPassword } from './authSlice'
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import ErrorText from '../../components/ErrorText';
-import IPage from '../../interfaces/page';
 import { FormContainer, Input, Button } from '../../styles/forms';
 
-const LoginPage: React.FunctionComponent<IPage> = props => { 
+const LoginPage = () => { 
     const [logedin, setLogin] = useState<boolean>(false);
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');

@@ -1,11 +1,10 @@
 import { useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { logout } from '../../features/auth/authSlice'
-import IPage from '../../interfaces/page';
+import { logout } from './authSlice'
 import { FormContainer, Button } from '../../styles/forms';
 import { FlexRowCenter } from '../../styles/layouts';
 
-const LogOutPage: React.FunctionComponent<IPage> = props => { 
+const LogOutPage = () => { 
 
     const history = useHistory();
     const dispatch = useDispatch(); 

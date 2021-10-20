@@ -3,9 +3,11 @@ import { Redirect } from 'react-router';
 import { auth } from '../../config/firebase';
 
 
-export interface IAuthRouteProps { }
+export interface IAuthRouteProps { 
+    children: React.ReactNode,
+}
 
-const AuthRoute: React.FunctionComponent<IAuthRouteProps> = props => { 
+const AuthRoute= (props: IAuthRouteProps) => { 
     const { children } = props;
 
     if (!auth.currentUser) { 

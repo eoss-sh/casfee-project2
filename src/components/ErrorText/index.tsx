@@ -4,7 +4,7 @@ export interface IErrorTextProps {
     error: string,
 }
 
-const ErrorText: React.FunctionComponent<IErrorTextProps> = props => { 
+const ErrorText = (props: IErrorTextProps) => { 
     const { error } = props;
 
     if (error === '') return null; 

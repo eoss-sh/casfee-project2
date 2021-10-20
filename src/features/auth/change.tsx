@@ -4,10 +4,9 @@ import { Link } from 'react-router-dom';
 import ErrorText from '../../components/ErrorText';
 import { auth } from '../../config/firebase';
 import logging from '../../config/logging';
-import IPage from '../../interfaces/page';
 import { FormContainer, Input, Button } from '../../styles/forms';
 
-const ChangePwPage: React.FunctionComponent<IPage> = props => { 
+const ChangePwPage = () => { 
     const [changing, setChanging] = useState<boolean>(false);
     const [newPassword, setNewPassword] = useState<string>('');
     const [newPasswordConfirm, setNewPasswordConfirm] = useState<string>('');

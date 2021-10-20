@@ -3,7 +3,7 @@ import { fetchCoursesList } from './coursesSlice';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../helpers/hooks';
 
-const Courses: React.FunctionComponent = () => {
+const Courses = () => {
   const dispatch = useDispatch(); 
   const courses = useAppSelector((state) => state.courses.courses);
 

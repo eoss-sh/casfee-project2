@@ -80,11 +80,11 @@ select {
 /*-- Custom Properties --*/
 
 :root {
-  --dark-green: #0A775F;
-  --brown: #C99B67;
-  --dark-purple: #310A31;
-  --light-purple: #847996;
-  --light-green: #D7FCD4;
+  --dark-green: #365d32;
+  --light-green: #A1C181;
+  --yellow: #FCCA46;
+  --light-blue: #3AAED8;
+  --dark-blue: #233D4D; 
   --white: #fff;
   --black: #000;
   --dark-grey: #5f5e5e;
@@ -97,6 +97,22 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.button {
+  padding: 10px 30px;
+  border: 1px solid #3AAED8;
+  background-color: #3AAED8;
+  border-radius: 10px;
+}
+.button:hover {
+  background-color: transparent;
+}
+
+.button-primary {
+  border:1px solid #FCCA46;
+  background-color: #FCCA46;
+}
+
 `;
 
 export default GlobalStyle;

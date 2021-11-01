@@ -3,7 +3,7 @@ header {
   align-items: center;
   justify-content: space-between;
   height: 4rem;
-  background-color: var(--dark-green);
+  background-color: var(--dark-blue);
 }
 
 .main-nav {
@@ -11,12 +11,27 @@ header {
   grid-template-columns: 1fr 3fr;
 }
 
-.main-nav_logo {
+.main-nav a {
   color: var(--white);
+  text-decoration: none;
+}
+
+.main-nav_logo {
+  font-size: 1.5rem;
 }
 
 .main-nav_links {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   gap: 50px;
+}
+
+.main-nav_links a {
+    line-height: 1;
+}
+
+.main-nav__profile-image {
+  height: 50px;
+  border-radius: 50%;
 }

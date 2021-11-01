@@ -1,29 +1,32 @@
 import { useEffect } from 'react';
-import { useAppSelector } from './helpers/hooks';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter, Route, Switch, RouteComponentProps } from 'react-router-dom';
 import { auth } from './config/firebase'
-import { database, storage } from './config/firebase';
 import { login, logout } from './features/auth/authSlice'
 import GlobalStyle from './styles/global';
 import Header from './components/Header/Header';
 import routes from './config/routes';
 import AuthRoute from './components/AuthRoute';
+import { getAdditionalUserInfo } from './features/auth/authApi';
 
 const App = () => {
 
   const dispatch = useDispatch();
-  const currentUser = useAppSelector((state) => state.auth.user.email)
-
 
   // useEffect to persist Login on Refreshs
   useEffect(() => {
-      auth.onAuthStateChanged((userAuth) => {
+      auth.onAuthStateChanged(async (userAuth) => {
+        const userData = await getAdditionalUserInfo('appUser', userAuth?.uid)
+        const tokens = await userAuth?.getIdTokenResult();
         if (userAuth) {
-          dispatch(login({
-            email: userAuth.email,
-            uid: userAuth.uid
-          }))
+          dispatch(
+            login({
+              email: userAuth.email,
+              uid: userAuth.uid,
+              url: userData.data()?.url,
+              admin: tokens?.claims.admin,
+            })
+          );
         }
         else {
           dispatch(logout())
@@ -37,7 +40,6 @@ const App = () => {
       <div className="App">
         <BrowserRouter>
           <Header />
-          <h1>Current User: {currentUser}</h1>
           <Switch>
             {routes.map((route, index) => { 
               return (

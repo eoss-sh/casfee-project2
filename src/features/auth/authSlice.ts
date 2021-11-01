@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { auth } from '../../config/firebase' 
+import {getAdditionalUserInfo} from './authApi'
 import logging from "../../config/logging";
 
 // Move all the interfaces to the interfaces folder? probably not?
@@ -7,7 +8,9 @@ interface AuthState {
     user: {
         email: string | null | undefined,
         uid: string | null | undefined,
-        error: any
+        error: any,
+        admin: boolean,
+        url: string
     }
 }
 interface LoginData { 
@@ -20,6 +23,8 @@ const initialState: AuthState = {
         email: '',
         uid: '',
         error: '',
+        admin: false,
+        url: ''
     }
 }
 
@@ -31,12 +36,15 @@ export const loginWithUsernameAndPassword = createAsyncThunk(
         try {
             const { email, password } = loginData;
             await auth.setPersistence('local')
-            const userCreds = await auth.signInWithEmailAndPassword(email, password)
-
+            const userCreds = await auth.signInWithEmailAndPassword(email, password);
+            const tokens = await userCreds.user?.getIdTokenResult();
+            const additionalUserInfo = await getAdditionalUserInfo('appUser', userCreds.user?.uid)
             return {
                 email: userCreds.user?.email,
                 uid: userCreds.user?.uid,
-                error: ''
+                error: '',
+                admin: tokens?.claims.admin,
+                url: additionalUserInfo?.data()?.url
             }
         }
         catch (error) { 
@@ -98,6 +106,8 @@ const authReducer = createSlice({
                     email: '',
                     uid: '',
                     error: '',
+                    admin: false, 
+                    url: '',
 
                 }
             })

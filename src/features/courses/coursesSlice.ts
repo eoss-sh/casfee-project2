@@ -1,12 +1,8 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import {database, storage} from '../../config/firebase'
-
-interface course {
-    name: string
-}
-
+import {database} from '../../config/firebase'
+import singelCourse from '../../interfaces/course'
 interface coursesState {
-    courses: course[],
+    courses: singelCourse[],
     loading: boolean,
 }
 
@@ -15,19 +11,28 @@ const initialState: coursesState = {
     loading: false,
 }
 
+// Func to fetch all Courses from Firestore
 export const fetchCoursesList = createAsyncThunk(
     "courses/fetchListOfCourses",
     async () => {
-        const coursesCollection: course[] = []
+        const coursesCollection: singelCourse[] = []
         const snapshot = await database.collection('courses').get()
         snapshot.forEach((doc) => {
-            coursesCollection.push(doc.data().name)
+            coursesCollection.push({
+                course: {
+                name: doc.data().name,
+                shortDesc: doc.data().shortDesc,
+                desc: doc.data().desc,
+                type: doc.data().type,
+                url: doc.data().url,
+                uid: doc.id,
+                error: ''
+                }
+            })
         })
         return coursesCollection;
     }
-
 )
-
 
 const coursesReducer = createSlice({
     name: 'courses',

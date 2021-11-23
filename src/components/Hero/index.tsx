@@ -1,5 +1,5 @@
 import React from 'react';
-import { MainButton } from '../../styles/buttons';
+import { MainLink } from '../../styles/buttons';
 import { HeroContainer, HeroImage, HeroSubTitel, HeroTitel } from '../../styles/hero';
 import { Container } from '../../styles/styles';
 
@@ -19,7 +19,7 @@ const Hero = ({title, subtitle, image, buttonLink, buttonText}:HeroProps) => {
             <Container>
                 <HeroTitel>{title}</HeroTitel>
                 <HeroSubTitel>{subtitle}</HeroSubTitel>
-                <MainButton href={buttonLink}>{buttonText}</MainButton>
+                {buttonLink && <MainLink href={buttonLink}>{buttonText}</MainLink>}
             </Container>
         </HeroContainer>
     )

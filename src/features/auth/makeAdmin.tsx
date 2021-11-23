@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import {functions} from '../../config/firebase';
-import { FormContainer, Input, Button } from '../../styles/forms';
+import { MainButton } from '../../styles/buttons';
+import { FormContainer, Input } from '../../styles/forms';
 
 const MakeAdmin = () => {
     const [email, setEmail] = useState('')
-    const [error, setError] = useState('')
 
     const addAdminRole = functions.httpsCallable('addAdminRole')
 
@@ -19,13 +19,13 @@ const MakeAdmin = () => {
           onChange={(event) => setEmail(event.target.value)}
           value={email}
         />
-        <Button onClick={async () => {
+        <MainButton onClick={async () => {
                 const confirm = await addAdminRole({email})
                 console.log(confirm)
             }
         }>
           Bestätigen
-        </Button>
+        </MainButton>
       </FormContainer>
     );
 }

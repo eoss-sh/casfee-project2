@@ -1,6 +1,10 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import {SingelCourseCard} from '../../styles/courses';
+import {MainLinkText} from '../../styles/buttons'
+import {
+  SingelCourseCard,
+  SingelCourseCardDescription,
+  SingelCourseCardImage,
+} from '../../styles/courses';
 
 interface singleCourseCardProps {
     name: string,
@@ -12,9 +16,10 @@ interface singleCourseCardProps {
 const SingleCourseCard = ({name, url, shortDesc, id}: singleCourseCardProps) => {
     return (
       <SingelCourseCard key={id}>
-        <p>{name}</p>
-        <p>{shortDesc}</p>
-        <Link to={'course/' + id}>Detail</Link>
+        <SingelCourseCardImage src={url} alt={name} />
+        <h3>{name}</h3>
+        <SingelCourseCardDescription>{shortDesc}</SingelCourseCardDescription>
+        <MainLinkText to={'course/' + id}>Details &rarr;</MainLinkText>
       </SingelCourseCard>
     );
 }

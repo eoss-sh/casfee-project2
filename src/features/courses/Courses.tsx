@@ -2,7 +2,6 @@ import React, {useEffect} from 'react'
 import { fetchCoursesList } from './coursesSlice';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../helpers/hooks';
-import {Link} from 'react-router-dom';
 import Hero from '../../components/Hero';
 import image from './images/course1.jpg';
 import SingleCourseCard from '../singleCourse/singleCourseCard';
@@ -27,7 +26,7 @@ const Courses = () => {
         buttonText="Anmelden"
       />
       <Container>
-        <h1>Golfplätze der Schweiz</h1>
+        <h2>Golfplätze der Schweiz</h2>
         <CourseListe>
           {courses.map((course) => {
             return (

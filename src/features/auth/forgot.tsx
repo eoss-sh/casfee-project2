@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import ErrorText from '../../components/ErrorText';
 import { auth } from '../../config/firebase';
-import { FormContainer, Input, Button } from '../../styles/forms';
+import { MainButton } from '../../styles/buttons';
+import { FormContainer, Input } from '../../styles/forms';
 
 const ForgotPwPage = () => { 
     const [sending, setSending] = useState<boolean>(false);
@@ -35,12 +36,12 @@ const ForgotPwPage = () => {
                 onChange={event => setEmail(event.target.value)}
                 value={email}
             />
-            <Button
+            <MainButton
                 disabled={sending}
                 onClick={() => restPassword()}
             >
                 Anmelden
-            </Button>
+            </MainButton>
             ({sent} && <small><p>Email gesendet.</p></small>)
             <ErrorText error={error} /> 
         </FormContainer>

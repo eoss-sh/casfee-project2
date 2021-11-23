@@ -88,6 +88,7 @@ select {
   --white: #fff;
   --black: #000;
   --dark-grey: #5f5e5e;
+  --light-grey: #e5e5e5;
 }
 
 /*-- Global Styles --*/
@@ -98,19 +99,31 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.button {
-  padding: 10px 30px;
-  border: 1px solid #3AAED8;
-  background-color: #3AAED8;
-  border-radius: 10px;
-}
-.button:hover {
-  background-color: transparent;
+// Typography
+h1 {
+  font-size: 3rem;
 }
 
-.button-primary {
-  border:1px solid #FCCA46;
-  background-color: #FCCA46;
+h2 {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+}
+
+h3 {
+  font-size: 1.4rem;
+}
+
+h4 {
+  font-size: 1.2rem;
+}
+
+p {
+  font-size: 1rem;
+}
+
+// Inputs and Forms
+input[type='file']{
+  display: none;
 }
 
 `;

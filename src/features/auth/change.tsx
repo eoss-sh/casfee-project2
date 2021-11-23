@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
-import { Link } from 'react-router-dom';
 import ErrorText from '../../components/ErrorText';
 import { auth } from '../../config/firebase';
 import logging from '../../config/logging';
-import { FormContainer, Input, Button } from '../../styles/forms';
+import { MainButton, MainLinkText } from '../../styles/buttons';
+import { FormContainer, Input } from '../../styles/forms';
 
 const ChangePwPage = () => { 
     const [changing, setChanging] = useState<boolean>(false);
@@ -65,13 +65,13 @@ const ChangePwPage = () => {
                 onChange={event => setNewPasswordConfirm(event.target.value)}
                 value={newPasswordConfirm}
             />
-            <Button
+            <MainButton
                 disabled={changing}
                 onClick={() => changePassword()}
             >
                 Anmelden
-            </Button>
-            <small><p>Noch nicht registriert?<Link to="/register">Jetzt registrieren!</Link></p></small>
+            </MainButton>
+            <small><p>Noch nicht registriert?<MainLinkText to="/register">Jetzt registrieren!</MainLinkText></p></small>
             <ErrorText error={error} /> 
         </FormContainer>
     )

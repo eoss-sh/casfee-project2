@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import singelCourse from '../../interfaces/course'
-//[ToDo]: Rename the Functino
+import singelCourse, {hole} from '../../interfaces/course'
+//[ToDo]: Rename the Function
 import { getAdditionalUserInfo } from '../auth/authApi';
+import { fetchHolesPerCourse } from './courseAPI'
 
 
 const initialState: singelCourse = {
@@ -13,6 +14,7 @@ const initialState: singelCourse = {
     url: '',
     type: '',
     error: '',
+    holes: [],
   }
 };
 
@@ -20,8 +22,12 @@ const initialState: singelCourse = {
 export const fetchCourse = createAsyncThunk(
   'course/fetchSingleCourse',
   async (uid: string) => {
-    const result = await getAdditionalUserInfo('courses', uid)
-    return result.data();
+    const result = await getAdditionalUserInfo('courses', uid);
+    const holesResults = await fetchHolesPerCourse(uid);
+    const holes = holesResults.docs.map((doc) => doc.data() as hole);
+    const course = result.data();
+    const courseData = ({ course, holes });
+    return courseData;
   }
 );
 
@@ -32,17 +38,15 @@ const courseReducer = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchCourse.fulfilled, (state: singelCourse, action) => {
-        console.log('before')
-        console.log(action.payload?.shortDesc)
-        console.log('after')
         state.course = {
-          name: action.payload?.name,
-          shortDesc: action.payload?.shortDesc,
-          desc: action.payload?.desc,
-          url: action.payload?.url,
-          type: action.payload?.type,
-          uid: action.payload?.uid,
+          name: action.payload.course?.name,
+          shortDesc: action.payload.course?.shortDesc,
+          desc: action.payload.course?.desc,
+          url: action.payload.course?.url,
+          type: action.payload.course?.type,
+          uid: action.payload.course?.uid,
           error: '',
+          holes: action.payload?.holes
         };
       })
       .addCase(fetchCourse.rejected, (state: singelCourse) => {
@@ -54,6 +58,7 @@ const courseReducer = createSlice({
           type: '',
           uid: '',
           error: 'Could not fetch Course',
+          holes: [],
         };
       })
       .addCase(fetchCourse.pending, (state: singelCourse) => {
@@ -65,6 +70,7 @@ const courseReducer = createSlice({
           type: '',
           uid: '',
           error: 'Still pending',
+          holes: [],
         };
       });
   },

@@ -1,8 +1,9 @@
 import { useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { logout } from './authSlice'
-import { FormContainer, Button } from '../../styles/forms';
+import { FormContainer } from '../../styles/forms';
 import { FlexRowCenter } from '../../styles/layouts';
+import { MainButton, SecondaryButton } from '../../styles/buttons';
 
 const LogOutPage = () => { 
 
@@ -17,16 +18,16 @@ const LogOutPage = () => {
         <FormContainer>
             <p>Sind Sie sicher, dass Sie sich auslogen möchten?</p>
             <FlexRowCenter>
-                <Button
+                <MainButton
                     onClick={() => logoutofApp()}
                 >
                     Logout
-                </Button>
-                <Button
+                </MainButton>
+                <SecondaryButton
                     onClick={() => { history.goBack()} }
                 >
                     Cancel
-                </Button>
+                </SecondaryButton>
             </FlexRowCenter>
         </FormContainer>
     )

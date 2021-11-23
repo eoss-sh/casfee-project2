@@ -2,7 +2,8 @@ import React, {useState} from 'react';
 import Uploader from '../../components/Uploader';
 import { database } from '../../config/firebase';
 import logging from '../../config/logging';
-import { FormContainer, Input, Button } from '../../styles/forms';
+import { MainButton } from '../../styles/buttons';
+import { FormContainer, Input, Label, Plus } from '../../styles/forms';
 
 const AddCourse = () => {
     const [name, setName] = useState<string>('');
@@ -64,7 +65,7 @@ const AddCourse = () => {
           type="textfield"
           name="desc"
           id="desc"
-          placeholder="Bescchreibung"
+          placeholder="Beschreibung"
           onChange={(event) => setDesc(event.target.value)}
           value={desc}
         />
@@ -86,6 +87,9 @@ const AddCourse = () => {
           onChange={(event) => setType(event.target.value)}
           value={type}
         />
+        <Label htmlFor="userImage">
+          <Plus>+</Plus>Bild hinzufügen
+        </Label>
         <Input
           large
           type="file"
@@ -97,7 +101,7 @@ const AddCourse = () => {
         {image && (
           <Uploader image={image} setImage={setImage} setUrl={setUrl} />
         )}
-        <Button onClick={() => addNewCourse()}>Anmelden</Button>
+        <MainButton onClick={() => addNewCourse()}>Kurs Hinzufügen</MainButton>
       </FormContainer>
     );
 }

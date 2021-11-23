@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
-import { Link } from 'react-router-dom';
 import ErrorText from '../../components/ErrorText';
+import TwoColumnImage from '../../components/TwoColumnImage';
 import Uploader from '../../components/Uploader';
 import { auth, database } from '../../config/firebase';
 import logging from '../../config/logging';
-import { FormContainer, Input, Button } from '../../styles/forms';
+import { MainButton, MainLinkText } from '../../styles/buttons';
+import { FormContainer, Input, Label, Plus } from '../../styles/forms';
+import { SmallText } from '../../styles/type';
+import introImage from '../../assets/login.jpg';
 
 const RegisterPage = () => { 
     const [registering, setRegistering] = useState<boolean>(false);
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [confirm, setConfirm] = useState<string>('');
-    const [hcp, setHcp] = useState<number>(36)
+    const [hcp, setHcp] = useState<number>()
     const [image, setImage] = useState<File>()
     const [url, setUrl] = useState<String>('')
     const [error, setError] = useState<string>('');
@@ -64,6 +67,7 @@ const RegisterPage = () => {
     }
 
     return (
+      <TwoColumnImage image={introImage}>
       <FormContainer>
         <h2>Registrierung</h2>
         <Input
@@ -103,6 +107,7 @@ const RegisterPage = () => {
           onChange={(event) => setHcp(parseFloat(event.target.value))}
           value={hcp}
         />
+        <Label htmlFor="userImage" ><Plus>+</Plus>Bild Hinzufügen</Label>
         <Input
           large
           type="file"
@@ -112,19 +117,20 @@ const RegisterPage = () => {
           onChange={handleFileUpload}
         />
         {image && <Uploader image={image} setImage={setImage} setUrl={setUrl} />}
-        <Button
+        <MainButton
           disabled={registering}
           onClick={() => signUpWithEmailAndPassword()}
         >
           Anmelden
-        </Button>
-        <small>
+        </MainButton>
+        <SmallText>
           <p>
-            Bereits registriert? <Link to="/login">Login</Link>
+            Bereits registriert? <MainLinkText to="/login">Login</MainLinkText>
           </p>
-        </small>
+        </SmallText>
         <ErrorText error={error} />
       </FormContainer>
+      </TwoColumnImage>
     );
 }
 

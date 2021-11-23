@@ -3,6 +3,7 @@ import { useAppSelector } from '../../helpers/hooks';
 import { NavLink } from 'react-router-dom'
 import { Container } from '../../styles/styles'
 import './Header.css'
+import { NavButtonLink, NavButtonLinkSecondary } from '../../styles/buttons';
 
 
 export default function Header() {
@@ -21,20 +22,19 @@ export default function Header() {
             <section className="main-nav_links">
               {!currentUser.uid && (
                 <>
-                  <NavLink
-                    className="button button-primary"
+                  <NavButtonLinkSecondary
                     exact
                     to="/register"
                   >
                     Registrieren
-                  </NavLink>
-                  <NavLink
+                  </NavButtonLinkSecondary>
+                  <NavButtonLink
                     className="button button-secondary"
                     exact
                     to="/login"
                   >
                     LogIn
-                  </NavLink>
+                  </NavButtonLink>
                 </>
               )}
               {currentUser.admin && <NavLink to="/">Kurse erfassen</NavLink>}

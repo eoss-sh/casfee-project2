@@ -25,6 +25,7 @@ const ScoreCard = ({id}: scoreCardProps) => {
 
   return (
     <Container>
+      <h1>Hello World</h1>
       <Scorecard>
         <ScorecardTitelRow>
           <ScorecardTitel>No.</ScorecardTitel>

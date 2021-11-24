@@ -13,6 +13,11 @@ const initialState: singelCourse = {
     uid: '',
     url: '',
     type: '',
+    total_distance1: 0,
+    total_distance2: 0,
+    total_distance3: 0,
+    total_distance4: 0,
+    par: 72,
     error: '',
     holes: [],
   }
@@ -45,6 +50,11 @@ const courseReducer = createSlice({
           url: action.payload.course?.url,
           type: action.payload.course?.type,
           uid: action.payload.course?.uid,
+          par: action.payload.course?.par,
+          total_distance1: action.payload.course?.total_distance1,
+          total_distance2: action.payload.course?.total_distance2,
+          total_distance3: action.payload.course?.total_distance3,
+          total_distance4: action.payload.course?.total_distance4,
           error: '',
           holes: action.payload?.holes
         };
@@ -57,6 +67,7 @@ const courseReducer = createSlice({
           url: '',
           type: '',
           uid: '',
+          par: 0,
           error: 'Could not fetch Course',
           holes: [],
         };
@@ -69,6 +80,7 @@ const courseReducer = createSlice({
           url: '',
           type: '',
           uid: '',
+          par: 0,
           error: 'Still pending',
           holes: [],
         };

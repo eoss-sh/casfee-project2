@@ -25,6 +25,7 @@ export const fetchCoursesList = createAsyncThunk(
                 desc: doc.data().desc,
                 type: doc.data().type,
                 url: doc.data().url,
+                par: doc.data().par,
                 uid: doc.id,
                 error: ''
                 }

@@ -6,6 +6,7 @@ import {
   ScorecardRow,
   ScorecardTitel,
   ScorecardTitelRow,
+  ScorecardTotalRow,
 } from '../../styles/scorecard';
 import { Container } from '../../styles/styles';
 import { fetchCourse } from './singleCourseSlice';
@@ -23,32 +24,41 @@ const ScoreCard = ({id}: scoreCardProps) => {
   }, [dispatch, id]);
 
   return (
-      <Container>
-        <Scorecard>
-          <ScorecardTitelRow>
-            <ScorecardTitel>No.</ScorecardTitel>
-            <ScorecardTitel>Par</ScorecardTitel>
-            <ScorecardTitel>HCP</ScorecardTitel>
-            <ScorecardTitel>Distanz 1</ScorecardTitel>
-            <ScorecardTitel>Distanz 2</ScorecardTitel>
-            <ScorecardTitel>Distanz 3</ScorecardTitel>
-            <ScorecardTitel>Distanz 4</ScorecardTitel>
-          </ScorecardTitelRow>
-          {data.course.holes?.map((hole, index) => {
-            return (
-              <ScorecardRow key={index}>
-                <p>{hole.no}</p>
-                <p>{hole.data.par}</p>
-                <p>{hole.data.hcp}</p>
-                <p>{hole.data.dist1}</p>
-                <p>{hole.data.dist2}</p>
-                <p>{hole.data.dist3}</p>
-                <p>{hole.data.dist4}</p>
-              </ScorecardRow>
-            );
-          })}
-        </Scorecard>
-      </Container>
+    <Container>
+      <Scorecard>
+        <ScorecardTitelRow>
+          <ScorecardTitel>No.</ScorecardTitel>
+          <ScorecardTitel>Par</ScorecardTitel>
+          <ScorecardTitel>HCP</ScorecardTitel>
+          <ScorecardTitel>Distanz 1</ScorecardTitel>
+          <ScorecardTitel>Distanz 2</ScorecardTitel>
+          <ScorecardTitel>Distanz 3</ScorecardTitel>
+          <ScorecardTitel>Distanz 4</ScorecardTitel>
+        </ScorecardTitelRow>
+        {data.course.holes?.map((hole, index) => {
+          return (
+            <ScorecardRow key={index}>
+              <p>{hole.no}</p>
+              <p>{hole.data.par}</p>
+              <p>{hole.data.hcp}</p>
+              <p>{hole.data.dist1}</p>
+              <p>{hole.data.dist2}</p>
+              <p>{hole.data.dist3}</p>
+              <p>{hole.data.dist4}</p>
+            </ScorecardRow>
+          );
+        })}
+        <ScorecardTotalRow>
+          <ScorecardTitel></ScorecardTitel>
+          <ScorecardTitel>{data.course.par}</ScorecardTitel>
+          <ScorecardTitel></ScorecardTitel>
+          <ScorecardTitel>{data.course.total_distance1}</ScorecardTitel>
+          <ScorecardTitel>{data.course.total_distance2}</ScorecardTitel>
+          <ScorecardTitel>{data.course.total_distance3}</ScorecardTitel>
+          <ScorecardTitel>{data.course.total_distance4}</ScorecardTitel>
+        </ScorecardTotalRow>
+      </Scorecard>
+    </Container>
   );
 };
 

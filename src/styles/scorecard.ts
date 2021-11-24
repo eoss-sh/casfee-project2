@@ -22,3 +22,10 @@ export const ScorecardRow = styled.div`
     grid-template-columns: repeat(7, 1fr);
     margin-bottom: 1%;
 `
+
+export const ScorecardTotalRow = styled.div`
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: var(--light-grey);
+    margin-top: 2%;
+`;

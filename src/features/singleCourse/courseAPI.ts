@@ -5,5 +5,5 @@ export function fetchSingleCourse(uid: string) {
 }
 
 export async function fetchHolesPerCourse(uid: string) {
-    return await database.collection('courses').doc(uid).collection('Holes').get()
+    return await database.collection('courses').doc(uid).collection('Holes').orderBy('no').get()
 }

@@ -3,20 +3,22 @@ import Uploader from '../../components/Uploader';
 import { database } from '../../config/firebase';
 import logging from '../../config/logging';
 import { MainButton } from '../../styles/buttons';
-import { FormContainer, Input, Label, Plus } from '../../styles/forms';
+import { FormContainer, Input, InputRow, Label, Icon } from '../../styles/forms';
 
 const AddCourse = () => {
     const [name, setName] = useState<string>('');
     const [shortDesc, setShortDesc] = useState<string>('');
     const [desc, setDesc] = useState<string>('');
     const [place, setPlace] = useState<string>('');
-    const [type, setType] = useState<string>('');
+    const [type, setType] = useState<number>(18);
     const [image, setImage] = useState<File>();
     const [url, setUrl] = useState<String>('');
 
     const types = ['image/png', 'image/jpeg'];
+    // Make Array of Holes to loop over and create Input Rows 
+    const holes = (Array.from(Array(type).keys()).map(x => x + 1));
 
-    // Make one Function => also used in Register Component
+    // [ToDo:]Make one Function => also used in Register Component
     const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
       if (event.target.files && types.includes(event.target.files[0].type)) {
         setImage(event.target.files[0]);
@@ -25,14 +27,15 @@ const AddCourse = () => {
 
     const addNewCourse = async () => {
       try {
-        await database.collection('courses').doc().set({
+        const data = await database.collection('courses').add({
           name,
           shortDesc,
           desc,
           type,
           url,
         });
-        logging.info(`Platz ${name} erfolgreich angelegt.`);
+        logging.info(`Platz ${data.id} erfolgreich angelegt.`);
+
       } catch (error) {
         logging.warn(error)
       }
@@ -80,15 +83,15 @@ const AddCourse = () => {
         />
         <Input
           large
-          type="text"
+          type="number"
           name="type"
           id="type"
           placeholder="Art"
-          onChange={(event) => setType(event.target.value)}
+          onChange={(event) => setType(event.target.valueAsNumber)}
           value={type}
         />
         <Label htmlFor="userImage">
-          <Plus>+</Plus>Bild hinzufügen
+          <Icon>+</Icon>Bild hinzufügen
         </Label>
         <Input
           large
@@ -101,7 +104,22 @@ const AddCourse = () => {
         {image && (
           <Uploader image={image} setImage={setImage} setUrl={setUrl} />
         )}
+        {holes.map(hole => {
+          console.log(hole)
+          return (
+            <InputRow key={hole} >
+              <Icon>{hole}</Icon>
+              <Input placeholder='Par' />
+              <Input placeholder='HCP' />
+              <Input placeholder='Men Medal' />
+              <Input placeholder='Men Champs' />
+              <Input placeholder='Women Champs' />
+              <Input placeholder='Women Medal' />
+            </InputRow>
+          )
+        })}
         <MainButton onClick={() => addNewCourse()}>Kurs Hinzufügen</MainButton>
+
       </FormContainer>
     );
 }

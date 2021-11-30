@@ -5,6 +5,7 @@ import HomePage from "../pages/home";
 import ForgotPwPage from "../features/auth/forgot";
 import ProfilePage from "../pages/profile";
 import SingleCourse from "../features/singleCourse/singleCourse";
+import AddCoursePage from "../pages/kurs-erfassen";
 
 const routes: IRoute[] = [
   {
@@ -46,6 +47,13 @@ const routes: IRoute[] = [
     path: '/profile',
     name: 'Profile Page',
     component: ProfilePage,
+    exact: true,
+    protected: true,
+  },
+  {
+    path: '/add-course',
+    name: 'Add Course Page',
+    component: AddCoursePage,
     exact: true,
     protected: true,
   },

@@ -16,7 +16,10 @@ interface singleCourseCardProps {
 const SingleCourseCard = ({name, url, shortDesc, id}: singleCourseCardProps) => {
     return (
       <SingelCourseCard key={id}>
-        <SingelCourseCardImage src={url} alt={name} />
+        <SingelCourseCardImage 
+          src={url} 
+          alt={name} 
+        />
         <h3>{name}</h3>
         <SingelCourseCardDescription>{shortDesc}</SingelCourseCardDescription>
         <MainLinkText to={'course/' + id}>Details &rarr;</MainLinkText>

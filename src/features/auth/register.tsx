@@ -6,7 +6,7 @@ import Uploader from '../../components/Uploader';
 import { auth, database } from '../../config/firebase';
 import logging from '../../config/logging';
 import { MainButton, MainLinkText } from '../../styles/buttons';
-import { FormContainer, Input, Label, Plus } from '../../styles/forms';
+import { FormContainer, Input, Label, Icon } from '../../styles/forms';
 import { SmallText } from '../../styles/type';
 import introImage from '../../assets/login.jpg';
 
@@ -93,7 +93,7 @@ const RegisterPage = () => {
           type="password"
           name="confirm"
           id="confirm"
-          placeholder="Passwort Bestätigen"
+          placeholder="Passwort bestätigen"
           onChange={(event) => setConfirm(event.target.value)}
           value={confirm}
         />
@@ -107,7 +107,7 @@ const RegisterPage = () => {
           onChange={(event) => setHcp(parseFloat(event.target.value))}
           value={hcp}
         />
-        <Label htmlFor="userImage" ><Plus>+</Plus>Bild Hinzufügen</Label>
+        <Label htmlFor="userImage" ><Icon>+</Icon>Bild hinzufügen</Label>
         <Input
           large
           type="file"

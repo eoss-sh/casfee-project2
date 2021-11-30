@@ -12,7 +12,7 @@ export const TwoColumns = styled.div`
     flex-flow: row;
     align-items: center;
     justify-content: space-between;
-    height: 50vh;
+    height: 70vh;
 `
 
 export const ImageFullCover = styled.img`

@@ -17,27 +17,29 @@ export const FormContainer = styled.section`
 `
 
 export const Input = styled.input`
-    width: ${(props: InputProps) => props.large ? "70%" : "20%"};
-    padding: 5px 7px;
-    border: none;
-    border-bottom: 1.5px solid var(--dark-grey);
+  width: ${(props: InputProps) => (props.large ? '70%' : '20%')};
+  padding: 5px 7px;
+  border: none;
+  border-bottom: 1.5px solid var(--dark-grey);
+  outline: none;
+  margin-bottom: 3%;
+  margin-right: ${(props: InputProps) => (props.large ? '0%' : '3%')};
+  &::placeholder {
+    color: var(--dark-grey);
+  }
+  &:last-of-type {
+    margin-bottom: ${(props: InputProps) => (props.large ? '5%' : '3%')};
+    margin-right: ${(props: InputProps) => (props.large ? '0%' : '0%')};
+  }
+  &:first-of-type {
+    ${(props: InputProps) => (props.large ? '5%' : '0%')};
+  }
+  &:focus,
+  &:active {
+    border-bottom: 1.5px solid var(--dark-blue);
     outline: none;
-    margin-bottom: 3%;
-    &::placeholder {
-        color: var(--dark-grey);
-    }
-    &:last-of-type {
-        margin-bottom: 5%;
-    }
-    &:first-of-type {
-        margin-top: 5%;
-    }
-    &:focus, &:active{
-        border-bottom: 1.5px solid var(--dark-blue);           
-        outline: none;
-    }
-`
-
+  }
+`;
 export const Label = styled.label`
     position: relative;
     width: 70%;
@@ -48,7 +50,7 @@ export const Label = styled.label`
     line-height: 3.5;
     cursor: pointer;
 `
-export const Plus = styled.span`
+export const Icon = styled.span`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -61,4 +63,12 @@ export const Plus = styled.span`
     background-color: var(--dark-grey);
     color: var(--white);
     font-size: 1.5rem;
+`
+export const InputRow = styled.section`
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    padding-left: 5%;
 `

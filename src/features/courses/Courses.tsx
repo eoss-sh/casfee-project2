@@ -23,7 +23,7 @@ const Courses = () => {
         title="Messen - vergleichen - verbessern"
         subtitle="Verbssere dein Golfspiel mit zuverlässigen Statistiken."
         buttonLink="/register"
-        buttonText="Anmelden"
+        buttonText="Registrieren"
       />
       <Container>
         <h2>Golfplätze der Schweiz</h2>

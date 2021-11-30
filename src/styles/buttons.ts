@@ -21,7 +21,7 @@ const mainButtonStyle = `
 const secondaryButtonStyle = `
     border: 1px solid var(--yellow);
     background-color: var(--yellow);
-    color: var(--white);
+    color: var(--dark-blue);
     :hover {
         background-color: transparent;
         color: var(--yellow);
@@ -39,6 +39,10 @@ export const SecondaryButton = styled.button`
 export const MainLink = styled.a`
     ${baseButtonStyle}
     ${mainButtonStyle}
+`;
+export const SecondaryLink = styled.a`
+  ${baseButtonStyle}
+  ${secondaryButtonStyle}
 `;
 export const NavButtonLink = styled(NavLink)`
     ${baseButtonStyle}

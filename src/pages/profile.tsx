@@ -4,7 +4,6 @@ import IPage from '../interfaces/page';
 import MakeAdmin from '../features/auth/makeAdmin';
 import ChangePwPage from '../features/auth/change';
 import LogOutPage from '../features/auth/logout';
-import AddCourse from '../features/singleCourse/AddCourse';
 
 const ProfilePage = (props: IPage) => {
     const currentUser = useAppSelector((state) => state.auth.user);
@@ -15,7 +14,6 @@ const ProfilePage = (props: IPage) => {
                 <ChangePwPage />
                 <LogOutPage /> 
                 {currentUser.admin && <MakeAdmin />}
-                {currentUser.admin && <AddCourse />}
             </div>
         );
     } 

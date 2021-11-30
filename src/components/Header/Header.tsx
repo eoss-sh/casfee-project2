@@ -37,7 +37,7 @@ export default function Header() {
                   </NavButtonLink>
                 </>
               )}
-              {currentUser.admin && <NavLink to="/">Kurse erfassen</NavLink>}
+              {currentUser.admin && <NavLink to="/add-course">Kurse erfassen</NavLink>}
               {currentUser.uid && (
                 <NavLink exact to="/profile">
                   <img className="main-nav__profile-image" src={currentUser.url} alt="name" />

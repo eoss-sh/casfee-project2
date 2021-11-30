@@ -11,13 +11,13 @@ header {
   grid-template-columns: 1fr 3fr;
 }
 
-.main-nav a {
-  color: var(--white);
-  text-decoration: none;
-}
-
 .main-nav_logo {
   font-size: 1.5rem;
+}
+
+.main-nav_logo a {
+  color: var(--white);
+  text-decoration: none;
 }
 
 .main-nav_links {

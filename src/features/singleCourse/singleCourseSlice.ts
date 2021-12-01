@@ -1,43 +1,43 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import singelCourse, {hole} from '../../interfaces/course'
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import singelCourse, { hole } from "../../interfaces/course";
 //[ToDo]: Rename the Function
-import { getAdditionalUserInfo } from '../auth/authApi';
-import { fetchHolesPerCourse } from './courseAPI'
-
+import { getAdditionalUserInfo } from "../auth/authApi";
+import { fetchHolesPerCourse } from "./courseAPI";
 
 const initialState: singelCourse = {
   course: {
-    name: '',
-    shortDesc: '',
-    desc: '',
-    uid: '',
-    url: '',
-    type: '',
+    name: "",
+    shortDesc: "",
+    desc: "",
+    uid: "",
+    url: "",
+    type: "",
     total_distance1: 0,
     total_distance2: 0,
     total_distance3: 0,
     total_distance4: 0,
     par: 72,
-    error: '',
+    error: "",
     holes: [],
-  }
+  },
 };
 
 // Func to fetch Single Course from Firestore
 export const fetchCourse = createAsyncThunk(
-  'course/fetchSingleCourse',
+  "course/fetchSingleCourse",
   async (uid: string) => {
-    const result = await getAdditionalUserInfo('courses', uid);
+    const result = await getAdditionalUserInfo("courses", uid);
     const holesResults = await fetchHolesPerCourse(uid);
     const holes = holesResults.docs.map((doc) => doc.data() as hole);
     const course = result.data();
-    const courseData = ({ course, holes });
+    const courseData = { course, holes };
+    console.log(courseData, holes);
     return courseData;
   }
 );
 
 const courseReducer = createSlice({
-  name: 'course',
+  name: "course",
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -55,33 +55,33 @@ const courseReducer = createSlice({
           total_distance2: action.payload.course?.total_distance2,
           total_distance3: action.payload.course?.total_distance3,
           total_distance4: action.payload.course?.total_distance4,
-          error: '',
-          holes: action.payload?.holes
+          error: "",
+          holes: action.payload?.holes,
         };
       })
       .addCase(fetchCourse.rejected, (state: singelCourse) => {
         state.course = {
-          name: '',
-          shortDesc: '',
-          desc: '',
-          url: '',
-          type: '',
-          uid: '',
+          name: "",
+          shortDesc: "",
+          desc: "",
+          url: "",
+          type: "",
+          uid: "",
           par: 0,
-          error: 'Could not fetch Course',
+          error: "Could not fetch Course",
           holes: [],
         };
       })
       .addCase(fetchCourse.pending, (state: singelCourse) => {
         state.course = {
-          name: '',
-          shortDesc: '',
-          desc: '',
-          url: '',
-          type: '',
-          uid: '',
+          name: "",
+          shortDesc: "",
+          desc: "",
+          url: "",
+          type: "",
+          uid: "",
           par: 0,
-          error: 'Still pending',
+          error: "Still pending",
           holes: [],
         };
       });

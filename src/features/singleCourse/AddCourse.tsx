@@ -11,9 +11,8 @@ import {
   Label,
   Icon,
 } from "../../styles/forms";
-import { IndexType } from "typescript";
 
-interface holeInputsInterface {
+interface HoleInputsInterface {
   [key: string]: hole;
 }
 
@@ -25,7 +24,7 @@ const AddCourse = () => {
   const [type, setType] = useState<number>(18);
   const [image, setImage] = useState<File>();
   const [url, setUrl] = useState<String>("");
-  const [holeInputs, setHoleInputs] = useState<holeInputsInterface>({});
+  const [holeInputs, setHoleInputs] = useState<HoleInputsInterface>({});
 
   const types = ["image/png", "image/jpeg"];
   // Make Array of Holes to loop over and create Input Rows
@@ -38,6 +37,26 @@ const AddCourse = () => {
     }
   };
 
+  // Function to Update all the Hole Input Values
+  // Pass number of hole to update, set all Inputs to Numbers
+  const handleHolesInputs = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    holeNo: number
+  ) => {
+    const { name, value } = event.target;
+    setHoleInputs((prev) => {
+      if (prev === null) {
+        return { [holeNo]: { [name]: parseInt(value, 10) } };
+      }
+      return {
+        ...prev,
+        [holeNo]: { ...holeInputs?.[holeNo], [name]: parseInt(value, 10) },
+      };
+    });
+  };
+
+  // Function to Add Course to Database
+  // First create Collection, get ID back and add Holes as SubCollection
   const addNewCourse = async () => {
     try {
       const data = await database.collection("courses").add({
@@ -47,6 +66,13 @@ const AddCourse = () => {
         type,
         url,
       });
+      for (let [no, hole] of Object.entries(holeInputs)) {
+        await database
+          .collection("courses")
+          .doc(data.id)
+          .collection("holes")
+          .add({ ...hole, no: parseInt(no, 10) + 1 });
+      }
       logging.info(data);
     } catch (error) {
       logging.warn(error);
@@ -119,117 +145,45 @@ const AddCourse = () => {
             <Icon>{hole + 1}</Icon>
             <Input
               type="number"
+              name="par"
               placeholder="Par"
-              onChange={(event) =>
-                setHoleInputs((prevState) => ({
-                  holeInputs: {
-                    ...prevState.holeInputs,
-                    [hole]: {
-                      data: {
-                        ...prevState.holeInputs[hole].data,
-                        par: event.target.valueAsNumber,
-                      },
-                      id: hole,
-                    },
-                  },
-                }))
-              }
-              value={holeInputs?.[hole]?.data.par}
+              onChange={(event) => handleHolesInputs(event, hole)}
+              value={holeInputs?.[hole]?.par}
             />
             <Input
               type="number"
+              name="hcp"
               placeholder="HCP"
-              onChange={(event) =>
-                setHoleInputs((prevState) => ({
-                  holeInputs: {
-                    ...prevState.holeInputs,
-                    [hole]: {
-                      data: {
-                        ...prevState.holeInputs[hole].data,
-                        hcp: event.target.valueAsNumber,
-                      },
-                      id: hole,
-                    },
-                  },
-                }))
-              }
-              value={holeInputs?.[hole]?.data.hcp}
+              onChange={(event) => handleHolesInputs(event, hole)}
+              value={holeInputs?.[hole]?.hcp}
             />
             <Input
               placeholder="Men Champs"
               type="number"
-              onChange={(event) =>
-                setHoleInputs((prevState) => ({
-                  holeInputs: {
-                    ...prevState.holeInputs,
-                    [hole]: {
-                      data: {
-                        ...prevState.holeInputs[hole].data,
-                        dist1: event.target.valueAsNumber,
-                      },
-                      id: hole,
-                    },
-                  },
-                }))
-              }
-              value={holeInputs?.[hole]?.data.dist1}
+              name="dist1"
+              onChange={(event) => handleHolesInputs(event, hole)}
+              value={holeInputs?.[hole]?.dist1}
             />
             <Input
               placeholder="Men Medal"
               type="number"
-              onChange={(event) =>
-                setHoleInputs((prevState) => ({
-                  holeInputs: {
-                    ...prevState.holeInputs,
-                    [hole]: {
-                      data: {
-                        ...prevState.holeInputs[hole].data,
-                        dist2: event.target.valueAsNumber,
-                      },
-                      id: hole,
-                    },
-                  },
-                }))
-              }
-              value={holeInputs?.[hole]?.data.dist2}
+              name="dist2"
+              onChange={(event) => handleHolesInputs(event, hole)}
+              value={holeInputs?.[hole]?.dist2}
             />
             <Input
               placeholder="Women Champs"
               type="number"
-              onChange={(event) =>
-                setHoleInputs((prevState) => ({
-                  holeInputs: {
-                    ...prevState.holeInputs,
-                    [hole]: {
-                      data: {
-                        ...prevState.holeInputs[hole].data,
-                        dist3: event.target.valueAsNumber,
-                      },
-                      id: hole,
-                    },
-                  },
-                }))
-              }
-              value={holeInputs?.[hole]?.data.dist3}
+              name="dist3"
+              onChange={(event) => handleHolesInputs(event, hole)}
+              value={holeInputs?.[hole]?.dist3}
             />
             <Input
               placeholder="Women Medal"
               type="number"
-              onChange={(event) =>
-                setHoleInputs((prevState) => ({
-                  holeInputs: {
-                    ...prevState.holeInputs,
-                    [hole]: {
-                      data: {
-                        ...prevState.holeInputs[hole].data,
-                        dist4: event.target.valueAsNumber,
-                      },
-                      id: hole,
-                    },
-                  },
-                }))
-              }
-              value={holeInputs?.[hole]?.data.dist4}
+              name="dist4"
+              onChange={(event) => handleHolesInputs(event, hole)}
+              value={holeInputs?.[hole]?.dist4}
             />
           </InputRow>
         );

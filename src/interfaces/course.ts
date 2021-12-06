@@ -1,13 +1,11 @@
 export interface hole {
-  data: {
-    dist1: number;
-    dist2: number;
-    dist3: number;
-    dist4: number;
-    par: number;
-    hcp: number;
-  };
-  no: number;
+  dist1?: number;
+  dist2?: number;
+  dist3?: number;
+  dist4?: number;
+  par?: number;
+  hcp?: number;
+  no?: number;
 }
 
 export default interface singelCourse {
@@ -24,6 +22,6 @@ export default interface singelCourse {
     total_distance4?: number;
     par: number;
     error: string;
-    holes?: hole[];
+    holes?: hole[] | null | undefined;
   };
 }

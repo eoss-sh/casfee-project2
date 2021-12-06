@@ -1,9 +1,14 @@
-import { database } from '../../config/firebase';
+import { database } from "../../config/firebase";
 
 export function fetchSingleCourse(uid: string) {
-    return database.collection('courses').doc().get()
+  return database.collection("courses").doc().get();
 }
 
 export async function fetchHolesPerCourse(uid: string) {
-    return await database.collection('courses').doc(uid).collection('Holes').orderBy('no').get()
+  return await database
+    .collection("courses")
+    .doc(uid)
+    .collection("holes")
+    .orderBy("no")
+    .get();
 }

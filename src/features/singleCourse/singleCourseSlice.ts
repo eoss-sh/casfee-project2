@@ -31,7 +31,6 @@ export const fetchCourse = createAsyncThunk(
     const holes = holesResults.docs.map((doc) => doc.data() as hole);
     const course = result.data();
     const courseData = { course, holes };
-    console.log(courseData, holes);
     return courseData;
   }
 );
@@ -56,7 +55,7 @@ const courseReducer = createSlice({
           total_distance3: action.payload.course?.total_distance3,
           total_distance4: action.payload.course?.total_distance4,
           error: "",
-          holes: action.payload?.holes,
+          holes: [...action.payload.holes],
         };
       })
       .addCase(fetchCourse.rejected, (state: singelCourse) => {

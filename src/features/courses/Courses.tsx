@@ -1,20 +1,14 @@
-import React, {useEffect} from 'react'
-import { fetchCoursesList } from './coursesSlice';
-import { useDispatch } from 'react-redux';
-import { useAppSelector } from '../../helpers/hooks';
-import Hero from '../../components/Hero';
-import image from './images/course1.jpg';
-import SingleCourseCard from '../singleCourse/singleCourseCard';
-import {CourseListe} from '../../styles/courses'
-import { Container } from '../../styles/styles';
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../helpers/hooks";
+import Hero from "../../components/Hero";
+import image from "./images/course1.jpg";
+import SingleCourseCard from "../singleCourse/singleCourseCard";
+import { CourseListe } from "../../styles/courses";
+import { Container } from "../../styles/styles";
 
 const Courses = () => {
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   const courses = useAppSelector((state) => state.courses.courses);
-
-  useEffect(() => {
-    dispatch(fetchCoursesList())
-  }, [dispatch])
 
   return (
     <>
@@ -30,11 +24,12 @@ const Courses = () => {
         <CourseListe>
           {courses.map((course) => {
             return (
-              <SingleCourseCard 
-                  name={course.course.name}
-                  shortDesc={course.course.shortDesc}
-                  id={course.course.uid}
-                  url={course.course.url}
+              <SingleCourseCard
+                key={course.course.uid}
+                name={course.course.name}
+                shortDesc={course.course.shortDesc}
+                id={course.course.uid}
+                url={course.course.url}
               />
             );
           })}
@@ -42,7 +37,6 @@ const Courses = () => {
       </Container>
     </>
   );
-  
 };
 
 export default Courses;

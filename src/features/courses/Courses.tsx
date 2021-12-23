@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../helpers/hooks";
+import { fetchCoursesList } from "./coursesSlice";
 import Hero from "../../components/Hero";
 import image from "./images/course1.jpg";
 import SingleCourseCard from "../singleCourse/singleCourseCard";
@@ -9,6 +11,10 @@ import { Container } from "../../styles/styles";
 const Courses = () => {
   const dispatch = useDispatch();
   const courses = useAppSelector((state) => state.courses.courses);
+
+  useEffect(() => {
+    dispatch(fetchCoursesList());
+  }, [dispatch]);
 
   return (
     <>

@@ -4,13 +4,8 @@ import { database } from "../../config/firebase";
 import logging from "../../config/logging";
 import { MainButton } from "../../styles/buttons";
 import { hole } from "../../interfaces/course";
-import {
-  FormContainer,
-  Input,
-  InputRow,
-  Label,
-  Icon,
-} from "../../styles/forms";
+import { FormContainer, Input, InputRow, Label } from "../../styles/forms";
+import { Icon } from "../../styles/elements";
 
 interface HoleInputsInterface {
   [key: string]: hole;

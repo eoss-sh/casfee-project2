@@ -1,73 +1,75 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router';
-import ErrorText from '../../components/ErrorText';
-import TwoColumnImage from '../../components/TwoColumnImage';
-import Uploader from '../../components/Uploader';
-import { auth, database } from '../../config/firebase';
-import logging from '../../config/logging';
-import { MainButton, MainLinkText } from '../../styles/buttons';
-import { FormContainer, Input, Label, Icon } from '../../styles/forms';
-import { SmallText } from '../../styles/type';
-import introImage from '../../assets/login.jpg';
+import React, { useState } from "react";
+import { useHistory } from "react-router";
+import ErrorText from "../../components/ErrorText";
+import TwoColumnImage from "../../components/TwoColumnImage";
+import Uploader from "../../components/Uploader";
+import { auth, database } from "../../config/firebase";
+import logging from "../../config/logging";
+import { MainButton, MainLinkText } from "../../styles/buttons";
+import { FormContainer, Input, Label } from "../../styles/forms";
+import { Icon } from "../../styles/elements";
+import { SmallText } from "../../styles/type";
+import introImage from "../../assets/login.jpg";
 
-const RegisterPage = () => { 
-    const [registering, setRegistering] = useState<boolean>(false);
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
-    const [confirm, setConfirm] = useState<string>('');
-    const [hcp, setHcp] = useState<number>()
-    const [image, setImage] = useState<File>()
-    const [url, setUrl] = useState<String>('')
-    const [error, setError] = useState<string>('');
+const RegisterPage = () => {
+  const [registering, setRegistering] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirm, setConfirm] = useState<string>("");
+  const [hcp, setHcp] = useState<number>();
+  const [image, setImage] = useState<File>();
+  const [url, setUrl] = useState<String>("");
+  const [error, setError] = useState<string>("");
 
-    const history = useHistory();
-    const types = ['image/png', 'image/jpeg']
+  const history = useHistory();
+  const types = ["image/png", "image/jpeg"];
 
-
-    const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-      if (event.target.files && types.includes(event.target.files[0].type)) {
-        setImage(event.target.files[0]);
-      }
-    };
-
-    const signUpWithEmailAndPassword = () => { 
-        if (password !== confirm) {
-            setError('Die eingegebenen Passwörter stimmen nicht überein.')
-            return
-        }
-        if (error !== '') setError('');
-        
-        setRegistering(true);
-
-        auth.createUserWithEmailAndPassword(email, password)
-            .then(result => { 
-                return database.collection('appUser').doc(result.user?.uid).set({
-                    hcp,
-                    url,
-                })
-            }).then((result) => {
-                logging.info(result);
-                history.push('/login');
-            })
-            .catch(error => { 
-                logging.error(error);
-
-                if (error.code.includes('auth/weak-password')) {
-                    setError('Bitte verwenden Sie ein strengeres Passwort.')
-                }
-                else if (error.code.includes('auth/email-already-in-use')) {
-                    setError('Die eingegebene Email-Adresse wird bereits verwendet.')
-                }
-                else { 
-                    setError('Im Moment können Sie sich nicht anmelden. Bitte probieren Sie es später wieder.')
-                }
-
-                setRegistering(false);
-            })
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && types.includes(event.target.files[0].type)) {
+      setImage(event.target.files[0]);
     }
+  };
 
-    return (
-      <TwoColumnImage image={introImage}>
+  const signUpWithEmailAndPassword = () => {
+    if (password !== confirm) {
+      setError("Die eingegebenen Passwörter stimmen nicht überein.");
+      return;
+    }
+    if (error !== "") setError("");
+
+    setRegistering(true);
+
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((result) => {
+        return database.collection("appUser").doc(result.user?.uid).set({
+          hcp,
+          url,
+        });
+      })
+      .then((result) => {
+        logging.info(result);
+        history.push("/login");
+      })
+      .catch((error) => {
+        logging.error(error);
+
+        if (error.code.includes("auth/weak-password")) {
+          setError("Bitte verwenden Sie ein strengeres Passwort.");
+        } else if (error.code.includes("auth/email-already-in-use")) {
+          setError("Die eingegebene Email-Adresse wird bereits verwendet.");
+        } else {
+          setError(
+            "Im Moment können Sie sich nicht anmelden. Bitte probieren Sie es später wieder."
+          );
+        }
+
+        setRegistering(false);
+      });
+  };
+
+  return (
+    <TwoColumnImage image={introImage}>
       <FormContainer>
         <h2>Registrierung</h2>
         <Input
@@ -107,7 +109,9 @@ const RegisterPage = () => {
           onChange={(event) => setHcp(parseFloat(event.target.value))}
           value={hcp}
         />
-        <Label htmlFor="userImage" ><Icon>+</Icon>Bild hinzufügen</Label>
+        <Label htmlFor="userImage">
+          <Icon>+</Icon>Bild hinzufügen
+        </Label>
         <Input
           large
           type="file"
@@ -116,7 +120,9 @@ const RegisterPage = () => {
           placeholder="Bild"
           onChange={handleFileUpload}
         />
-        {image && <Uploader image={image} setImage={setImage} setUrl={setUrl} />}
+        {image && (
+          <Uploader image={image} setImage={setImage} setUrl={setUrl} />
+        )}
         <MainButton
           disabled={registering}
           onClick={() => signUpWithEmailAndPassword()}
@@ -130,8 +136,8 @@ const RegisterPage = () => {
         </SmallText>
         <ErrorText error={error} />
       </FormContainer>
-      </TwoColumnImage>
-    );
-}
+    </TwoColumnImage>
+  );
+};
 
 export default RegisterPage;

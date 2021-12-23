@@ -3,6 +3,7 @@ export default interface Score {
     id?: string;
     course?: string;
     score?: number;
+    totalPutts?: number;
     date?: string;
     user?: string;
     scorecard?: ScorecardEntry[];

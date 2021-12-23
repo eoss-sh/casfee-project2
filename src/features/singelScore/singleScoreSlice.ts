@@ -17,7 +17,7 @@ export const fetchSingleScore = createAsyncThunk(
     const result = await fetchSingleScoreFunc(id);
     const score = result.data();
     const scorecard = await fetchSingleScoreCardFunc(id);
-    const totalScore = { ...score, scorecard: scorecard };
+    const totalScore = { ...score, scorecard };
     return totalScore;
   }
 );

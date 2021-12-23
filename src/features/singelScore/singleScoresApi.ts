@@ -10,7 +10,6 @@ export const fetchSingleScoreCardFunc = async (id: string) => {
     .collection("scores")
     .doc(id)
     .collection("scorecard")
-    .orderBy("holeNo")
     .get();
   return snapShot.docs.map((doc) => doc.data());
 };

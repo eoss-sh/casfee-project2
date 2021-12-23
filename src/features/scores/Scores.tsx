@@ -18,11 +18,12 @@ const Scores = () => {
       <h1>Scores</h1>
       <p>{currentUser.uid}</p>
       {scores.map((score) => {
-        console.log(scores);
         return (
-          <div>
+          <div key={score.id}>
+            <p>Datum: {score.date}</p>
             <p>Course: {score.course}</p>
             <p>Score: {score.score}</p>
+            <p>Putts: {score.totalPutts}</p>
             <MainLinkText to={`singlescore/${score.id}`}>
               Details &rarr;
             </MainLinkText>

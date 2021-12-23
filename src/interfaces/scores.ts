@@ -18,6 +18,8 @@ export interface ScorecardEntry {
   holeNo?: number;
   putts?: number;
   score?: number;
+  gir?: string;
+  fairway?: string;
 }
 
 export interface ScoreOverview {
@@ -26,4 +28,5 @@ export interface ScoreOverview {
   score?: number;
   date?: string;
   user?: string;
+  totalPutts?: number;
 }

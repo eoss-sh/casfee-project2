@@ -18,7 +18,7 @@ export const ScorecardHeader = styled.header``;
 
 export const ScorecardTitelRow = styled.div<ScorecardProps>`
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 1fr;
   grid-template-columns: repeat(4, 1fr);
   margin-bottom: 2%;
   @media ${device.l} {
@@ -35,7 +35,7 @@ export const ScorecardTitel = styled.p<ScoreCardTitelProps>`
   display: ${(props: ScoreCardTitelProps) =>
     props.showMobile ? "block" : "none"};
   @media ${device.l} {
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: bold;
     display: block;
   }

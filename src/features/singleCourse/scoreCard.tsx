@@ -29,41 +29,39 @@ const ScoreCard = ({ id }: scoreCardProps) => {
     }, 0);
 
   return (
-    <Container>
-      <Scorecard>
-        <ScorecardTitelRow columnsAmount={7}>
-          <ScorecardTitel>No.</ScorecardTitel>
-          <ScorecardTitel>Par</ScorecardTitel>
-          <ScorecardTitel>HCP</ScorecardTitel>
-          <ScorecardTitel>Distanz 1</ScorecardTitel>
-          <ScorecardTitel>Distanz 2</ScorecardTitel>
-          <ScorecardTitel>Distanz 3</ScorecardTitel>
-          <ScorecardTitel>Distanz 4</ScorecardTitel>
-        </ScorecardTitelRow>
-        {data.course.holes?.map((hole, index) => {
-          return (
-            <ScorecardRow key={index} columnsAmount={7}>
-              <p>{hole.no}</p>
-              <p>{hole.par}</p>
-              <p>{hole.hcp}</p>
-              <p>{hole.dist1}</p>
-              <p>{hole.dist2}</p>
-              <p>{hole.dist3}</p>
-              <p>{hole.dist4}</p>
-            </ScorecardRow>
-          );
-        })}
-        <ScorecardTotalRow columnsAmount={7}>
-          <ScorecardTitel></ScorecardTitel>
-          <ScorecardTitel>{getTotal("par")}</ScorecardTitel>
-          <ScorecardTitel></ScorecardTitel>
-          <ScorecardTitel>{getTotal("dist1")}</ScorecardTitel>
-          <ScorecardTitel>{getTotal("dist2")}</ScorecardTitel>
-          <ScorecardTitel>{getTotal("dist3")}</ScorecardTitel>
-          <ScorecardTitel>{getTotal("dist4")}</ScorecardTitel>
-        </ScorecardTotalRow>
-      </Scorecard>
-    </Container>
+    <Scorecard>
+      <ScorecardTitelRow columnsAmount={7}>
+        <ScorecardTitel>No.</ScorecardTitel>
+        <ScorecardTitel>Par</ScorecardTitel>
+        <ScorecardTitel>HCP</ScorecardTitel>
+        <ScorecardTitel>Distanz 1</ScorecardTitel>
+        <ScorecardTitel>Distanz 2</ScorecardTitel>
+        <ScorecardTitel>Distanz 3</ScorecardTitel>
+        <ScorecardTitel>Distanz 4</ScorecardTitel>
+      </ScorecardTitelRow>
+      {data.course.holes?.map((hole, index) => {
+        return (
+          <ScorecardRow key={index} columnsAmount={7}>
+            <p>{hole.no}</p>
+            <p>{hole.par}</p>
+            <p>{hole.hcp}</p>
+            <p>{hole.dist1}</p>
+            <p>{hole.dist2}</p>
+            <p>{hole.dist3}</p>
+            <p>{hole.dist4}</p>
+          </ScorecardRow>
+        );
+      })}
+      <ScorecardTotalRow columnsAmount={7}>
+        <ScorecardTitel></ScorecardTitel>
+        <ScorecardTitel>{getTotal("par")}</ScorecardTitel>
+        <ScorecardTitel></ScorecardTitel>
+        <ScorecardTitel>{getTotal("dist1")}</ScorecardTitel>
+        <ScorecardTitel>{getTotal("dist2")}</ScorecardTitel>
+        <ScorecardTitel>{getTotal("dist3")}</ScorecardTitel>
+        <ScorecardTitel>{getTotal("dist4")}</ScorecardTitel>
+      </ScorecardTotalRow>
+    </Scorecard>
   );
 };
 

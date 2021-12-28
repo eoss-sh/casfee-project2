@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { fetchMultiScores } from "./scoresSlice";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../helpers/hooks";
-import { MainLinkText } from "../../styles/buttons";
 import SmallHero from "../../components/SmallHero";
 import { SingleScore, ScoresContainer } from "../../styles/scores";
 

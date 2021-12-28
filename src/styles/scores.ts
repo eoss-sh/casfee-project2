@@ -27,6 +27,11 @@ export const SingleScore = styled(Link)`
   }
 `;
 
+export const BestScore = styled.section`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+`;
+
 export const HoleList = styled.section`
   ${ContainerStyles}
   display: flex;

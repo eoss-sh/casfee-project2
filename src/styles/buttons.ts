@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import {NavLink, Link} from 'react-router-dom'
+import styled from "styled-components";
+import { NavLink, Link } from "react-router-dom";
 
 const baseButtonStyle = `
     padding: 10px 30px;
@@ -29,34 +29,41 @@ const secondaryButtonStyle = `
 `;
 
 export const MainButton = styled.button`
-    ${baseButtonStyle}
-    ${mainButtonStyle}
+  ${baseButtonStyle}
+  ${mainButtonStyle}
 `;
 export const SecondaryButton = styled.button`
   ${baseButtonStyle}
   ${secondaryButtonStyle}
 `;
 export const MainLink = styled.a`
-    ${baseButtonStyle}
-    ${mainButtonStyle}
+  ${baseButtonStyle}
+  ${mainButtonStyle}
 `;
 export const SecondaryLink = styled.a`
   ${baseButtonStyle}
   ${secondaryButtonStyle}
 `;
+export const NaviLink = styled(NavLink)`
+  color: var(--white);
+  text-decoration: none;
+  :hover {
+    color: var(--yellow);
+  }
+`;
 export const NavButtonLink = styled(NavLink)`
-    ${baseButtonStyle}
-    ${mainButtonStyle}
+  ${baseButtonStyle}
+  ${mainButtonStyle}
 `;
 export const NavButtonLinkSecondary = styled(NavLink)`
-    ${baseButtonStyle}
-    ${secondaryButtonStyle}
+  ${baseButtonStyle}
+  ${secondaryButtonStyle}
 `;
 export const MainLinkText = styled(Link)`
-    text-decoration: none;
-    color: var(--dark-blue);
-`
+  text-decoration: none;
+  color: var(--dark-blue);
+`;
 export const SecondaryLinkText = styled(Link)`
-    text-decoration: none;
-    color: var(--yellow);
-`
+  text-decoration: none;
+  color: var(--yellow);
+`;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { useAppSelector } from "../../helpers/hooks";
 import { fetchCoursesList } from "../courses/coursesSlice";
 import { useDispatch } from "react-redux";
@@ -6,10 +7,21 @@ import { fetchCourse } from "../singleCourse/singleCourseSlice";
 import { ScorecardEntry } from "../../interfaces/scores";
 import { database } from "../../config/firebase";
 import logging from "../../config/logging";
-import { FormContainer, Input } from "../../styles/forms";
-import { ScorecardRow, Scorecard } from "../../styles/scorecard";
+import {
+  CourseSelector,
+  FormContainer,
+  Input,
+  Selectors,
+} from "../../styles/forms";
+import {
+  ScorecardRow,
+  Scorecard,
+  ScorecardTitelRow,
+  ScorecardTitel,
+} from "../../styles/scorecard";
 import { Container } from "../../styles/styles";
 import { MainButton } from "../../styles/buttons";
+import SmallHero from "../../components/SmallHero";
 
 interface ScoreInputsInterface {
   [key: string]: ScorecardEntry;
@@ -17,6 +29,7 @@ interface ScoreInputsInterface {
 
 const AddScore = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const courses = useAppSelector((state) => state.courses.courses);
   const user = useAppSelector((state) => state.auth.user);
   const course = useAppSelector((state) => state.course.course);
@@ -84,6 +97,7 @@ const AddScore = () => {
           .collection("scorecard")
           .add({ ...score, holeNo: parseInt(no, 10) });
       }
+      history.push("/scores");
     } catch (error) {
       logging.error(error);
     }
@@ -94,82 +108,105 @@ const AddScore = () => {
   }, [dispatch]);
 
   return (
-    <FormContainer>
-      Los gehts!
-      <select
-        name="course"
-        id="course"
-        onChange={(e) => setDistance(e.target.value)}
-      >
-        <option value="dist1">Mens Champions</option>
-        <option value="dist2">Mens Medal</option>
-        <option value="dist3">Women Champions</option>
-        <option value="dist4">Women Medal</option>
-      </select>
-      <select
-        name="distance"
-        id="distance"
-        onChange={(e) => handleSetSelectedCourse(e, e.target.value)}
-      >
-        {courses.map((course) => (
-          <option key={course.course.uid} value={course.course.uid}>
-            {course.course.name}
-          </option>
-        ))}
-      </select>
+    <>
+      <SmallHero
+        title="Los geht's!"
+        subtitle="Platz und Tee auswählen - und loslegen."
+      />
       <Container>
-        <Scorecard>
-          {course.holes?.map((hole, index) => {
-            return (
-              <ScorecardRow key={index}>
-                <p>{hole.no}</p>
-                <p>{hole.par}</p>
-                <p>{hole.hcp}</p>
-                {distance === "dist1" && <p>{hole.dist1}</p>}
-                {distance === "dist2" && <p>{hole.dist2}</p>}
-                {distance === "dist3" && <p>{hole.dist3}</p>}
-                {distance === "dist4" && <p>{hole.dist4}</p>}
-                <Input
-                  large
-                  type="number"
-                  name="score"
-                  placeholder="Score"
-                  onChange={(e) => handleScoreChange(e, hole.no as number)}
-                  value={scorecard?.[hole.no as number]?.score || 0}
-                />
-                <Input
-                  large
-                  type="number"
-                  name="putts"
-                  placeholder="Putts"
-                  onChange={(e) => handleScoreChange(e, hole.no as number)}
-                  value={scorecard?.[hole.no as number]?.putts || 0}
-                />
-                <select
-                  name="gir"
-                  onChange={(e) => handleScoreChange(e, hole.no as number)}
-                  value={scorecard?.[hole.no as number]?.gir}
-                >
-                  <option value="na">Wählen</option>
-                  <option value="true">Ja</option>
-                  <option value="false">Nein</option>
-                </select>
-                <select
-                  name="fir"
-                  onChange={(e) => handleScoreChange(e, hole.no as number)}
-                  value={scorecard?.[hole.no as number]?.fairway}
-                >
-                  <option value="na">Wählen</option>
-                  <option value="true">Ja</option>
-                  <option value="false">Nein</option>
-                </select>
-              </ScorecardRow>
-            );
-          })}
-          <MainButton onClick={() => addScore()}>Submit Score</MainButton>
-        </Scorecard>
+        <Selectors>
+          <CourseSelector
+            name="course"
+            id="course"
+            onChange={(e) => setDistance(e.target.value)}
+          >
+            <option disabled selected value="">
+              -- Distanz auswählen --
+            </option>
+            <option value="dist1">Mens Champions</option>
+            <option value="dist2">Mens Medal</option>
+            <option value="dist3">Women Champions</option>
+            <option value="dist4">Women Medal</option>
+          </CourseSelector>
+          <CourseSelector
+            name="distance"
+            id="distance"
+            onChange={(e) => handleSetSelectedCourse(e, e.target.value)}
+          >
+            <option disabled selected value="">
+              -- Kurs auswählen --
+            </option>
+            {courses.map((course) => (
+              <option key={course.course.uid} value={course.course.uid}>
+                {course.course.name}
+              </option>
+            ))}
+          </CourseSelector>
+        </Selectors>
+        <FormContainer>
+          <Scorecard>
+            <ScorecardTitelRow columnsAmount={8}>
+              <ScorecardTitel showMobile={true}>No.</ScorecardTitel>
+              <ScorecardTitel showMobile={true}>Par</ScorecardTitel>
+              <ScorecardTitel showMobile={true}>HCP</ScorecardTitel>
+              <ScorecardTitel showMobile={true}>Distanz</ScorecardTitel>
+              <ScorecardTitel showMobile={false}>Score</ScorecardTitel>
+              <ScorecardTitel showMobile={false}>Putts</ScorecardTitel>
+              <ScorecardTitel showMobile={false}>GIR</ScorecardTitel>
+              <ScorecardTitel showMobile={false}>FIR</ScorecardTitel>
+            </ScorecardTitelRow>
+            {course.holes?.map((hole, index) => {
+              return (
+                <ScorecardRow key={index} columnsAmount={8}>
+                  <p>{hole.no}</p>
+                  <p>{hole.par}</p>
+                  <p>{hole.hcp}</p>
+                  {distance === "dist1" && <p>{hole.dist1}</p>}
+                  {distance === "dist2" && <p>{hole.dist2}</p>}
+                  {distance === "dist3" && <p>{hole.dist3}</p>}
+                  {distance === "dist4" && <p>{hole.dist4}</p>}
+                  <Input
+                    large
+                    type="number"
+                    name="score"
+                    placeholder="Score"
+                    onChange={(e) => handleScoreChange(e, hole.no as number)}
+                    value={scorecard?.[hole.no as number]?.score || 0}
+                  />
+                  <Input
+                    large
+                    type="number"
+                    name="putts"
+                    placeholder="Putts"
+                    onChange={(e) => handleScoreChange(e, hole.no as number)}
+                    value={scorecard?.[hole.no as number]?.putts || 0}
+                  />
+                  <select
+                    name="gir"
+                    onChange={(e) => handleScoreChange(e, hole.no as number)}
+                    value={scorecard?.[hole.no as number]?.gir}
+                  >
+                    <option value="na">Wählen</option>
+                    <option value="true">Ja</option>
+                    <option value="false">Nein</option>
+                  </select>
+                  <select
+                    name="fir"
+                    onChange={(e) => handleScoreChange(e, hole.no as number)}
+                    value={scorecard?.[hole.no as number]?.fairway}
+                  >
+                    <option value="na">Wählen</option>
+                    <option value="true">Ja</option>
+                    <option value="false">Nein</option>
+                  </select>
+                </ScorecardRow>
+              );
+            })}
+            <MainButton onClick={() => addScore()}>Submit Score</MainButton>
+          </Scorecard>
+        </FormContainer>
       </Container>
-    </FormContainer>
+    </>
   );
 };
 

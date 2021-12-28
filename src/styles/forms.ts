@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { device } from "./grid";
 
 interface InputProps {
   large?: boolean;
@@ -9,7 +10,7 @@ export const FormContainer = styled.section`
   display: flex;
   flex-flow: column;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   height: 100%;
   width: 100%;
   padding: 2%;
@@ -57,4 +58,20 @@ export const InputRow = styled.section`
   position: relative;
   width: 100%;
   padding-left: 5%;
+`;
+
+export const Selectors = styled.section`
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+  margin: 5% 0;
+
+  @media ${device.l} {
+    flex-flow: row wrap;
+  }
+`;
+export const CourseSelector = styled.select`
+  padding: 1%;
+  min-height: 2rem;
+  margin-bottom: 5%;
 `;

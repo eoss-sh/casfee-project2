@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components"
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 /*---- RESETS ----*/
@@ -19,7 +19,8 @@ p,
 figure,
 blockquote,
 dl,
-dd {
+dd, 
+ul {
   margin: 0;
 }
 
@@ -126,6 +127,15 @@ input[type='file']{
   display: none;
 }
 
+// Selects
+select {
+  border: none;
+  background-color: lightgray;
+  border-radius: 30px;
+  padding-left: 1%;
+}
+option {
+  padding-left: 2%;
+}
 `;
-
 export default GlobalStyle;

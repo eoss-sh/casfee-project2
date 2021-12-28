@@ -31,7 +31,7 @@ const ScoreCard = ({ id }: scoreCardProps) => {
   return (
     <Container>
       <Scorecard>
-        <ScorecardTitelRow>
+        <ScorecardTitelRow columnsAmount={7}>
           <ScorecardTitel>No.</ScorecardTitel>
           <ScorecardTitel>Par</ScorecardTitel>
           <ScorecardTitel>HCP</ScorecardTitel>
@@ -42,7 +42,7 @@ const ScoreCard = ({ id }: scoreCardProps) => {
         </ScorecardTitelRow>
         {data.course.holes?.map((hole, index) => {
           return (
-            <ScorecardRow key={index}>
+            <ScorecardRow key={index} columnsAmount={7}>
               <p>{hole.no}</p>
               <p>{hole.par}</p>
               <p>{hole.hcp}</p>
@@ -53,7 +53,7 @@ const ScoreCard = ({ id }: scoreCardProps) => {
             </ScorecardRow>
           );
         })}
-        <ScorecardTotalRow>
+        <ScorecardTotalRow columnsAmount={7}>
           <ScorecardTitel></ScorecardTitel>
           <ScorecardTitel>{getTotal("par")}</ScorecardTitel>
           <ScorecardTitel></ScorecardTitel>

@@ -8,7 +8,6 @@ import {
   ScorecardTitelRow,
   ScorecardTotalRow,
 } from "../../styles/scorecard";
-import { Container } from "../../styles/styles";
 import { fetchCourse } from "./singleCourseSlice";
 interface scoreCardProps {
   id: string;

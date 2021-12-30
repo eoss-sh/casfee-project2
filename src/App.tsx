@@ -7,12 +7,12 @@ import {
   RouteComponentProps,
 } from "react-router-dom";
 import { auth } from "./config/firebase";
-import { login, logout } from "./features/auth/authSlice";
+import { login, logout } from "./features/Auth/authSlice";
 import GlobalStyle from "./styles/global";
 import Header from "./features/Header/Header";
 import routes from "./config/routes";
 import AuthRoute from "./components/AuthRoute";
-import { getAdditionalUserInfo } from "./features/auth/authApi";
+import { getAdditionalUserInfo } from "./features/Auth/authApi";
 
 const App = () => {
   const dispatch = useDispatch();

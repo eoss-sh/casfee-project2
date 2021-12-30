@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { fetchMultiScores } from "./scoresSlice";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../helpers/hooks";
@@ -11,7 +11,15 @@ const Scores = () => {
   const currentUser = useAppSelector((state) => state.auth.user);
 
   useEffect(() => {
-    dispatch(fetchMultiScores({ attribute: "appUser", id: currentUser.uid }));
+    dispatch(
+      fetchMultiScores({
+        attribute: "appUser",
+        id: currentUser.uid,
+        order: "date",
+        limit: 100,
+        direction: "desc",
+      })
+    );
   }, [dispatch, currentUser.uid]);
 
   return (
@@ -19,9 +27,10 @@ const Scores = () => {
       <SmallHero title="Scores" subtitle="See your scores" />
       <ScoresContainer>
         {scores.map((score) => {
+          const roundDate = score.date?.toDate().toLocaleDateString();
           return (
             <SingleScore key={score.id} to={`singlescore/${score.id}`}>
-              <p>Datum: {score.date}</p>
+              <p>Date: {roundDate}</p>
               <p>Course: {score.course}</p>
               <p>Score: {score.score}</p>
               <p>Putts: {score.totalPutts}</p>

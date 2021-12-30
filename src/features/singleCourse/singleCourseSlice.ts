@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import singelCourse, { hole } from "../../interfaces/course";
 //[ToDo]: Rename the Function
-import { getAdditionalUserInfo } from "../auth/authApi";
+import { getAdditionalUserInfo } from "../Auth/authApi";
 import { fetchHolesPerCourse } from "./courseAPI";
 
 const initialState: singelCourse = {

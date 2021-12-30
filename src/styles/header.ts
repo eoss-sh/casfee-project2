@@ -50,7 +50,10 @@ export const MainNavLink = styled.li`
 
 export const MainNavProfileImage = styled.img`
   height: 50px;
+  width: 50px;
   border-radius: 50%;
+  object-fit: cover;
+  background-color: var(--yellow);
 `;
 
 export const MobileNav = styled.nav`

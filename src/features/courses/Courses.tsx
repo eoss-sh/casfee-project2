@@ -4,7 +4,7 @@ import { useAppSelector } from "../../helpers/hooks";
 import { fetchCoursesList } from "./coursesSlice";
 import Hero from "../../components/Hero";
 import image from "./images/course1.jpg";
-import SingleCourseCard from "../singleCourse/singleCourseCard";
+import SingleCourseCard from "../SingleCourse/singleCourseCard";
 import { CourseListe } from "../../styles/courses";
 import { Container } from "../../styles/styles";
 

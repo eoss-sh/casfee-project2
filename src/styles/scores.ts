@@ -29,7 +29,7 @@ export const SingleScore = styled(Link)`
 
 export const BestScore = styled.section`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
 `;
 
 export const HoleList = styled.section`
@@ -48,4 +48,10 @@ export const Hole = styled.article`
   height: 50px;
   padding-left: 70px;
   margin-bottom: 2%;
+`;
+
+export const TrophyIcon = styled.h1`
+  font-size: 5rem;
+  text-align: center;
+  color: var(--yellow);
 `;

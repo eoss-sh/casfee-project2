@@ -3,7 +3,6 @@ import { useAppSelector } from "../../helpers/hooks";
 import { NavLink } from "react-router-dom";
 import { Container } from "../../styles/styles";
 import {
-  MainLink,
   NavButtonLink,
   NavButtonLinkSecondary,
   NaviLink,
@@ -74,6 +73,9 @@ export default function Header() {
                 <>
                   <MainNavLink>
                     <NaviLink to="/scores">Scores</NaviLink>
+                  </MainNavLink>
+                  <MainNavLink>
+                    <NaviLink to="/statistics">Statistik</NaviLink>
                   </MainNavLink>
                   {screenWidth > 768 && (
                     <MainNavLink>

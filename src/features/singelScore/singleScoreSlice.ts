@@ -7,7 +7,14 @@ import Score from "../../interfaces/scores";
 import logging from "../../config/logging";
 
 const initialState: Score = {
-  score: { id: "", course: "", score: 0, user: "", date: "", scorecard: [] },
+  score: {
+    id: "",
+    course: "",
+    score: 0,
+    appUser: "",
+    date: new Date(),
+    scorecard: [],
+  },
 };
 
 // Fetches one single score with a specific ID

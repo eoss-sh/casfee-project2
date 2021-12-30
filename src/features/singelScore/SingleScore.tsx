@@ -23,7 +23,7 @@ const SingleScore = () => {
   return (
     <>
       <SmallHero
-        title={`Runde im ${singleScore.score.course}`}
+        title={`Runde im ${singleScore.score?.course}`}
         subtitle={`gespielt am ${singleScore.score.date}`}
       />
       <StatsCotainer>
@@ -41,7 +41,7 @@ const SingleScore = () => {
       <HoleList>
         {singleScore.score.scorecard?.map((hole) => {
           return (
-            <Hole>
+            <Hole key={hole.holeNo}>
               <Icon>{hole.holeNo}</Icon>
               <p>Putts: {hole.putts}</p>
               <p>Score: {hole.score}</p>

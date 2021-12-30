@@ -4,14 +4,16 @@ export default interface Score {
     course?: string;
     score?: number;
     totalPutts?: number;
-    date?: string;
-    user?: string;
+    date?: any;
+    appUser?: string;
     scorecard?: ScorecardEntry[];
   };
 }
 
 export interface Scores {
   scores: ScoreOverview[];
+  averageScore: number;
+  averagePutts: number;
 }
 
 export interface ScorecardEntry {
@@ -26,8 +28,8 @@ export interface ScorecardEntry {
 export interface ScoreOverview {
   id?: string;
   course?: string;
-  score?: number;
-  date?: string;
-  user?: string;
-  totalPutts?: number;
+  score: number;
+  date?: any;
+  appUser: string;
+  totalPutts: number;
 }

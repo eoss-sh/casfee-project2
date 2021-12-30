@@ -16,13 +16,16 @@ const RegisterPage = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirm, setConfirm] = useState<string>("");
-  const [hcp, setHcp] = useState<number>();
+  const [hcp, setHcp] = useState<number>(0);
   const [image, setImage] = useState<File>();
-  const [url, setUrl] = useState<String>("");
+  const [url, setUrl] = useState<String>(
+    "https://firebasestorage.googleapis.com/v0/b/birdiebook-c8af5.appspot.com/o/golfer-gd2c89f964_1280.png?alt=media&token=9489c1f6-1ead-481a-a9a3-8442551e8071"
+  );
+  const [name, setName] = useState<string>("Anonymer User");
   const [error, setError] = useState<string>("");
 
   const history = useHistory();
-  const types = ["image/png", "image/jpeg"];
+  const types = ["image/png", "image/jpeg", "image/jpg"];
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && types.includes(event.target.files[0].type)) {
@@ -45,6 +48,7 @@ const RegisterPage = () => {
         return database.collection("appUser").doc(result.user?.uid).set({
           hcp,
           url,
+          name,
         });
       })
       .then((result) => {
@@ -98,6 +102,15 @@ const RegisterPage = () => {
           placeholder="Passwort bestätigen"
           onChange={(event) => setConfirm(event.target.value)}
           value={confirm}
+        />
+        <Input
+          large
+          type="text"
+          name="name"
+          id="name"
+          placeholder="Name"
+          onChange={(event) => setName(event.target.value)}
+          value={name}
         />
         <Input
           large

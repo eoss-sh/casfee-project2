@@ -5,7 +5,7 @@ import Hero from "../../components/Hero";
 import { useAppSelector } from "../../helpers/hooks";
 import ScoreCard from "./scoreCard";
 import { fetchCourse } from "./singleCourseSlice";
-import BestScores from "../scores/BestScores";
+import BestScores from "../Scores/BestScores";
 import ParamTypes from "../../interfaces/params";
 import {
   CourseDescription,

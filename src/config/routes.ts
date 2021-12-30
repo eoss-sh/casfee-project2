@@ -1,14 +1,15 @@
 import IRoute from "../interfaces/route";
-import RegisterPage from "../features/auth/register";
-import LoginPage from "../features/auth/login";
+import RegisterPage from "../features/Auth/register";
+import LoginPage from "../features/Auth/login";
 import HomePage from "../pages/home";
-import ForgotPwPage from "../features/auth/forgot";
+import ForgotPwPage from "../features/Auth/forgot";
 import ProfilePage from "../pages/profile";
-import SingleCourse from "../features/singleCourse/singleCourse";
+import SingleCourse from "../features/SingleCourse/singleCourse";
 import AddCoursePage from "../pages/kurs-erfassen";
-import Scores from "../features/scores/Scores";
-import AddScore from "../features/singelScore/AddScore";
-import SingleScore from "../features/singelScore/SingleScore";
+import Scores from "../features/Scores/Scores";
+import AddScore from "../features/SingelScore/AddScore";
+import SingleScore from "../features/SingelScore/SingleScore";
+import Statistics from "../features/Statistics/Statistics";
 
 const routes: IRoute[] = [
   {
@@ -78,6 +79,13 @@ const routes: IRoute[] = [
     path: "/singlescore/:id",
     name: "Single Score Page",
     component: SingleScore,
+    exact: true,
+    protected: false,
+  },
+  {
+    path: "/statistics",
+    name: "Statistics Page",
+    component: Statistics,
     exact: true,
     protected: false,
   },

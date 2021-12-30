@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useAppSelector } from "../../helpers/hooks";
-import { fetchCoursesList } from "../courses/coursesSlice";
+import { fetchCoursesList } from "../Courses/coursesSlice";
 import { useDispatch } from "react-redux";
-import { fetchCourse } from "../singleCourse/singleCourseSlice";
+import { fetchCourse } from "../SingleCourse/singleCourseSlice";
 import { ScorecardEntry } from "../../interfaces/scores";
 import { database } from "../../config/firebase";
 import logging from "../../config/logging";
@@ -80,8 +80,7 @@ const AddScore = () => {
   const addScore = async () => {
     const date = new Date();
     const score = {
-      date:
-        date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear(),
+      date: date,
       course: course.name,
       appUser: user.uid,
       score: getTotalScore("score"),

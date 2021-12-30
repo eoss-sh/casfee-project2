@@ -137,5 +137,7 @@ select {
 option {
   padding-left: 2%;
 }
+
 `;
+
 export default GlobalStyle;

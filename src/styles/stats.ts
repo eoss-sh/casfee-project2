@@ -6,7 +6,7 @@ export const StatsCotainer = styled.section`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin: 5%;
+  padding: 5% 0;
 `;
 
 export const Stat = styled.article`
@@ -25,4 +25,12 @@ export const StatNumber = styled.h1`
   font-size: 2rem;
   color: var(--dark-grey);
   text-align: center;
+`;
+
+export const ChartContainer = styled.section`
+  ${ContainerStyles}
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
 `;

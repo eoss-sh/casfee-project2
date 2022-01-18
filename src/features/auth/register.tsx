@@ -21,7 +21,7 @@ const RegisterPage = () => {
   const [url, setUrl] = useState<String>(
     "https://firebasestorage.googleapis.com/v0/b/birdiebook-c8af5.appspot.com/o/golfer-gd2c89f964_1280.png?alt=media&token=9489c1f6-1ead-481a-a9a3-8442551e8071"
   );
-  const [name, setName] = useState<string>("Anonymer User");
+  const [name, setName] = useState<string>("");
   const [error, setError] = useState<string>("");
 
   const history = useHistory();
@@ -37,6 +37,13 @@ const RegisterPage = () => {
     if (password !== confirm) {
       setError("Die eingegebenen Passwörter stimmen nicht überein.");
       return;
+    }
+    if (name === "") {
+      setError("Bitte gib deinen Namen an.");
+      return;
+    }
+    if (hcp > 45) {
+      setError("Bitte gib ein korrektes Handicap an.");
     }
     if (error !== "") setError("");
 

@@ -31,6 +31,7 @@ const secondaryButtonStyle = `
 export const MainButton = styled.button`
   ${baseButtonStyle}
   ${mainButtonStyle}
+  width: 30%;
 `;
 export const SecondaryButton = styled.button`
   ${baseButtonStyle}

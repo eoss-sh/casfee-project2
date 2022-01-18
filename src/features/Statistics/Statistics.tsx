@@ -53,13 +53,12 @@ const Statistics = () => {
       <StatsCotainer>
         <Stat>
           <StatNumber>
-            <FaTrophy /> {averageScore}
+            <FaTrophy /> {averageScore ? averageScore : "-"}
           </StatNumber>
         </Stat>
         <Stat>
-          <StatNumber>
-            <GiGolfFlag /> {averagePutts}
-          </StatNumber>
+          <GiGolfFlag /> {averagePutts ? averagePutts : "-"}
+          <StatNumber></StatNumber>
         </Stat>
       </StatsCotainer>
       <ChartContainer>

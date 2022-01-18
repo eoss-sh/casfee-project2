@@ -90,6 +90,7 @@ select {
   --black: #000;
   --dark-grey: #5f5e5e;
   --light-grey: #e5e5e5;
+  --error: #f54242
 }
 
 /*-- Global Styles --*/

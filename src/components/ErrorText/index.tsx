@@ -1,16 +1,16 @@
-import React from 'react'; 
-import { SmallText } from '../../styles/type';
+import React from "react";
+import { SmallText } from "../../styles/type";
 
-export interface ErrorTextProps { 
-    error: string,
+export interface ErrorTextProps {
+  error: string;
 }
 
-const ErrorText = (props: ErrorTextProps) => { 
-    const { error } = props;
+const ErrorText = (props: ErrorTextProps) => {
+  const { error } = props;
 
-    if (error === '') return null; 
+  if (error === "") return null;
 
-    return <SmallText>{error}</SmallText>;
-}
+  return <SmallText errorString>{error}</SmallText>;
+};
 
 export default ErrorText;

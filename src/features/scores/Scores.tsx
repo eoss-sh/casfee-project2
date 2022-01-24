@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../helpers/hooks";
 import SmallHero from "../../components/SmallHero";
 import { SingleScore, ScoresContainer } from "../../styles/scores";
+import { Link } from "react-router-dom";
 
 const Scores = () => {
   const dispatch = useDispatch();
@@ -29,12 +30,16 @@ const Scores = () => {
         {scores.map((score) => {
           const roundDate = score.date?.toDate().toLocaleDateString();
           return (
-            <SingleScore key={score.id} to={`singlescore/${score.id}`}>
-              <p>Date: {roundDate}</p>
-              <p>Course: {score.course}</p>
-              <p>Score: {score.score}</p>
-              <p>Putts: {score.totalPutts}</p>
-            </SingleScore>
+            <>
+              <SingleScore key={score.id} to={`singlescore/${score.id}`}>
+                <p>Date: {roundDate}</p>
+                <p>Course: {score.course}</p>
+                <p>Score: {score.score}</p>
+                <p>Putts: {score.totalPutts}</p>
+                <p>FIR: {score.totalFIR}</p>
+                <p>GIR: {score.totalGIR}</p>
+              </SingleScore>
+            </>
           );
         })}
       </ScoresContainer>

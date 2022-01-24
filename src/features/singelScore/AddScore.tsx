@@ -33,7 +33,6 @@ const AddScore = () => {
   const courses = useAppSelector((state) => state.courses.courses);
   const user = useAppSelector((state) => state.auth.user);
   const course = useAppSelector((state) => state.course.course);
-
   const [distance, setDistance] = useState("");
   const [scorecard, setScorecard] = useState<ScoreInputsInterface>({});
 
@@ -47,17 +46,13 @@ const AddScore = () => {
 
   // Function to change to current scorecard by the user
   const handleScoreChange = (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLSelectElement>,
+    e: React.ChangeEvent<HTMLInputElement>,
     no: number
   ) => {
-    const { name, value } = e.target;
+    const { name, value, checked } = e.target;
     setScorecard((prev) => {
       const valueType =
-        name === "fir" || name === "gir"
-          ? value === "true"
-          : parseInt(value, 10);
+        name === "fir" || name === "gir" ? checked : parseInt(value, 10);
       if (prev === null) {
         return { [no]: { [name]: valueType } };
       }
@@ -76,6 +71,13 @@ const AddScore = () => {
     );
   };
 
+  // Function to get Total of GIR an FIR
+  const getTotalIR = (attribute: string) => {
+    return Object.values(scorecard).filter(
+      (hole: any) => hole[attribute] === true
+    ).length;
+  };
+
   // Function to add a new scorecard to the database
   const addScore = async () => {
     const date = new Date();
@@ -85,6 +87,8 @@ const AddScore = () => {
       appUser: user.uid,
       score: getTotalScore("score"),
       totalPutts: getTotalScore("putts"),
+      totalGIR: getTotalIR("gir"),
+      totalFIR: getTotalIR("fir"),
     };
     logging.info(score);
     try {
@@ -180,24 +184,18 @@ const AddScore = () => {
                     onChange={(e) => handleScoreChange(e, hole.no as number)}
                     value={scorecard?.[hole.no as number]?.putts || 0}
                   />
-                  <select
+                  <input
+                    type="checkbox"
                     name="gir"
                     onChange={(e) => handleScoreChange(e, hole.no as number)}
-                    value={scorecard?.[hole.no as number]?.gir}
-                  >
-                    <option value="na">Wählen</option>
-                    <option value="true">Ja</option>
-                    <option value="false">Nein</option>
-                  </select>
-                  <select
+                    checked={scorecard?.[hole.no as number]?.gir}
+                  />
+                  <input
+                    type="checkbox"
                     name="fir"
                     onChange={(e) => handleScoreChange(e, hole.no as number)}
-                    value={scorecard?.[hole.no as number]?.fairway}
-                  >
-                    <option value="na">Wählen</option>
-                    <option value="true">Ja</option>
-                    <option value="false">Nein</option>
-                  </select>
+                    checked={scorecard?.[hole.no as number]?.fir}
+                  />
                 </ScorecardRow>
               );
             })}

@@ -26,6 +26,8 @@ const Statistics = () => {
   const currentUser = useAppSelector((state) => state.auth.user);
   const averagePutts = useAppSelector((state) => state.scores.averagePutts);
   const averageScore = useAppSelector((state) => state.scores.averageScore);
+  const averageGIR = useAppSelector((state) => state.scores.averageGIR);
+  const averageFIR = useAppSelector((state) => state.scores.averageFIR);
   const scores = useAppSelector((state) => state.scores.scores);
 
   useEffect(() => {
@@ -58,6 +60,14 @@ const Statistics = () => {
         </Stat>
         <Stat>
           <GiGolfFlag /> {averagePutts ? averagePutts : "-"}
+          <StatNumber></StatNumber>
+        </Stat>
+        <Stat>
+          <GiGolfFlag /> {averageGIR ? averageGIR : "-"}
+          <StatNumber></StatNumber>
+        </Stat>
+        <Stat>
+          <GiGolfFlag /> {averageFIR ? averageFIR : "-"}
           <StatNumber></StatNumber>
         </Stat>
       </StatsCotainer>

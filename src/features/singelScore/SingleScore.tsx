@@ -3,50 +3,29 @@ import { useParams } from "react-router-dom";
 import { fetchSingleScore } from "./singleScoreSlice";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../helpers/hooks";
+import { updateScore, updateSingleScore } from "./singleScoreSlice";
 import ParamTypes from "../../interfaces/params";
 import SmallHero from "../../components/SmallHero";
 import { HoleList, Hole } from "../../styles/scores";
 import { Icon } from "../../styles/elements";
 import { StatsCotainer, Stat, StatNumber } from "../../styles/stats";
 import { FaTrophy } from "react-icons/fa";
-import { GiGolfFlag } from "react-icons/gi";
+import { GiCondorEmblem, GiGolfFlag } from "react-icons/gi";
 import { MdModeEditOutline } from "react-icons/md";
 import { Container } from "../../styles/styles";
-import { ScorecardEntry } from "../../interfaces/scores";
 
 const SingleScore = () => {
   const { id } = useParams<ParamTypes>();
   const dispatch = useDispatch();
   const singleScore = useAppSelector((state) => state.singleScore);
 
-  const [dirty, setDirty] = useState(false);
-  const [scorecard, setScorecard] = useState<ScorecardEntry[]>(
-    singleScore.score.scorecard
-  );
-
-  const handleUpdate = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    no: number = 0
-  ) => {
-    setDirty(true);
-    console.log(no);
-    setScorecard((scorecard) => {
-      console.log(scorecard);
-      return {
-        ...scorecard,
-        [no]: { ...scorecard?.[no], [e.target.name]: e.target.value },
-      };
-    });
-    console.log(scorecard);
+  const submitUpdate = () => {
+    dispatch(updateSingleScore({ id: id, data: singleScore.score.scorecard }));
   };
 
   useEffect(() => {
     dispatch(fetchSingleScore(id));
   }, [dispatch, id]);
-
-  useEffect(() => {
-    setScorecard(singleScore.score.scorecard);
-  }, [singleScore.score.scorecard]);
 
   return (
     <>
@@ -78,26 +57,31 @@ const SingleScore = () => {
       </StatsCotainer>
       <Container>
         <HoleList>
-          {singleScore.score.scorecard?.map((hole) => {
+          {singleScore.score.scorecard?.map((hole, index) => {
             return (
-              <Hole key={hole.holeNo}>
+              <Hole key={index}>
                 <Icon>{hole.holeNo}</Icon>
                 <p>
                   Putts:
                   <input
+                    type="number"
                     value={hole.putts}
                     name="putts"
-                    onChange={(e) => handleUpdate(e, hole.holeNo)}
+                    onChange={(e) =>
+                      dispatch(
+                        updateScore({ index, value: e.target.valueAsNumber })
+                      )
+                    }
                   />
                 </p>
                 <p>Score: {hole.score}</p>
-                <p>GIR: {hole.gir ? "yes" : "NO"}</p>
+                <p>GIR: {hole.gir ? "yes" : "no"}</p>
                 <p>FIR: {hole.fir ? "yes" : "NO"}</p>
-                {dirty && <MdModeEditOutline />}
               </Hole>
             );
           })}
         </HoleList>
+        <button onClick={submitUpdate}>Update</button>
       </Container>
     </>
   );

@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../helpers/hooks";
 import SmallHero from "../../components/SmallHero";
 import { SingleScore, ScoresContainer } from "../../styles/scores";
-import { Link } from "react-router-dom";
 
 const Scores = () => {
   const dispatch = useDispatch();

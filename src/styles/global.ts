@@ -95,11 +95,7 @@ select {
 
 /*-- Global Styles --*/
 
-body {
-  font-family: 'Poppins', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+
 
 // Typography
 h1 {

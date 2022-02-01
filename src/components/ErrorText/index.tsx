@@ -1,4 +1,3 @@
-import React from "react";
 import { SmallText } from "../../styles/type";
 
 export interface ErrorTextProps {

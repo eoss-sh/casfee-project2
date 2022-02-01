@@ -50,9 +50,6 @@ export const loginWithUsernameAndPassword = createAsyncThunk(
         url: additionalUserInfo?.data()?.url,
       };
     } catch (error) {
-      // To Check => this is not too good I guess...search js stringify error
-      // it has to be done so that we can compare the error to the firebase errormessages
-      // to render different Messages per Error
       const msg = error + "";
       let output: string = "";
       if (msg.includes("auth/invalid-email")) {

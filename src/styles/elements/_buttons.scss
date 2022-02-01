@@ -10,6 +10,9 @@
     &:hover {
       color: var(--light-blue);
     }
+    &__login {
+      width: 100%;
+    }
   }
   &-secondary {
     color: var(--dark-blue);

@@ -9,20 +9,6 @@ const GlobalStyle = createGlobalStyle`
   box-sizing: border-box;
 }
 
-/* Remove default margin */
-body,
-h1,
-h2,
-h3,
-h4,
-p,
-figure,
-blockquote,
-dl,
-dd, 
-ul {
-  margin: 0;
-}
 
 /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
 ul[role='list'],
@@ -96,33 +82,6 @@ select {
 /*-- Global Styles --*/
 
 
-
-// Typography
-h1 {
-  font-size: 3rem;
-}
-
-h2 {
-  font-size: 2.2rem;
-  margin-bottom: 0.5rem;
-}
-
-h3 {
-  font-size: 1.4rem;
-}
-
-h4 {
-  font-size: 1.2rem;
-}
-
-p {
-  font-size: 1rem;
-}
-
-// Inputs and Forms
-input[type='file']{
-  display: none;
-}
 
 // Selects
 select {

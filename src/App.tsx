@@ -10,6 +10,7 @@ import { auth } from "./config/firebase";
 import { login, logout } from "./features/Auth/authSlice";
 import GlobalStyle from "./styles/global";
 import Header from "./features/Header/Header";
+import Footer from "./components/Footer";
 import routes from "./config/routes";
 import AuthRoute from "./components/AuthRoute";
 import { getAdditionalUserInfo } from "./features/Auth/authApi";
@@ -64,6 +65,7 @@ const App = () => {
               );
             })}
           </Switch>
+          <Footer />
         </BrowserRouter>
       </div>
     </>

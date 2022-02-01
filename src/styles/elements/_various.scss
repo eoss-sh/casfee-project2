@@ -1,0 +1,20 @@
+.or-seperator {
+  display: flex;
+  align-items: center;
+  height: 5rem;
+  &:before {
+    content: "";
+    width: 50%;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.15);
+  }
+  &:after {
+    content: "";
+    width: 50%;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.15);
+  }
+  &__text {
+    padding: 0 1rem;
+  }
+}

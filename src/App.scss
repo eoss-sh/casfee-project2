@@ -1,9 +1,14 @@
 $theme-colors: (
   "primary": #3aaed8,
   "secondary": #fcca46,
+  "danger": #ff5b57,
 );
 
 @import "~bootstrap/scss/bootstrap";
 @import "./styles/elements/buttons";
+@import "./styles/elements/forms";
+@import "./styles/elements/various";
+@import "./styles/elements/footer";
 @import "./styles/layout/container";
 @import "./styles/global/typo";
+@import "./styles/features/auth";

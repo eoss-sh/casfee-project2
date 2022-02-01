@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 import ErrorText from "../../components/ErrorText";
-import TwoColumnImage from "../../components/TwoColumnImage";
 import Uploader from "../../components/Uploader";
 import { auth, database } from "../../config/firebase";
 import logging from "../../config/logging";
-import { MainButton, MainLinkText } from "../../styles/buttons";
-import { FormContainer, Input, Label } from "../../styles/forms";
-import { Icon } from "../../styles/elements";
-import { SmallText } from "../../styles/type";
-import introImage from "../../assets/login.jpg";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import { Alert } from "react-bootstrap";
 
 const RegisterPage = () => {
   const [registering, setRegistering] = useState<boolean>(false);
@@ -80,83 +78,86 @@ const RegisterPage = () => {
   };
 
   return (
-    <TwoColumnImage image={introImage}>
-      <FormContainer>
+    <div className="container">
+      <section className="form form-register">
         <h2>Registrierung</h2>
-        <Input
-          large
-          type="email"
-          name="email"
-          id="email"
-          placeholder="Email"
-          onChange={(event) => setEmail(event.target.value)}
-          value={email}
-        />
-        <Input
-          large
-          type="password"
-          name="password"
-          id="password"
-          placeholder="Passwort"
-          onChange={(event) => setPassword(event.target.value)}
-          value={password}
-        />
-        <Input
-          large
-          type="password"
-          name="confirm"
-          id="confirm"
-          placeholder="Passwort bestätigen"
-          onChange={(event) => setConfirm(event.target.value)}
-          value={confirm}
-        />
-        <Input
-          large
-          type="text"
-          name="name"
-          id="name"
-          placeholder="Name"
-          onChange={(event) => setName(event.target.value)}
-          value={name}
-        />
-        <Input
-          large
-          type="number"
-          step="0.1"
-          name="hcp"
-          id="hcp"
-          placeholder="Handicap"
-          onChange={(event) => setHcp(parseFloat(event.target.value))}
-          value={hcp}
-        />
-        <Label htmlFor="userImage">
-          <Icon>+</Icon>Bild hinzufügen
-        </Label>
-        <Input
-          large
-          type="file"
-          name="userImage"
-          id="userImage"
-          placeholder="Bild"
-          onChange={handleFileUpload}
-        />
-        {image && (
-          <Uploader image={image} setImage={setImage} setUrl={setUrl} />
-        )}
-        <MainButton
+        <Form.Group className="mb-3">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Email"
+            onChange={(event) => setEmail(event.target.value)}
+            value={email}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Passwort</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Passwort"
+            onChange={(event) => setPassword(event.target.value)}
+            value={password}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Passwort wiederholen</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Passwort wiederholen"
+            onChange={(event) => setConfirm(event.target.value)}
+            value={confirm}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Name (empfohlen)</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Name"
+            onChange={(event) => setName(event.target.value)}
+            value={name}
+          />
+          <Form.Text className="text-muted">
+            Um Ihren User in Ranglisten zu erkennen, empfehlen wir Ihnen einen
+            Namen anzugeben.
+          </Form.Text>
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Handicap (empfohlen)</Form.Label>
+          <Form.Control
+            type="number"
+            step="0.1"
+            placeholder="Handicap"
+            onChange={(event) => setHcp(parseFloat(event.target.value))}
+            value={hcp}
+          />
+          <Form.Text className="text-muted">
+            Um Ihre Spielstärke in die Bewertung einzubeziehen, empfehlen wir
+            ein realistisches Handicap anzugeben.
+          </Form.Text>
+        </Form.Group>
+        <Form.Group controlId="formFile" className="mb-3">
+          <Form.Label>Profilbild</Form.Label>
+          <Form.Control type="file" onChange={handleFileUpload} />
+          {image && (
+            <Uploader image={image} setImage={setImage} setUrl={setUrl} />
+          )}
+        </Form.Group>
+        <Button
+          variant="primary"
+          className="btn-primary__login"
           disabled={registering}
           onClick={() => signUpWithEmailAndPassword()}
         >
           Anmelden
-        </MainButton>
-        <SmallText>
+        </Button>
+        <small>
           <p>
-            Bereits registriert? <MainLinkText to="/login">Login</MainLinkText>
+            Bereits registriert? <Link to="/login">Login</Link>
           </p>
-        </SmallText>
+        </small>
         <ErrorText error={error} />
-      </FormContainer>
-    </TwoColumnImage>
+      </section>
+    </div>
   );
 };
 

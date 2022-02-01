@@ -45,7 +45,7 @@ const LoginPage = () => {
       <Button variant="primary" onClick={() => logInEmailPassword()}>
         Anmelden
       </Button>
-      <small className="register">
+      <small>
         Noch nicht registriert?
         <Link to="/register">Jetzt registrieren!</Link>
       </small>

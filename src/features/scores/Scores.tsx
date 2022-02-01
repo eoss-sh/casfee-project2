@@ -29,12 +29,16 @@ const Scores = () => {
         {scores.map((score) => {
           const roundDate = score.date?.toDate().toLocaleDateString();
           return (
-            <SingleScore key={score.id} to={`singlescore/${score.id}`}>
-              <p>Date: {roundDate}</p>
-              <p>Course: {score.course}</p>
-              <p>Score: {score.score}</p>
-              <p>Putts: {score.totalPutts}</p>
-            </SingleScore>
+            <>
+              <SingleScore key={score.id} to={`singlescore/${score.id}`}>
+                <p>Date: {roundDate}</p>
+                <p>Course: {score.course}</p>
+                <p>Score: {score.score}</p>
+                <p>Putts: {score.totalPutts}</p>
+                <p>FIR: {score.totalFIR}</p>
+                <p>GIR: {score.totalGIR}</p>
+              </SingleScore>
+            </>
           );
         })}
       </ScoresContainer>

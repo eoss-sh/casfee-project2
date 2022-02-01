@@ -4,9 +4,11 @@ export default interface Score {
     course?: string;
     score?: number;
     totalPutts?: number;
+    totalFIR?: number;
+    totalGIR?: number;
     date?: any;
     appUser?: string;
-    scorecard?: ScorecardEntry[];
+    scorecard: ScorecardEntry[];
   };
 }
 
@@ -14,6 +16,8 @@ export interface Scores {
   scores: ScoreOverview[];
   averageScore: number;
   averagePutts: number;
+  averageGIR: number;
+  averageFIR: number;
 }
 
 export interface ScorecardEntry {
@@ -21,8 +25,8 @@ export interface ScorecardEntry {
   holeNo?: number;
   putts?: number;
   score?: number;
-  gir?: string;
-  fairway?: string;
+  gir?: boolean;
+  fir?: boolean;
 }
 
 export interface ScoreOverview {
@@ -32,4 +36,6 @@ export interface ScoreOverview {
   date?: any;
   appUser: string;
   totalPutts: number;
+  totalFIR: number;
+  totalGIR: number;
 }

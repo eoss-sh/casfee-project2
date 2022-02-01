@@ -2,9 +2,16 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   fetchSingleScoreFunc,
   fetchSingleScoreCardFunc,
+  updateSingleScoreCardFunc,
 } from "./singleScoresApi";
 import Score from "../../interfaces/scores";
 import logging from "../../config/logging";
+import { ScorecardEntry } from "../../interfaces/scores";
+
+interface updateData {
+  id: string;
+  data: ScorecardEntry[];
+}
 
 const initialState: Score = {
   score: {
@@ -29,10 +36,28 @@ export const fetchSingleScore = createAsyncThunk(
   }
 );
 
+export const updateSingleScore = createAsyncThunk(
+  "singleScore/updateSingleScore",
+  async (updateData: updateData) => {
+    try {
+      const { id, data } = updateData;
+      const result = await updateSingleScoreCardFunc(id, data);
+      return result;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
 const singelScoreReducer = createSlice({
   name: "singleScore",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    updateScore(state, action) {
+      console.log(action.payload);
+      state.score.scorecard[action.payload.index].putts = action.payload.value;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchSingleScore.fulfilled, (state: Score, action) => {
@@ -47,8 +72,16 @@ const singelScoreReducer = createSlice({
       .addCase(fetchSingleScore.pending, (state: Score) => {
         logging.info("Fetching single score");
         state = initialState;
+      })
+      .addCase(updateSingleScore.fulfilled, () => {
+        logging.info("Updated single score");
+      })
+      .addCase(updateSingleScore.rejected, (action) => {
+        logging.error("Updating single score failed");
       });
   },
 });
+
+export const { updateScore } = singelScoreReducer.actions;
 
 export default singelScoreReducer.reducer;

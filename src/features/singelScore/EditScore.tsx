@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../helpers/hooks";
-import { fetchCoursesList } from "../Courses/coursesSlice";
+import { fetchSingleScore } from "./singleScoreSlice";
 import { useDispatch } from "react-redux";
-import { fetchCourse } from "../SingleCourse/singleCourseSlice";
 import { ScorecardEntry } from "../../interfaces/scores";
 import { database } from "../../config/firebase";
 import logging from "../../config/logging";
-import {
-  CourseSelector,
-  FormContainer,
-  Input,
-  Selectors,
-} from "../../styles/forms";
+import ParamTypes from "../../interfaces/params";
+import { FormContainer, Input } from "../../styles/forms";
 import {
   ScorecardRow,
   Scorecard,
@@ -27,22 +23,12 @@ interface ScoreInputsInterface {
   [key: string]: ScorecardEntry;
 }
 
-const AddScore = () => {
+const EditScore = () => {
+  const { id } = useParams<ParamTypes>();
   const dispatch = useDispatch();
   const history = useHistory();
-  const courses = useAppSelector((state) => state.courses.courses);
   const user = useAppSelector((state) => state.auth.user);
-  const course = useAppSelector((state) => state.course.course);
-  const [distance, setDistance] = useState("");
   const [scorecard, setScorecard] = useState<ScoreInputsInterface>({});
-
-  // Function to select course from dropdown
-  const handleSetSelectedCourse = (
-    e: React.ChangeEvent<HTMLSelectElement>,
-    id: string
-  ) => {
-    dispatch(fetchCourse(id));
-  };
 
   // Function to change to current scorecard by the user
   const handleScoreChange = (
@@ -78,7 +64,7 @@ const AddScore = () => {
     ).length;
   };
 
-  // Function to add a new scorecard to the database
+  // Function to Update scorecard and push to the database
   const addScore = async () => {
     const date = new Date();
     const score = {
@@ -107,8 +93,8 @@ const AddScore = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchCoursesList());
-  }, [dispatch]);
+    dispatch(fetchSingleScore(id));
+  }, [dispatch, id]);
 
   return (
     <>
@@ -117,35 +103,6 @@ const AddScore = () => {
         subtitle="Platz und Tee auswählen - und loslegen."
       />
       <Container>
-        <Selectors>
-          <CourseSelector
-            name="course"
-            id="course"
-            onChange={(e) => setDistance(e.target.value)}
-          >
-            <option disabled selected value="">
-              -- Distanz auswählen --
-            </option>
-            <option value="dist1">Mens Champions</option>
-            <option value="dist2">Mens Medal</option>
-            <option value="dist3">Women Champions</option>
-            <option value="dist4">Women Medal</option>
-          </CourseSelector>
-          <CourseSelector
-            name="distance"
-            id="distance"
-            onChange={(e) => handleSetSelectedCourse(e, e.target.value)}
-          >
-            <option disabled selected value="">
-              -- Kurs auswählen --
-            </option>
-            {courses.map((course) => (
-              <option key={course.course.uid} value={course.course.uid}>
-                {course.course.name}
-              </option>
-            ))}
-          </CourseSelector>
-        </Selectors>
         <FormContainer>
           <Scorecard>
             <ScorecardTitelRow columnsAmount={8}>
@@ -199,7 +156,7 @@ const AddScore = () => {
                 </ScorecardRow>
               );
             })}
-            <MainButton onClick={() => addScore()}>Submit Score</MainButton>
+            <MainButton onClick={() => addScore()}>Update Score</MainButton>
           </Scorecard>
         </FormContainer>
       </Container>
@@ -207,4 +164,4 @@ const AddScore = () => {
   );
 };
 
-export default AddScore;
+export default EditScore;

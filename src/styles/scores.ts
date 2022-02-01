@@ -11,7 +11,7 @@ export const ScoresContainer = styled.section`
 export const SingleScore = styled(Link)`
   display: grid;
   grid-template-rows: 1fr 1fr;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   padding: 2rem 0;
   color: var(--dark-grey);
   text-decoration: none;
@@ -22,7 +22,7 @@ export const SingleScore = styled(Link)`
 
   @media ${device.l} {
     grid-template-rows: 1fr;
-    grid-template-columns: 1fr 3fr 1fr 1fr;
+    grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr;
     padding: 0.5% 0;
   }
 `;
@@ -42,7 +42,7 @@ export const HoleList = styled.section`
 export const Hole = styled.article`
   display: grid;
   grid-template-rows: 1fr;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 20px;
   align-items: center;
   position: relative;
   height: 50px;

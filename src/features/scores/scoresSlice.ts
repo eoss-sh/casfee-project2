@@ -14,6 +14,8 @@ const initialState: Scores = {
   scores: [],
   averageScore: 0,
   averagePutts: 0,
+  averageGIR: 0,
+  averageFIR: 0,
 };
 
 // Fetches multiple scores, all scores per user or all scores per course
@@ -40,10 +42,16 @@ const scoresReducer = createSlice({
       const { scores } = state;
       const totalScore = scores.reduce((acc, curr) => acc + curr.score, 0);
       const totalPutts = scores.reduce((acc, curr) => acc + curr.totalPutts, 0);
-      const averageScore = totalScore / scores.length;
-      const averagePutts = totalPutts / scores.length;
+      const totalGIR = scores.reduce((acc, curr) => acc + curr.totalGIR, 0);
+      const totalFIR = scores.reduce((acc, curr) => acc + curr.totalFIR, 0);
+      const averageScore = Math.floor((totalScore / scores.length) * 100) / 100;
+      const averagePutts = Math.floor((totalPutts / scores.length) * 100) / 100;
+      const averageFIR = Math.floor((totalFIR / scores.length) * 100) / 100;
+      const averageGIR = Math.floor((totalGIR / scores.length) * 100) / 100;
       state.averageScore = averageScore;
       state.averagePutts = averagePutts;
+      state.averageGIR = averageGIR;
+      state.averageFIR = averageFIR;
     },
   },
   extraReducers: (builder) => {

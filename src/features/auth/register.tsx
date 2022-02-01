@@ -6,14 +6,16 @@ import Uploader from "../../components/Uploader";
 import { auth, database } from "../../config/firebase";
 import logging from "../../config/logging";
 import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import { Alert } from "react-bootstrap";
+import { BiShowAlt } from "react-icons/bi";
 
 const RegisterPage = () => {
   const [registering, setRegistering] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [confirm, setConfirm] = useState<string>("");
+  const [passwordShow, setPasswordShow] = useState<boolean>(false);
   const [hcp, setHcp] = useState<number>(0);
   const [image, setImage] = useState<File>();
   const [url, setUrl] = useState<String>(
@@ -25,6 +27,10 @@ const RegisterPage = () => {
   const history = useHistory();
   const types = ["image/png", "image/jpeg", "image/jpg"];
 
+  const togglePassword = () => {
+    setPasswordShow(!passwordShow);
+  };
+
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && types.includes(event.target.files[0].type)) {
       setImage(event.target.files[0]);
@@ -32,10 +38,6 @@ const RegisterPage = () => {
   };
 
   const signUpWithEmailAndPassword = () => {
-    if (password !== confirm) {
-      setError("Die eingegebenen Passwörter stimmen nicht überein.");
-      return;
-    }
     if (name === "") {
       setError("Bitte gib deinen Namen an.");
       return;
@@ -92,30 +94,28 @@ const RegisterPage = () => {
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Passwort</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Passwort"
-            onChange={(event) => setPassword(event.target.value)}
-            value={password}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Passwort wiederholen</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Passwort wiederholen"
-            onChange={(event) => setConfirm(event.target.value)}
-            value={confirm}
-          />
+          <InputGroup>
+            <Form.Control
+              type={passwordShow ? "text" : "password"}
+              placeholder="Passwort"
+              onChange={(event) => setPassword(event.target.value)}
+              value={password}
+            />
+            <InputGroup.Text>
+              <BiShowAlt onClick={togglePassword} />
+            </InputGroup.Text>
+          </InputGroup>
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Name (empfohlen)</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Name"
-            onChange={(event) => setName(event.target.value)}
-            value={name}
-          />
+          <InputGroup>
+            <Form.Control
+              type="text"
+              placeholder="Name"
+              onChange={(event) => setName(event.target.value)}
+              value={name}
+            />
+          </InputGroup>
           <Form.Text className="text-muted">
             Um Ihren User in Ranglisten zu erkennen, empfehlen wir Ihnen einen
             Namen anzugeben.

@@ -22,3 +22,16 @@ h4 {
 p {
   font-size: 1rem;
 }
+
+a {
+  color: var(--light-blue);
+  text-decoration: none;
+  &:hover {
+    color: var(--dark-blue);
+  }
+}
+
+small {
+  display: block;
+  margin-top: 1rem;
+}

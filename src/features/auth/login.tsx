@@ -42,18 +42,12 @@ const LoginPage = () => {
           />
         </FloatingLabel>
       </Form.Group>
-      <Button
-        variant="primary"
-        className="text-white"
-        onClick={() => logInEmailPassword()}
-      >
+      <Button variant="primary" onClick={() => logInEmailPassword()}>
         Anmelden
       </Button>
-      <small>
-        <p>
-          Noch nicht registriert?
-          <Link to="/register">Jetzt registrieren!</Link>
-        </p>
+      <small className="register">
+        Noch nicht registriert?
+        <Link to="/register">Jetzt registrieren!</Link>
       </small>
     </section>
   );

@@ -3,7 +3,10 @@ import { fetchMultiScores } from "./scoresSlice";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../helpers/hooks";
 import SmallHero from "../../components/SmallHero";
-import { SingleScore, ScoresContainer } from "../../styles/scores";
+import Table from "react-bootstrap/Table";
+import { Link } from "react-router-dom";
+import { Container } from "react-bootstrap";
+import { BsArrowRightCircle } from "react-icons/bs";
 
 const Scores = () => {
   const dispatch = useDispatch();
@@ -24,24 +27,44 @@ const Scores = () => {
 
   return (
     <>
-      <SmallHero title="Scores" subtitle="See your scores" />
-      <ScoresContainer>
-        {scores.map((score) => {
-          const roundDate = score.date?.toDate().toLocaleDateString();
-          return (
-            <>
-              <SingleScore key={score.id} to={`singlescore/${score.id}`}>
-                <p>Date: {roundDate}</p>
-                <p>Course: {score.course}</p>
-                <p>Score: {score.score}</p>
-                <p>Putts: {score.totalPutts}</p>
-                <p>FIR: {score.totalFIR}</p>
-                <p>GIR: {score.totalGIR}</p>
-              </SingleScore>
-            </>
-          );
-        })}
-      </ScoresContainer>
+      <SmallHero title="Scores" subtitle="Alle deine Scores auf einen Blick" />
+      <Container>
+        <Table responsive="sm">
+          <thead>
+            <tr>
+              <th>Datum</th>
+              <th>Platz</th>
+              <th>Score</th>
+              <th>Putts</th>
+              <th>FIR</th>
+              <th>GIR</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            {scores.map((score) => {
+              const roundDate = score.date?.toDate().toLocaleDateString();
+              return (
+                <>
+                  <tr>
+                    <td>{roundDate}</td>
+                    <td>{score.course}</td>
+                    <td>{score.score}</td>
+                    <td>{score.totalPutts}</td>
+                    <td>{score.totalFIR}</td>
+                    <td>{score.totalGIR}</td>
+                    <td>
+                      <Link to={`singlescore/${score.id}`}>
+                        <BsArrowRightCircle />
+                      </Link>
+                    </td>
+                  </tr>
+                </>
+              );
+            })}
+          </tbody>
+        </Table>
+      </Container>
     </>
   );
 };

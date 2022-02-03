@@ -1,4 +1,14 @@
 .form {
-  max-width: 30rem;
+  width: 70%;
   margin: 0 auto;
+  &-text {
+    font-size: 0.75rem;
+  }
+  .row {
+    margin-bottom: 1rem;
+  }
+}
+
+.alert {
+  margin-top: 1rem;
 }

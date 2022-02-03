@@ -6,6 +6,11 @@ import { MainButton } from "../../styles/buttons";
 import { hole } from "../../interfaces/course";
 import { FormContainer, Input, InputRow, Label } from "../../styles/forms";
 import { Icon } from "../../styles/elements";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
+import Button from "react-bootstrap/Button";
+import { Alert, Col } from "react-bootstrap";
+import Row from "react-bootstrap/Row";
 
 interface HoleInputsInterface {
   [key: string]: hole;
@@ -75,116 +80,132 @@ const AddCourse = () => {
   };
 
   return (
-    <FormContainer>
-      <h2>Neuen Kurs hinzufügen</h2>
-      <Input
-        large
-        type="text"
-        name="name"
-        id="name"
-        placeholder="Name"
-        onChange={(event) => setName(event.target.value)}
-        value={name}
-      />
-      <Input
-        large
-        type="textarea"
-        name="shortDesc"
-        id="shortDesc"
-        placeholder="Kurzbeschreibung"
-        onChange={(event) => setShortDesc(event.target.value)}
-        value={shortDesc}
-      />
-      <Input
-        large
-        type="textfield"
-        name="desc"
-        id="desc"
-        placeholder="Beschreibung"
-        onChange={(event) => setDesc(event.target.value)}
-        value={desc}
-      />
-      <Input
-        large
-        type="text"
-        name="place"
-        id="place"
-        placeholder="Ort"
-        onChange={(event) => setPlace(event.target.value)}
-        value={place}
-      />
-      <Input
-        large
-        type="number"
-        name="type"
-        id="type"
-        placeholder="Art"
-        onChange={(event) => setType(event.target.valueAsNumber)}
-        value={type}
-      />
-      <Label htmlFor="userImage">
-        <Icon>+</Icon>Bild hinzufügen
-      </Label>
-      <Input
-        large
-        type="file"
-        name="userImage"
-        id="userImage"
-        placeholder="Bild"
-        onChange={handleFileUpload}
-      />
-      {image && <Uploader image={image} setImage={setImage} setUrl={setUrl} />}
-      {holes.map((hole) => {
-        return (
-          <InputRow key={hole}>
-            <Icon>{hole + 1}</Icon>
-            <Input
-              type="number"
-              name="par"
-              placeholder="Par"
-              onChange={(event) => handleHolesInputs(event, hole)}
-              value={holeInputs?.[hole]?.par}
+    <div className="container">
+      <h2>Neuen Platz hinzufügen</h2>
+      <Form>
+        <Row xs={1} lg={2}>
+          <Form.Group as={Col} className="mb-3">
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Name"
+              onChange={(event) => setName(event.target.value)}
+              value={name}
             />
-            <Input
-              type="number"
-              name="hcp"
-              placeholder="HCP"
-              onChange={(event) => handleHolesInputs(event, hole)}
-              value={holeInputs?.[hole]?.hcp}
+          </Form.Group>
+          <Form.Group as={Col} className="mb-3">
+            <Form.Label>Ort</Form.Label>
+            <Form.Control
+              type="text"
+              name="place"
+              placeholder="Ort"
+              onChange={(event) => setPlace(event.target.value)}
+              value={place}
             />
-            <Input
-              placeholder="Men Champs"
-              type="number"
-              name="dist1"
-              onChange={(event) => handleHolesInputs(event, hole)}
-              value={holeInputs?.[hole]?.dist1}
-            />
-            <Input
-              placeholder="Men Medal"
-              type="number"
-              name="dist2"
-              onChange={(event) => handleHolesInputs(event, hole)}
-              value={holeInputs?.[hole]?.dist2}
-            />
-            <Input
-              placeholder="Women Champs"
-              type="number"
-              name="dist3"
-              onChange={(event) => handleHolesInputs(event, hole)}
-              value={holeInputs?.[hole]?.dist3}
-            />
-            <Input
-              placeholder="Women Medal"
-              type="number"
-              name="dist4"
-              onChange={(event) => handleHolesInputs(event, hole)}
-              value={holeInputs?.[hole]?.dist4}
-            />
-          </InputRow>
-        );
-      })}
-      <MainButton onClick={() => addNewCourse()}>Kurs Hinzufügen</MainButton>
-    </FormContainer>
+          </Form.Group>
+        </Row>
+        <Form.Group as={Col} className="mb-3">
+          <Form.Label>Kurzbeschreibung</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={2}
+            name="shortDesc"
+            placeholder="Kurzbeschreibung des Platzes"
+            onChange={(event) => setShortDesc(event.target.value)}
+            value={shortDesc}
+          />
+        </Form.Group>
+        <Form.Group as={Col} className="mb-3">
+          <Form.Label>Kurze Beschreibung</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={4}
+            name="desc"
+            placeholder="Beschreibung eintragen..."
+            onChange={(event) => setDesc(event.target.value)}
+            value={desc}
+          />
+        </Form.Group>
+        <Form.Check
+          inline
+          label="18 Löcher"
+          type="radio"
+          name="type"
+          value={18}
+          checked={type === 18}
+          onChange={(event) => setType(event.target.valueAsNumber)}
+        />
+        <Form.Check
+          inline
+          label="9 Löcher"
+          type="radio"
+          name="type"
+          value={9}
+          checked={type === 9}
+          onChange={(event) => setType(event.target.valueAsNumber)}
+        />
+        <Row xs={1} lg={2}>
+          <Form.Group controlId="formFile" className="mb-3">
+            <Form.Label>Bild</Form.Label>
+            <Form.Control type="file" onChange={handleFileUpload} />
+            {image && (
+              <Uploader image={image} setImage={setImage} setUrl={setUrl} />
+            )}
+          </Form.Group>
+        </Row>
+
+        {holes.map((hole) => {
+          return (
+            <InputRow key={hole}>
+              <Icon>{hole + 1}</Icon>
+              <Input
+                type="number"
+                name="par"
+                placeholder="Par"
+                onChange={(event) => handleHolesInputs(event, hole)}
+                value={holeInputs?.[hole]?.par}
+              />
+              <Input
+                type="number"
+                name="hcp"
+                placeholder="HCP"
+                onChange={(event) => handleHolesInputs(event, hole)}
+                value={holeInputs?.[hole]?.hcp}
+              />
+              <Input
+                placeholder="Men Champs"
+                type="number"
+                name="dist1"
+                onChange={(event) => handleHolesInputs(event, hole)}
+                value={holeInputs?.[hole]?.dist1}
+              />
+              <Input
+                placeholder="Men Medal"
+                type="number"
+                name="dist2"
+                onChange={(event) => handleHolesInputs(event, hole)}
+                value={holeInputs?.[hole]?.dist2}
+              />
+              <Input
+                placeholder="Women Champs"
+                type="number"
+                name="dist3"
+                onChange={(event) => handleHolesInputs(event, hole)}
+                value={holeInputs?.[hole]?.dist3}
+              />
+              <Input
+                placeholder="Women Medal"
+                type="number"
+                name="dist4"
+                onChange={(event) => handleHolesInputs(event, hole)}
+                value={holeInputs?.[hole]?.dist4}
+              />
+            </InputRow>
+          );
+        })}
+        <MainButton onClick={() => addNewCourse()}>Kurs Hinzufügen</MainButton>
+      </Form>
+    </div>
   );
 };
 

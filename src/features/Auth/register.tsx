@@ -81,6 +81,7 @@ const RegisterPage = () => {
             <Form.Group as={Col} className="mb-3">
               <Form.Label>Email</Form.Label>
               <Form.Control
+                data-test="register-email"
                 type="email"
                 placeholder="Email"
                 onChange={(event) => setEmail(event.target.value)}
@@ -91,6 +92,7 @@ const RegisterPage = () => {
               <Form.Label>Passwort</Form.Label>
               <InputGroup>
                 <Form.Control
+                  data-test="register-pw"
                   type={passwordShow ? "text" : "password"}
                   placeholder="Passwort"
                   onChange={(event) => setPassword(event.target.value)}
@@ -158,6 +160,7 @@ const RegisterPage = () => {
         </Link>
         {show && (
           <Alert
+            data-test="register-alert"
             variant="danger"
             className="alert"
             onClose={() => {

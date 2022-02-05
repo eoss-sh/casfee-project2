@@ -41,6 +41,7 @@ const LoginPage = () => {
         <Form.Group>
           <FloatingLabel label="Email-Adresse" className="mb-3">
             <Form.Control
+              data-test="email"
               type="email"
               placeholder="Email"
               value={email}
@@ -49,6 +50,7 @@ const LoginPage = () => {
           </FloatingLabel>
           <FloatingLabel label="Passwort" className="mb-3">
             <Form.Control
+              data-test="password"
               type="password"
               placeholder="Passwort"
               onChange={(event) => setPassword(event.target.value)}
@@ -60,6 +62,7 @@ const LoginPage = () => {
           <Link to="/register">Passwort vergessen?</Link>
         </small>
         <Button
+          id="login"
           variant="primary"
           className="btn-primary__login"
           onClick={() => logInEmailPassword()}

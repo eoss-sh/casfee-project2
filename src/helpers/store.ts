@@ -5,6 +5,9 @@ import courseReducer from "../features/SingleCourse/singleCourseSlice";
 import singleScoreReducer from "../features/SingelScore/singleScoreSlice";
 import scoresReducer from "../features/Scores/scoresSlice";
 
+const initialState =
+  "Cypress" in window ? (window as any).__chr__initialState__ : undefined;
+
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -18,6 +21,11 @@ export const store = configureStore({
       serializableCheck: false,
     }),
 });
+
+if ("Cypress" in window) {
+  const w = window as any;
+  w.__chr__store__ = store;
+}
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;

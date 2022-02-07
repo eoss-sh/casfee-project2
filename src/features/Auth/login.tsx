@@ -36,7 +36,7 @@ const LoginPage = () => {
 
   return (
     <div className="container">
-      <section className="form form-login">
+      <section className="form form-auth">
         <h2>Willkommen zurück</h2>
         <Form.Group>
           <FloatingLabel label="Email-Adresse" className="mb-3">

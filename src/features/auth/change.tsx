@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import ErrorText from "../../components/ErrorText";
 import { auth } from "../../config/firebase";
 import logging from "../../config/logging";
-import { MainButton, MainLinkText } from "../../styles/buttons";
+import { MainButton } from "../../styles/buttons";
 import { FormContainer, Input } from "../../styles/forms";
 import { Header2 } from "../../styles/type";
 

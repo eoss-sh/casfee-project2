@@ -1,5 +1,4 @@
 .form {
-  width: 70%;
   margin: 0 auto;
   &-text {
     font-size: 0.75rem;
@@ -11,4 +10,12 @@
 
 .alert {
   margin-top: 1rem;
+}
+
+.table-input {
+  border: none;
+}
+
+.table-input__small {
+  width: 5rem;
 }

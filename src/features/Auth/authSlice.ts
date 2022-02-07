@@ -1,22 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { auth } from "../../config/firebase";
-import { getAdditionalUserInfo } from "./authApi";
+import {
+  deleteUserFunc,
+  getAdditionalUserInfo,
+  updateUserDataFunc,
+} from "./authApi";
 import logging from "../../config/logging";
-
-// Move all the interfaces to the interfaces folder? probably not?
-interface AuthState {
-  user: {
-    email: string | null | undefined;
-    uid: string | undefined;
-    error: any;
-    admin: boolean;
-    url: string;
-  };
-}
-interface LoginData {
-  email: string;
-  password: string;
-}
+import User, { AuthState, LoginData } from "../../interfaces/user";
 
 const initialState: AuthState = {
   user: {
@@ -25,6 +15,8 @@ const initialState: AuthState = {
     error: "",
     admin: false,
     url: "",
+    name: "",
+    hcp: undefined,
   },
 };
 
@@ -48,6 +40,8 @@ export const loginWithUsernameAndPassword = createAsyncThunk(
         error: "",
         admin: tokens?.claims.admin,
         url: additionalUserInfo?.data()?.url,
+        name: additionalUserInfo?.data()?.name,
+        hcp: additionalUserInfo?.data()?.hcp,
       };
     } catch (error) {
       const msg = error + "";
@@ -76,6 +70,34 @@ export const logout = createAsyncThunk("auth/logout", async () => {
     logging.error(error);
   }
 });
+
+// Thunk to Update User Infos
+export const updateUserData = createAsyncThunk(
+  "auth/updateUserData",
+  async (data: User) => {
+    try {
+      await updateUserDataFunc(data);
+      return data;
+    } catch (error) {
+      logging.error(error);
+    }
+  }
+);
+
+// Thunk to delete User
+export const deleteUser = createAsyncThunk(
+  "auth/deleteUser",
+  async (id: string | undefined) => {
+    try {
+      typeof id !== "string"
+        ? logging.error("NO ID GIVEN")
+        : await deleteUserFunc(id);
+      return "User deleted";
+    } catch (error) {
+      logging.error(error);
+    }
+  }
+);
 
 const authReducer = createSlice({
   name: "auth",
@@ -112,8 +134,30 @@ const authReducer = createSlice({
           error: "",
           admin: false,
           url: "",
+          name: "",
+          hcp: undefined,
         };
-      });
+      })
+      .addCase(updateUserData.fulfilled, (state: AuthState, action) => {
+        state.user.url = action.payload?.url;
+        state.user.name = action.payload?.name;
+        state.user.hcp = action.payload?.hcp;
+      })
+      .addCase(updateUserData.rejected, (state: AuthState, action) => {
+        state.user.error = action.payload;
+      })
+      .addCase(deleteUser.fulfilled, (state: AuthState) => {
+        state.user = {
+          email: "",
+          uid: "",
+          error: "",
+          admin: false,
+          url: "",
+          name: "",
+          hcp: undefined,
+        };
+      })
+      .addCase(deleteUser.rejected, (state: AuthState, action) => {});
   },
 });
 

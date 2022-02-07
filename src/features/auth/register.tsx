@@ -17,7 +17,7 @@ const RegisterPage = () => {
   const [passwordShow, setPasswordShow] = useState<boolean>(false);
   const [hcp, setHcp] = useState<number>(0);
   const [image, setImage] = useState<File>();
-  const [url, setUrl] = useState<String>(
+  const [url, setUrl] = useState<string>(
     "https://firebasestorage.googleapis.com/v0/b/birdiebook-c8af5.appspot.com/o/golfer-gd2c89f964_1280.png?alt=media&token=9489c1f6-1ead-481a-a9a3-8442551e8071"
   );
   const [name, setName] = useState<string>("");
@@ -74,7 +74,7 @@ const RegisterPage = () => {
 
   return (
     <div className="container">
-      <section className="form form-register">
+      <section className="form form-auth">
         <h2>Registrierung</h2>
         <Form>
           <Row xs={1} lg={2}>

@@ -30,6 +30,8 @@ const App = () => {
             uid: userAuth.uid,
             url: userData.data()?.url,
             admin: tokens?.claims.admin,
+            name: userData.data()?.name,
+            hcp: userData.data()?.hcp,
           })
         );
       } else {

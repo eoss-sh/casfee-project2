@@ -4,7 +4,7 @@ import useStorage from "../../helpers/customHooks/useStorage";
 interface UploaderProps {
   image: File;
   setImage: (image: File) => void;
-  setUrl: (url: String) => void;
+  setUrl: (url: string) => void;
 }
 
 const Uploader = ({ image, setImage, setUrl }: UploaderProps) => {

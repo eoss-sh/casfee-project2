@@ -13,11 +13,6 @@ export const getUserData = async (id: string) => {
   return await database.collection("users").doc(id).get();
 };
 
-// Get all Users
-export const getAllUsers = async () => {
-  return await database.collection("users").get();
-};
-
 // Update Single User Data
 export const updateUserDataFunc = async (data: User) => {
   database.collection("appUser").doc(data.id).update({

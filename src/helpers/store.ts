@@ -4,6 +4,7 @@ import coursesReducer from "../features/Courses/coursesSlice";
 import courseReducer from "../features/SingleCourse/singleCourseSlice";
 import singleScoreReducer from "../features/SingelScore/singleScoreSlice";
 import scoresReducer from "../features/Scores/scoresSlice";
+import allUserReducer from "../features/AllUser/allUserSlice";
 
 const initialState =
   "Cypress" in window ? (window as any).__chr__initialState__ : undefined;
@@ -15,6 +16,7 @@ export const store = configureStore({
     course: courseReducer,
     singleScore: singleScoreReducer,
     scores: scoresReducer,
+    allUser: allUserReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

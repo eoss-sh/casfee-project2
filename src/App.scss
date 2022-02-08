@@ -5,11 +5,13 @@ $theme-colors: (
 );
 
 @import "~bootstrap/scss/bootstrap";
+@import "./styles/layout/container";
+@import "./styles/layout/grid";
 @import "./styles/elements/buttons";
 @import "./styles/elements/forms";
 @import "./styles/elements/various";
 @import "./styles/elements/footer";
-@import "./styles/layout/container";
+@import "./styles/elements/header";
 @import "./styles/global/typo";
 @import "./styles/features/auth";
 @import "./styles/features/course";

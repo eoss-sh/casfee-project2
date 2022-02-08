@@ -1,114 +1,91 @@
-import { useState, useEffect } from "react";
 import { useAppSelector } from "../../helpers/hooks";
-import { NavLink } from "react-router-dom";
-import { Container } from "../../styles/styles";
-import {
-  NavButtonLink,
-  NavButtonLinkSecondary,
-  NaviLink,
-} from "../../styles/buttons";
-import {
-  Hamburger,
-  HeaderSection,
-  MainNav,
-  MainNavLinks,
-  MainNavLink,
-  MainNavLogo,
-  MainNavProfileImage,
-  MobileNav,
-} from "../../styles/header";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { VscChromeClose } from "react-icons/vsc";
+import { Navbar, Nav, Button, NavDropdown } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 
 export default function Header() {
   const currentUser = useAppSelector((state) => state.auth.user);
-  const [toggleMenu, setToggleMenu] = useState(false);
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    const setWidth = () => {
-      setScreenWidth(window.innerWidth);
-    };
-    window.addEventListener("resize", setWidth);
-    return () => {
-      window.removeEventListener("resize", setWidth);
-    };
-  }, []);
-
-  const toggleMenuFunc = () => {
-    setToggleMenu(!toggleMenu);
-  };
 
   return (
-    <HeaderSection>
-      <Container>
-        <MainNav>
-          <MainNavLogo>
-            <NaviLink exact to="/">
-              BirdieBook
-            </NaviLink>
-          </MainNavLogo>
-          {(toggleMenu || screenWidth > 768) && (
-            <MainNavLinks>
+    <>
+      <Navbar
+        collapseOnSelect
+        fixed="top"
+        expand="md"
+        bg="primary"
+        variant="dark"
+      >
+        <div className="container">
+          <LinkContainer exact to="/">
+            <Navbar.Brand>BirdieBook</Navbar.Brand>
+          </LinkContainer>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav>
               {!currentUser.uid && (
                 <>
-                  <MainNavLink>
-                    <NavButtonLinkSecondary exact to="/register">
-                      Registrieren
-                    </NavButtonLinkSecondary>
-                  </MainNavLink>
-                  <MainNavLink>
-                    <NavButtonLink exact to="/login">
-                      LogIn
-                    </NavButtonLink>
-                  </MainNavLink>
+                  <Nav.Item>
+                    <LinkContainer to="register">
+                      <Button variant="secondary">Registrieren</Button>
+                    </LinkContainer>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <LinkContainer to="login">
+                      <Button variant="primary">Login</Button>
+                    </LinkContainer>
+                  </Nav.Item>
                 </>
               )}
               {currentUser.admin && (
-                <MainNavLink>
-                  <NaviLink to="/add-course">Kurse erfassen</NaviLink>
-                </MainNavLink>
+                <Nav.Item>
+                  <LinkContainer to="add-course">
+                    <Nav.Link>Kurse erfassen</Nav.Link>
+                  </LinkContainer>
+                </Nav.Item>
               )}
               {currentUser.uid && (
                 <>
-                  <MainNavLink>
-                    <NaviLink to="/scores">Scores</NaviLink>
-                  </MainNavLink>
-                  <MainNavLink>
-                    <NaviLink to="/statistics">Statistik</NaviLink>
-                  </MainNavLink>
-                  {screenWidth > 768 && (
-                    <MainNavLink>
-                      <NavButtonLinkSecondary to="/add-score">
-                        Play
-                      </NavButtonLinkSecondary>
-                    </MainNavLink>
-                  )}
-                  <MainNavLink>
-                    <NavLink exact to="/profile">
-                      <MainNavProfileImage
-                        className="main-nav__profile-image"
+                  <Nav.Item>
+                    <LinkContainer to="scores">
+                      <Nav.Link>Scores</Nav.Link>
+                    </LinkContainer>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <LinkContainer to="statistics">
+                      <Nav.Link>Statistik</Nav.Link>
+                    </LinkContainer>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <LinkContainer to="add-score">
+                      <Button variant="secondary">Play</Button>
+                    </LinkContainer>
+                  </Nav.Item>
+                  <NavDropdown
+                    title={
+                      <img
+                        className="nav-profile__image"
                         src={currentUser.url}
-                        alt="name"
+                        alt={currentUser.name}
                       />
-                    </NavLink>
-                  </MainNavLink>
+                    }
+                    id="collasible-nav-dropdown"
+                  >
+                    <NavDropdown.Item>
+                      <LinkContainer to="profile">
+                        <Nav.Link>User Profil</Nav.Link>
+                      </LinkContainer>
+                    </NavDropdown.Item>
+                    <NavDropdown.Item>
+                      <LinkContainer to="profile">
+                        <Nav.Link>User Profil</Nav.Link>
+                      </LinkContainer>
+                    </NavDropdown.Item>
+                  </NavDropdown>
                 </>
               )}
-            </MainNavLinks>
-          )}
-          {screenWidth < 768 && (
-            <MobileNav>
-              <Hamburger onClick={toggleMenuFunc}>
-                {toggleMenu ? <VscChromeClose /> : <GiHamburgerMenu />}
-              </Hamburger>
-              <NavButtonLinkSecondary to="/add-score">
-                Play
-              </NavButtonLinkSecondary>
-            </MobileNav>
-          )}
-        </MainNav>
-      </Container>
-    </HeaderSection>
+            </Nav>
+          </Navbar.Collapse>
+        </div>
+      </Navbar>
+    </>
   );
 }

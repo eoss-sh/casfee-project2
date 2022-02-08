@@ -1,0 +1,41 @@
+.navbar-collapse {
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.navbar-nav {
+  gap: 1rem;
+  .nav-item {
+    display: flex;
+    align-items: center;
+    height: 2rem;
+    &:last-of-type {
+      height: 4rem;
+    }
+    @include lg {
+      height: 4rem;
+    }
+    .dropdown-toggle {
+      &::after {
+        content: none;
+      }
+    }
+    .dropdown-menu {
+      position: absolute;
+      border: none;
+      background-color: var(--light-blue);
+      border-radius: 0;
+      min-width: 12rem;
+      margin-left: -7%;
+      width: 114%;
+    }
+  }
+}
+
+.nav-profile__image {
+  height: 4rem;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: var(--yellow);
+}

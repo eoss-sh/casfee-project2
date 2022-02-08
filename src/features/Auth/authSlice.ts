@@ -92,6 +92,7 @@ export const deleteUser = createAsyncThunk(
       typeof id !== "string"
         ? logging.error("NO ID GIVEN")
         : await deleteUserFunc(id);
+
       return "User deleted";
     } catch (error) {
       logging.error(error);

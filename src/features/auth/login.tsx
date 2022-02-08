@@ -28,12 +28,6 @@ const LoginPage = () => {
     }
   }, [error]);
 
-  useEffect(() => {
-    if (user) {
-      history.push("/statistics");
-    }
-  }, [user, history]);
-
   return (
     <div className="container">
       <section className="form form-auth">
@@ -72,7 +66,10 @@ const LoginPage = () => {
         <div className="or-seperator">
           <span className="or-seperator__text">oder</span>
         </div>
-        <Link className="btn btn-secondary btn-secondary__login" to="/register">
+        <Link
+          className="btn btn-secondary btn-secondary__register"
+          to="/register"
+        >
           Registrieren
         </Link>
         {show && (

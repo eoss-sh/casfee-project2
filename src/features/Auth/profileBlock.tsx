@@ -5,6 +5,8 @@ import { useHistory } from "react-router-dom";
 import { updateUserData, deleteUser } from "./authSlice";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import Uploader from "../../components/Uploader";
+import ConfirmModal from "../../components/ConfirmModal";
+import { BsTrash } from "react-icons/bs";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -15,6 +17,7 @@ const Profile = () => {
   const [url, setUrl] = useState(user.url);
   const [hcp, setHcp] = useState(user.hcp);
   const [name, setName] = useState(user.name);
+  const [showModal, setShowModal] = useState(false);
 
   const types = ["image/png", "image/jpeg", "image/jpg"];
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,7 +45,17 @@ const Profile = () => {
 
   return (
     <div className="container">
+      <h1>Nutzer Profil</h1>
       <Form>
+        <Form.Group className="input-group__user-email">
+          <Form.Label>E-Mail</Form.Label>
+          <Form.Control
+            type="email"
+            disabled
+            placeholder="Email"
+            value={user.email || ""}
+          />
+        </Form.Group>
         <Row>
           <Col>
             <Form.Group>
@@ -78,27 +91,31 @@ const Profile = () => {
             <Uploader image={image} setImage={setImage} setUrl={setUrl} />
           )}
         </Form.Group>
-        <Row>
-          <Col>
-            <Button
-              variant="secondary"
-              className="btn-secondary__register"
-              onClick={() => dispatchUpdate()}
-            >
-              Update
-            </Button>
-          </Col>
-          <Col>
-            <Button
-              variant="danger"
-              className="btn-danger__delete"
-              onClick={() => dispatchDelete()}
-            >
-              Profil Löschen
-            </Button>
-          </Col>
-        </Row>
+
+        <Button
+          variant="primary"
+          className="btn-primary"
+          onClick={() => dispatchUpdate()}
+        >
+          Update
+        </Button>
+
+        <Button
+          variant="danger"
+          className="btn-danger__delete"
+          onClick={() => setShowModal(!showModal)}
+        >
+          <BsTrash />
+          Profil Löschen
+        </Button>
       </Form>
+      <ConfirmModal
+        title="Profil löschen"
+        message="Möchtest du dein Profil wirklich löschen?"
+        onClose={() => setShowModal(false)}
+        showModal={showModal}
+        onConfirm={() => dispatchDelete()}
+      />
     </div>
   );
 };

@@ -1,14 +1,16 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../helpers/hooks";
+import { functions } from "../../config/firebase";
 import { fetchAllUsers } from "./allUserSlice";
 import { deleteUser } from "../Auth/authSlice";
 import { Table, Button } from "react-bootstrap";
-import { BsTrash } from "react-icons/bs";
+import { BsTrash, BsBricks } from "react-icons/bs";
 
 const AllUsers = () => {
   const dispatch = useDispatch();
   const allUsers = useAppSelector((state) => state.allUser.users);
+  const addAdminRole = functions.httpsCallable("addAdminRole");
 
   useEffect(() => {
     dispatch(fetchAllUsers());
@@ -24,6 +26,7 @@ const AllUsers = () => {
               <th>Email</th>
               <th>Name</th>
               <th>HCP</th>
+              <th>Make Admin</th>
               <th>Delete</th>
             </tr>
           </thead>
@@ -34,6 +37,18 @@ const AllUsers = () => {
                   <td>{user.email}</td>
                   <td>{user.name}</td>
                   <td>{user.hcp}</td>
+                  <td>
+                    <Button
+                      variant="secondary"
+                      onClick={async () => {
+                        return await addAdminRole({
+                          email: user.email,
+                        });
+                      }}
+                    >
+                      <BsBricks />
+                    </Button>
+                  </td>
                   <td>
                     <Button
                       variant="danger"

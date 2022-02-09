@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { getAdditionalUserInfo } from "../../features/Auth/authApi";
-import { AvatarSmall, UserDataSection } from "../../styles/user";
 
 interface UserAvatarProps {
   id: string;
@@ -21,10 +20,10 @@ const UserData = ({ id }: UserAvatarProps) => {
   }, [id]);
 
   return (
-    <UserDataSection>
-      <AvatarSmall src={image} />
+    <section>
+      <img src={image} alt="User" />
       <p>{name}</p>
-    </UserDataSection>
+    </section>
   );
 };
 

@@ -27,4 +27,3 @@ export const deleteUserFunc = async (id: string) => {
   database.collection("appUser").doc(id).delete();
   auth.currentUser?.delete();
 };
-// Make User Admin

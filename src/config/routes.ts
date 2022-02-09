@@ -95,7 +95,7 @@ const routes: IRoute[] = [
     name: "Statistics Page",
     component: AllUsers,
     exact: true,
-    protected: false,
+    protected: true,
   },
 ];
 

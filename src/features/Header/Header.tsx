@@ -69,16 +69,18 @@ export default function Header() {
                     }
                     id="collasible-nav-dropdown"
                   >
-                    <NavDropdown.Item>
+                    <Nav.Item>
                       <LinkContainer to="profile">
                         <Nav.Link>User Profil</Nav.Link>
                       </LinkContainer>
-                    </NavDropdown.Item>
-                    <NavDropdown.Item>
-                      <LinkContainer to="profile">
-                        <Nav.Link>User Profil</Nav.Link>
-                      </LinkContainer>
-                    </NavDropdown.Item>
+                    </Nav.Item>
+                    {currentUser.admin && (
+                      <Nav.Item>
+                        <LinkContainer to="all-users">
+                          <Nav.Link>Alle User</Nav.Link>
+                        </LinkContainer>
+                      </Nav.Item>
+                    )}
                   </NavDropdown>
                 </>
               )}

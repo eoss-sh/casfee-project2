@@ -45,6 +45,7 @@ const RegisterPage = () => {
           hcp,
           url,
           name,
+          email,
         });
       })
       .then((result) => {
@@ -74,7 +75,7 @@ const RegisterPage = () => {
 
   return (
     <div className="container">
-      <section className="form form-auth">
+      <section className="form form-auth form-auth__register">
         <h2>Registrierung</h2>
         <Form>
           <Row xs={1} lg={2}>

@@ -10,6 +10,7 @@ import Scores from "../features/Scores/Scores";
 import AddScore from "../features/SingelScore/AddScore";
 import SingleScore from "../features/SingelScore/SingleScore";
 import Statistics from "../features/Statistics/Statistics";
+import AllUsers from "../features/AllUser/AllUsers";
 
 const routes: IRoute[] = [
   {
@@ -86,6 +87,13 @@ const routes: IRoute[] = [
     path: "/statistics",
     name: "Statistics Page",
     component: Statistics,
+    exact: true,
+    protected: false,
+  },
+  {
+    path: "/all-users",
+    name: "Statistics Page",
+    component: AllUsers,
     exact: true,
     protected: false,
   },

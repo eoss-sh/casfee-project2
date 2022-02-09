@@ -18,6 +18,7 @@ const Profile = () => {
   const [hcp, setHcp] = useState(user.hcp);
   const [name, setName] = useState(user.name);
   const [showModal, setShowModal] = useState(false);
+  const [email, setEmail] = useState(user.email);
 
   const types = ["image/png", "image/jpeg", "image/jpg"];
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,6 +34,7 @@ const Profile = () => {
         name,
         hcp,
         url,
+        email,
       })
     );
     history.push("/profile");

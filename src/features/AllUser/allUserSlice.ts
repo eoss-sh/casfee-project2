@@ -8,13 +8,12 @@ const initialState: Users = {
 };
 
 // Thunk to get all Users
-export const getAllUsers = createAsyncThunk("allUser/getAllUsers", async () => {
-  try {
+export const fetchAllUsers = createAsyncThunk(
+  "allUser/getAllUsers",
+  async () => {
     return await getAllUserFunc();
-  } catch (error) {
-    logging.error(error);
   }
-});
+);
 
 const allUserSlice = createSlice({
   name: "allUser",
@@ -22,10 +21,10 @@ const allUserSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getAllUsers.fulfilled, (state: Users, action) => {
+      .addCase(fetchAllUsers.fulfilled, (state, action) => {
         state.users = action.payload;
       })
-      .addCase(getAllUsers.rejected, (state: Users, action) => {
+      .addCase(fetchAllUsers.rejected, (state, action) => {
         logging.error(action.payload);
       });
   },

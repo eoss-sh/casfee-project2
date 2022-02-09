@@ -3,9 +3,31 @@
 }
 
 .form-auth {
-  width: 70%;
-  margin-top: 5rem;
-  padding: 4rem 3rem;
+  width: 100%;
+  margin: 7rem auto;
+  padding: 2rem 1.5rem;
   background-color: var(--white);
   box-shadow: 0px 4px 24px rgb(0 0 0 / 10%);
+  border-radius: 3rem;
+  @include md {
+    margin-top: 10rem;
+    padding: 4rem 3rem;
+  }
+}
+
+.form-auth__login {
+  @include md {
+    width: 55%;
+  }
+  @include lg {
+    width: 45%;
+  }
+  @include xl {
+    width: 40%;
+  }
+}
+.form-auth__register {
+  @include md {
+    width: 70%;
+  }
 }

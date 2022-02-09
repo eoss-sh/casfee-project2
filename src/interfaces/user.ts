@@ -3,6 +3,7 @@ export default interface User {
   name: string | undefined;
   url: string | undefined;
   id: string | undefined;
+  email: string | undefined | null;
 }
 
 export interface AuthState {
@@ -22,5 +23,5 @@ export interface LoginData {
 }
 
 export interface Users {
-  users: User[] | undefined;
+  users: User[];
 }

@@ -30,7 +30,7 @@ const LoginPage = () => {
 
   return (
     <div className="container">
-      <section className="form form-auth">
+      <section className="form form-auth form-auth__login">
         <h2>Willkommen zurück</h2>
         <Form.Group>
           <FloatingLabel label="Email-Adresse" className="mb-3">

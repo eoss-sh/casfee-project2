@@ -19,6 +19,7 @@ const routes: IRoute[] = [
     component: HomePage,
     exact: true,
     protected: false,
+    adminOnly: false,
   },
   {
     path: "/course/:id",
@@ -26,6 +27,7 @@ const routes: IRoute[] = [
     component: SingleCourse,
     exact: true,
     protected: false,
+    adminOnly: false,
   },
   {
     path: "/register",
@@ -33,6 +35,7 @@ const routes: IRoute[] = [
     component: RegisterPage,
     exact: true,
     protected: false,
+    adminOnly: false,
   },
   {
     path: "/login",
@@ -40,6 +43,7 @@ const routes: IRoute[] = [
     component: LoginPage,
     exact: true,
     protected: false,
+    adminOnly: false,
   },
   {
     path: "/forgot",
@@ -47,6 +51,7 @@ const routes: IRoute[] = [
     component: ForgotPwPage,
     exact: true,
     protected: true,
+    adminOnly: false,
   },
   {
     path: "/profile",
@@ -54,6 +59,7 @@ const routes: IRoute[] = [
     component: ProfilePage,
     exact: true,
     protected: true,
+    adminOnly: false,
   },
   {
     path: "/add-course",
@@ -61,27 +67,31 @@ const routes: IRoute[] = [
     component: AddCoursePage,
     exact: true,
     protected: true,
+    adminOnly: true,
   },
   {
     path: "/scores",
     name: "Scores Page",
     component: Scores,
     exact: true,
-    protected: false,
+    protected: true,
+    adminOnly: false,
   },
   {
     path: "/add-score",
     name: "New Score Page",
     component: AddScore,
     exact: true,
-    protected: false,
+    protected: true,
+    adminOnly: false,
   },
   {
     path: "/singlescore/:id",
     name: "Single Score Page",
     component: SingleScore,
     exact: true,
-    protected: false,
+    protected: true,
+    adminOnly: false,
   },
   {
     path: "/statistics",
@@ -89,6 +99,7 @@ const routes: IRoute[] = [
     component: Statistics,
     exact: true,
     protected: false,
+    adminOnly: false,
   },
   {
     path: "/all-users",
@@ -96,6 +107,7 @@ const routes: IRoute[] = [
     component: AllUsers,
     exact: true,
     protected: true,
+    adminOnly: true,
   },
 ];
 

@@ -1,11 +1,3 @@
-import {
-  SmallHeroContainer,
-  HeroSubTitel,
-  HeroTitel,
-  SmallHeroContent,
-} from "../../styles/hero";
-import { Container } from "../../styles/styles";
-
 interface SmallHeroProps {
   title: string;
   subtitle?: string;
@@ -13,14 +5,14 @@ interface SmallHeroProps {
 
 const SmallHero = ({ title, subtitle }: SmallHeroProps) => {
   return (
-    <SmallHeroContainer>
-      <Container>
-        <SmallHeroContent>
-          <HeroTitel>{title}</HeroTitel>
-          <HeroSubTitel>{subtitle}</HeroSubTitel>
-        </SmallHeroContent>
-      </Container>
-    </SmallHeroContainer>
+    <section className="smallhero">
+      <div className="container">
+        <section className="smallhero-content">
+          <h1 className="smallhero-content__title">{title}</h1>
+          <h4 className="smallhero-content__subtitle">{subtitle}</h4>
+        </section>
+      </div>
+    </section>
   );
 };
 

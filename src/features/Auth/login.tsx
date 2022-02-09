@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../helpers/hooks";
 import { loginWithUsernameAndPassword } from "./authSlice";
 import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { FloatingLabel, Alert } from "react-bootstrap";
@@ -14,9 +13,7 @@ const LoginPage = () => {
   const [show, setShow] = useState<boolean>(false);
 
   const dispatch = useDispatch();
-  const history = useHistory();
   const error = useAppSelector((state) => state.auth.user.error);
-  const user = useAppSelector((state) => state.auth.user.uid);
 
   const logInEmailPassword = () => {
     dispatch(loginWithUsernameAndPassword({ email, password }));

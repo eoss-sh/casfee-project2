@@ -1,9 +1,24 @@
+import { useState } from "react";
 import { useAppSelector } from "../../helpers/hooks";
+import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
+import { logout } from "../Auth/authSlice";
+import ConfirmModal from "../../components/ConfirmModal";
 import { Navbar, Nav, Button, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import { BsHandThumbsUp } from "react-icons/bs";
 
 export default function Header() {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const currentUser = useAppSelector((state) => state.auth.user);
+  const [showModal, setShowModal] = useState(false);
+
+  const logoutofApp = () => {
+    dispatch(logout());
+    setShowModal(false);
+    history.push("/login");
+  };
 
   return (
     <>
@@ -11,7 +26,7 @@ export default function Header() {
         collapseOnSelect
         fixed="top"
         expand="md"
-        bg="primary"
+        bg="theme"
         variant="dark"
       >
         <div className="container">
@@ -24,12 +39,12 @@ export default function Header() {
               {!currentUser.uid && (
                 <>
                   <Nav.Item>
-                    <LinkContainer to="register">
+                    <LinkContainer to="/register">
                       <Button variant="secondary">Registrieren</Button>
                     </LinkContainer>
                   </Nav.Item>
                   <Nav.Item>
-                    <LinkContainer to="login">
+                    <LinkContainer to="/login">
                       <Button variant="primary">Login</Button>
                     </LinkContainer>
                   </Nav.Item>
@@ -37,7 +52,7 @@ export default function Header() {
               )}
               {currentUser.admin && (
                 <Nav.Item>
-                  <LinkContainer to="add-course">
+                  <LinkContainer to="/add-course">
                     <Nav.Link>Kurse erfassen</Nav.Link>
                   </LinkContainer>
                 </Nav.Item>
@@ -45,17 +60,17 @@ export default function Header() {
               {currentUser.uid && (
                 <>
                   <Nav.Item>
-                    <LinkContainer to="scores">
+                    <LinkContainer to="/scores">
                       <Nav.Link>Scores</Nav.Link>
                     </LinkContainer>
                   </Nav.Item>
                   <Nav.Item>
-                    <LinkContainer to="statistics">
+                    <LinkContainer to="/statistics">
                       <Nav.Link>Statistik</Nav.Link>
                     </LinkContainer>
                   </Nav.Item>
                   <Nav.Item>
-                    <LinkContainer to="add-score">
+                    <LinkContainer to="/add-score">
                       <Button variant="secondary">Play</Button>
                     </LinkContainer>
                   </Nav.Item>
@@ -70,22 +85,39 @@ export default function Header() {
                     id="collasible-nav-dropdown"
                   >
                     <Nav.Item>
-                      <LinkContainer to="profile">
+                      <LinkContainer to="/profile">
                         <Nav.Link>User Profil</Nav.Link>
                       </LinkContainer>
                     </Nav.Item>
                     {currentUser.admin && (
                       <Nav.Item>
-                        <LinkContainer to="all-users">
+                        <LinkContainer to="/all-users">
                           <Nav.Link>Alle User</Nav.Link>
                         </LinkContainer>
                       </Nav.Item>
                     )}
+                    <Nav.Item>
+                      <Button
+                        variant="transparent"
+                        onClick={() => setShowModal(true)}
+                      >
+                        Log Out
+                      </Button>
+                    </Nav.Item>
                   </NavDropdown>
                 </>
               )}
             </Nav>
           </Navbar.Collapse>
+          <ConfirmModal
+            title="Log Out"
+            message="Möchtest du dich wirklich ausloggen?"
+            onClose={() => setShowModal(false)}
+            showModal={showModal}
+            onConfirm={() => logoutofApp()}
+            icon={<BsHandThumbsUp />}
+            variant="primary"
+          />
         </div>
       </Navbar>
     </>

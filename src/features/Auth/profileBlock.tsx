@@ -47,7 +47,6 @@ const Profile = () => {
 
   return (
     <div className="container">
-      <h1>Nutzer Profil</h1>
       <Form>
         <Form.Group className="input-group__user-email">
           <Form.Label>E-Mail</Form.Label>
@@ -117,6 +116,8 @@ const Profile = () => {
         onClose={() => setShowModal(false)}
         showModal={showModal}
         onConfirm={() => dispatchDelete()}
+        icon={<BsTrash />}
+        variant="danger"
       />
     </div>
   );

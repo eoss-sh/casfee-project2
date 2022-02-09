@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { auth } from "../../config/firebase";
+import { createBrowserHistory } from "history";
 import {
   deleteUserFunc,
   getAdditionalUserInfo,
@@ -7,6 +8,8 @@ import {
 } from "./authApi";
 import logging from "../../config/logging";
 import User, { AuthState, LoginData } from "../../interfaces/user";
+
+const history = createBrowserHistory();
 
 const initialState: AuthState = {
   user: {
@@ -34,6 +37,8 @@ export const loginWithUsernameAndPassword = createAsyncThunk(
         "appUser",
         userCreds.user?.uid
       );
+      history.push("/statistics");
+      window.location.reload();
       return {
         email: userCreds.user?.email,
         uid: userCreds.user?.uid,

@@ -1,12 +1,4 @@
-import React from "react";
-import { SecondaryLink } from "../../styles/buttons";
-import {
-  HeroContainer,
-  HeroImage,
-  HeroSubTitel,
-  HeroTitel,
-} from "../../styles/hero";
-import { Container } from "../../styles/styles";
+import { Button } from "react-bootstrap";
 
 interface HeroProps {
   title: string;
@@ -24,16 +16,18 @@ const Hero = ({
   buttonText,
 }: HeroProps) => {
   return (
-    <HeroContainer>
-      <HeroImage src={image} />
-      <Container>
-        <HeroTitel>{title}</HeroTitel>
-        <HeroSubTitel>{subtitle}</HeroSubTitel>
+    <section className="hero">
+      <img className="hero-image" src={image} alt="hero" />
+      <div className="container">
+        <h1 className="hero-title">{title}</h1>
+        <h4 className="hero-subtitle">{subtitle}</h4>
         {buttonLink && (
-          <SecondaryLink href={buttonLink}>{buttonText}</SecondaryLink>
+          <Button variant="secondary" href={buttonLink}>
+            {buttonText}
+          </Button>
         )}
-      </Container>
-    </HeroContainer>
+      </div>
+    </section>
   );
 };
 

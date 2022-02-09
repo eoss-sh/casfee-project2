@@ -13,6 +13,7 @@ import Header from "./features/Header/Header";
 import Footer from "./components/Footer";
 import routes from "./config/routes";
 import AuthRoute from "./components/AuthRoute";
+import AdminRoute from "./components/AdminRoute";
 import { getAdditionalUserInfo } from "./features/Auth/authApi";
 
 const App = () => {
@@ -54,7 +55,13 @@ const App = () => {
                   path={route.path}
                   exact={route.exact}
                   render={(routeProps: RouteComponentProps<any>) => {
-                    if (route.protected) {
+                    if (route.adminOnly) {
+                      return (
+                        <AdminRoute>
+                          <route.component {...routeProps} />
+                        </AdminRoute>
+                      );
+                    } else if (route.protected) {
                       return (
                         <AuthRoute>
                           <route.component {...routeProps} />

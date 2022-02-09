@@ -1,5 +1,4 @@
 import { Modal, Button } from "react-bootstrap";
-import { BsTrash } from "react-icons/bs";
 
 export interface ConfirmModalProps {
   title: string;
@@ -7,10 +6,13 @@ export interface ConfirmModalProps {
   onClose: () => void;
   showModal: boolean;
   onConfirm: () => void;
+  icon: React.ReactNode;
+  variant: string;
 }
 
 const ConfirmModal = (props: ConfirmModalProps) => {
-  const { title, message, onConfirm, onClose, showModal } = props;
+  const { title, message, onConfirm, onClose, showModal, variant, icon } =
+    props;
 
   return (
     <Modal show={showModal}>
@@ -22,8 +24,8 @@ const ConfirmModal = (props: ConfirmModalProps) => {
         <Button variant="secondary" onClick={onClose}>
           Abbrechen
         </Button>
-        <Button variant="danger" onClick={onConfirm}>
-          <BsTrash />
+        <Button variant={variant} onClick={onConfirm}>
+          {icon}
           Bestätigen
         </Button>
       </Modal.Footer>

@@ -2,6 +2,7 @@ $theme-colors: (
   "primary": #3aaed8,
   "secondary": #fcca46,
   "danger": #ff5b57,
+  "theme": #233d4d,
 );
 
 @import "~bootstrap/scss/bootstrap";
@@ -12,6 +13,7 @@ $theme-colors: (
 @import "./styles/elements/various";
 @import "./styles/elements/footer";
 @import "./styles/elements/header";
+@import "./styles/elements/heros";
 @import "./styles/global/typo";
 @import "./styles/features/auth";
 @import "./styles/features/course";

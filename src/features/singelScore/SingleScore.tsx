@@ -1,23 +1,35 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchSingleScore } from "./singleScoreSlice";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../helpers/hooks";
-import { updateScore, updateSingleScore } from "./singleScoreSlice";
+import { updateSingleScore } from "./singleScoreSlice";
 import ParamTypes from "../../interfaces/params";
 import SmallHero from "../../components/SmallHero";
-import { HoleList, Hole } from "../../styles/scores";
-import { Icon } from "../../styles/elements";
-import { StatsCotainer, Stat, StatNumber } from "../../styles/stats";
-import { FaTrophy } from "react-icons/fa";
-import { GiCondorEmblem, GiGolfFlag } from "react-icons/gi";
-import { MdModeEditOutline } from "react-icons/md";
-import { Container } from "../../styles/styles";
+import { Card, Row, Col, Button, Table } from "react-bootstrap";
+import scoreIcon from "../../assets/score.png";
+import firIcon from "../../assets/fir.png";
+import girIcon from "../../assets/gir.png";
+import puttsIcon from "../../assets/putts.png";
+import {
+  BsHandThumbsUp,
+  BsHandThumbsDown,
+  BsCheckCircle,
+  BsXCircle,
+} from "react-icons/bs";
 
 const SingleScore = () => {
   const { id } = useParams<ParamTypes>();
   const dispatch = useDispatch();
   const singleScore = useAppSelector((state) => state.singleScore);
+  const reverseScoreCard = [...singleScore.score.scorecard];
+
+  const statCards = [
+    { stat: singleScore.score.score, title: "Score", icon: scoreIcon },
+    { stat: singleScore.score.totalPutts, title: "Putts", icon: puttsIcon },
+    { stat: singleScore.score.totalFIR, title: "FIR", icon: firIcon },
+    { stat: singleScore.score.totalGIR, title: "GIR", icon: girIcon },
+  ];
 
   const submitUpdate = () => {
     dispatch(updateSingleScore({ id: id, data: singleScore.score.scorecard }));
@@ -31,58 +43,64 @@ const SingleScore = () => {
     <>
       <SmallHero
         title={`Runde im ${singleScore.score?.course}`}
-        subtitle={`gespielt am ${singleScore.score.date}`}
+        subtitle={`gespielt am ${singleScore.score.date
+          .toDate()
+          .toLocaleDateString()}`}
       />
-      <StatsCotainer>
-        <Stat>
-          <StatNumber>
-            <FaTrophy /> {singleScore.score.score}
-          </StatNumber>
-        </Stat>
-        <Stat>
-          <StatNumber>
-            <GiGolfFlag /> {singleScore.score.totalPutts}
-          </StatNumber>
-        </Stat>
-        <Stat>
-          <StatNumber>
-            <GiGolfFlag /> {singleScore.score.totalFIR}
-          </StatNumber>
-        </Stat>
-        <Stat>
-          <StatNumber>
-            <GiGolfFlag /> {singleScore.score.totalGIR}
-          </StatNumber>
-        </Stat>
-      </StatsCotainer>
-      <Container>
-        <HoleList>
-          {singleScore.score.scorecard?.map((hole, index) => {
-            return (
-              <Hole key={index}>
-                <Icon>{hole.holeNo}</Icon>
-                <p>
-                  Putts:
-                  <input
-                    type="number"
-                    value={hole.putts}
-                    name="putts"
-                    onChange={(e) =>
-                      dispatch(
-                        updateScore({ index, value: e.target.valueAsNumber })
-                      )
-                    }
+      <div className="container">
+        <section className="stats">
+          <Row xs={2} md={2} lg={4}>
+            {statCards.map((stat, i) => (
+              <Col key={i}>
+                <Card className="stats-card">
+                  <Card.Img
+                    className="stats-card__image"
+                    variant="top"
+                    src={stat.icon}
                   />
-                </p>
-                <p>Score: {hole.score}</p>
-                <p>GIR: {hole.gir ? "yes" : "no"}</p>
-                <p>FIR: {hole.fir ? "yes" : "NO"}</p>
-              </Hole>
-            );
-          })}
-        </HoleList>
-        <button onClick={submitUpdate}>Update</button>
-      </Container>
+                  <Card.Body>
+                    <Card.Title className="stats-card__title">
+                      &empty; {stat.title}
+                    </Card.Title>
+                    <Card.Text className="stats-card__text">
+                      {stat.stat ? stat.stat : "71.2"}
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </section>
+        <section className="scorecard">
+          <Table responsive>
+            <thead>
+              <tr>
+                <th>Nr.</th>
+                <th>Schläge</th>
+                <th>Putts</th>
+                <th>GIR</th>
+                <th>FIR</th>
+              </tr>
+            </thead>
+            <tbody>
+              {reverseScoreCard.reverse().map((hole, i) => (
+                <tr key={i}>
+                  <td>{hole.holeNo}</td>
+                  <td>{hole.score}</td>
+                  <td>{hole.putts}</td>
+                  <td>
+                    {hole.gir ? <BsHandThumbsUp /> : <BsHandThumbsDown />}
+                  </td>
+                  <td>{hole.fir ? <BsCheckCircle /> : <BsXCircle />}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </section>
+        <Button variant="primary" onClick={submitUpdate}>
+          Update
+        </Button>
+      </div>
     </>
   );
 };

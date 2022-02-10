@@ -3,7 +3,10 @@
   justify-content: center;
   height: 20vh;
   background-color: var(--dark-blue);
-  margin: 5rem 0;
+  margin: 3.5rem 0;
+  @include md {
+    margin: 5rem 0;
+  }
   &-content {
     display: flex;
     flex-flow: column;

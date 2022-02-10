@@ -98,7 +98,7 @@ export default function Header() {
                     )}
                     <Nav.Item>
                       <Button
-                        variant="transparent"
+                        variant="primary"
                         onClick={() => setShowModal(true)}
                       >
                         Log Out

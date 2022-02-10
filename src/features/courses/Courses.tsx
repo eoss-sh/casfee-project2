@@ -1,16 +1,17 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../helpers/hooks";
+import { Link } from "react-router-dom";
 import { fetchCoursesList } from "./coursesSlice";
 import Hero from "../../components/Hero";
+import SpinnerComp from "../../components/Spinner";
 import image from "./images/course1.jpg";
-import SingleCourseCard from "../SingleCourse/singleCourseCard";
-import { CourseListe } from "../../styles/courses";
-import { Container } from "../../styles/styles";
+import { Card, Col, Row } from "react-bootstrap";
 
 const Courses = () => {
   const dispatch = useDispatch();
   const courses = useAppSelector((state) => state.courses.courses);
+  const loading = useAppSelector((state) => state.courses.loading);
 
   useEffect(() => {
     dispatch(fetchCoursesList());
@@ -25,22 +26,35 @@ const Courses = () => {
         buttonLink="/register"
         buttonText="Registrieren"
       />
-      <Container>
-        <h2>Golfplätze der Schweiz</h2>
-        <CourseListe>
-          {courses.map((course) => {
-            return (
-              <SingleCourseCard
-                key={course.course.uid}
-                name={course.course.name}
-                shortDesc={course.course.shortDesc}
-                id={course.course.uid}
-                url={course.course.url}
-              />
-            );
-          })}
-        </CourseListe>
-      </Container>
+      {loading ? (
+        <SpinnerComp />
+      ) : (
+        <section className="courses-cards">
+          <div className="container">
+            <Row xs={1} md={2} className="g-4">
+              {courses.map((course) => {
+                return (
+                  <Col key={course.course.uid}>
+                    <Card>
+                      <Card.Img variant="top" src={course.course.url} />
+                      <Card.Body>
+                        <Card.Title>{course.course.name}</Card.Title>
+                        <Card.Text>{course.course.shortDesc}</Card.Text>
+                        <Link
+                          className="btn btn-primary"
+                          to={`/course/${course.course.uid}`}
+                        >
+                          Details
+                        </Link>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                );
+              })}
+            </Row>
+          </div>
+        </section>
+      )}
     </>
   );
 };

@@ -57,7 +57,7 @@ const Profile = () => {
             value={user.email || ""}
           />
         </Form.Group>
-        <Row>
+        <Row xs={1} lg={2}>
           <Col>
             <Form.Group>
               <Form.Label>Name</Form.Label>

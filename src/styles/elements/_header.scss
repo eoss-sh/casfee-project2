@@ -5,7 +5,11 @@
 }
 
 .navbar-nav {
-  gap: 1rem;
+  gap: 2rem;
+  padding-top: 2rem;
+  @include md {
+    padding-top: 0;
+  }
   .nav-item {
     display: flex;
     align-items: center;
@@ -16,6 +20,12 @@
     @include lg {
       height: 4rem;
     }
+    a {
+      font-size: 1.5rem;
+      @include md {
+        font-size: 1rem;
+      }
+    }
     .dropdown-toggle {
       &::after {
         content: none;
@@ -24,11 +34,12 @@
     .dropdown-menu {
       position: absolute;
       border: none;
-      background-color: var(--light-blue);
+      background-color: var(--dark-blue);
       border-radius: 0;
       min-width: 12rem;
       margin-left: -7%;
       width: 114%;
+      padding: 5% 14%;
     }
     .nav-link {
       color: var(--white);

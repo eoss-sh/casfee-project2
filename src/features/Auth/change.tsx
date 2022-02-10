@@ -1,28 +1,26 @@
 import React, { useState } from "react";
+import { Button } from "react-bootstrap";
 import { useHistory } from "react-router";
 import ErrorText from "../../components/ErrorText";
 import { auth } from "../../config/firebase";
 import logging from "../../config/logging";
-import { MainButton } from "../../styles/buttons";
-import { FormContainer, Input } from "../../styles/forms";
-import { Header2 } from "../../styles/type";
+import { Form, Col, InputGroup, Row } from "react-bootstrap";
+import { BiShowAlt } from "react-icons/bi";
 
 const ChangePwPage = () => {
-  const [changing, setChanging] = useState<boolean>(false);
   const [newPassword, setNewPassword] = useState<string>("");
-  const [newPasswordConfirm, setNewPasswordConfirm] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const [passwordShow, setPasswordShow] = useState<boolean>(false);
 
   const history = useHistory();
 
+  const togglePassword = () => {
+    setPasswordShow(!passwordShow);
+  };
+
   const changePassword = () => {
-    if (newPassword !== newPasswordConfirm) {
-      setError("Die eingegebenen Passwörter stimmen nicht überein.");
-      return;
-    }
     if (error !== "") setError("");
 
-    setChanging(true);
     const user = auth.currentUser;
     user
       ?.updatePassword(newPassword)
@@ -43,35 +41,36 @@ const ChangePwPage = () => {
             "Im Moment können Sie sich nicht anmelden. Bitte probieren Sie es später wieder."
           );
         }
-        setChanging(false);
       });
   };
   return (
-    <FormContainer>
-      <Header2>Passwort ändern</Header2>
-      <Input
-        large
-        type="password"
-        name="newPassword"
-        id="newPassword"
-        placeholder="Neues Passwort"
-        onChange={(event) => setNewPassword(event.target.value)}
-        value={newPassword}
-      />
-      <Input
-        large
-        type="password"
-        name="newPasswordConfirm"
-        id="newPasswordCOnfirm"
-        placeholder="Neues Passwort bestätigen"
-        onChange={(event) => setNewPasswordConfirm(event.target.value)}
-        value={newPasswordConfirm}
-      />
-      <MainButton disabled={changing} onClick={() => changePassword()}>
-        Passwort ändern
-      </MainButton>
-      <ErrorText error={error} />
-    </FormContainer>
+    <section className="password-change">
+      <div className="container">
+        <Row xs={1} lg={2} className="password-change__input-row">
+          <Form.Group as={Col} className="mb-3">
+            <Form.Label>Neues Passwort</Form.Label>
+            <InputGroup>
+              <Form.Control
+                type="password"
+                placeholder="Neues Passwort"
+                onChange={(event) => setNewPassword(event.target.value)}
+                value={newPassword}
+              />
+              <InputGroup.Text>
+                <BiShowAlt onClick={togglePassword} />
+              </InputGroup.Text>
+            </InputGroup>
+          </Form.Group>
+          <Button
+            className="btn-primary__change"
+            onClick={() => changePassword()}
+          >
+            Passwort ändern
+          </Button>
+        </Row>
+        <ErrorText error={error} />
+      </div>
+    </section>
   );
 };
 

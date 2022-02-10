@@ -44,12 +44,16 @@ const coursesReducer = createSlice({
     builder
       .addCase(fetchCoursesList.fulfilled, (state: coursesState, action) => {
         state.courses = action.payload;
+        state.loading = false;
       })
       .addCase(fetchCoursesList.rejected, (state: coursesState) => {
         state = {
           courses: [],
-          loading: true,
+          loading: false,
         };
+      })
+      .addCase(fetchCoursesList.pending, (state: coursesState) => {
+        state.loading = true;
       });
   },
 });

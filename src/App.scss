@@ -14,7 +14,9 @@ $theme-colors: (
 @import "./styles/elements/footer";
 @import "./styles/elements/header";
 @import "./styles/elements/heros";
+@import "./styles/elements/spinner";
 @import "./styles/global/typo";
 @import "./styles/features/auth";
 @import "./styles/features/course";
 @import "./styles/features/allusers";
+@import "./styles/features/stats";

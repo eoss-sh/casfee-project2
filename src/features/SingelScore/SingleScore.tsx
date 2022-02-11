@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { fetchSingleScore } from "./singleScoreSlice";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../helpers/hooks";
+import localDate from "../../helpers/functions/date";
 import { updateSingleScore } from "./singleScoreSlice";
 import ParamTypes from "../../interfaces/params";
 import SmallHero from "../../components/SmallHero";
@@ -43,9 +44,7 @@ const SingleScore = () => {
     <>
       <SmallHero
         title={`Runde im ${singleScore.score?.course}`}
-        subtitle={`gespielt am ${singleScore.score.date
-          .toDate()
-          .toLocaleDateString()}`}
+        subtitle={`gespielt am ${localDate(singleScore.score?.date.seconds)}`}
       />
       <div className="container">
         <section className="stats">

@@ -19,3 +19,15 @@
 .table-input__small {
   width: 5rem;
 }
+
+.form-check-input:checked {
+  background-color: var(--light-blue);
+  border: var(--light-blue) solid 1px;
+}
+
+.no-mobile {
+  display: none;
+  @include sm {
+    display: table-cell;
+  }
+}

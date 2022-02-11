@@ -33,6 +33,7 @@ const App = () => {
             admin: tokens?.claims.admin,
             name: userData.data()?.name,
             hcp: userData.data()?.hcp,
+            loading: false,
           })
         );
       } else {

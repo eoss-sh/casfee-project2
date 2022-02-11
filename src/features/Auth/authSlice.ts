@@ -20,6 +20,7 @@ const initialState: AuthState = {
     url: "",
     name: "",
     hcp: undefined,
+    loading: true,
   },
 };
 
@@ -47,6 +48,7 @@ export const loginWithUsernameAndPassword = createAsyncThunk(
         url: additionalUserInfo?.data()?.url,
         name: additionalUserInfo?.data()?.name,
         hcp: additionalUserInfo?.data()?.hcp,
+        loading: false,
       };
     } catch (error) {
       const msg = error + "";
@@ -120,6 +122,7 @@ const authReducer = createSlice({
       .addCase(loginWithUsernameAndPassword.pending, (state: AuthState) => {
         state.user.email = "";
         state.user.uid = "";
+        state.user.loading = true;
       })
       .addCase(
         loginWithUsernameAndPassword.fulfilled,
@@ -142,6 +145,7 @@ const authReducer = createSlice({
           url: "",
           name: "",
           hcp: undefined,
+          loading: false,
         };
       })
       .addCase(updateUserData.fulfilled, (state: AuthState, action) => {
@@ -161,6 +165,7 @@ const authReducer = createSlice({
           url: "",
           name: "",
           hcp: undefined,
+          loading: false,
         };
       })
       .addCase(deleteUser.rejected, (state: AuthState, action) => {});

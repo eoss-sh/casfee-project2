@@ -15,6 +15,7 @@ export interface AuthState {
     url: string | undefined;
     name: string | undefined;
     hcp: number | undefined;
+    loading: boolean;
   };
 }
 export interface LoginData {

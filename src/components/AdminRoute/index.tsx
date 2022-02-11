@@ -10,7 +10,7 @@ const AdminRoute = (props: IAdminRouteProps) => {
   const { children } = props;
   const currentUser = useAppSelector((state) => state.auth.user);
 
-  if (!currentUser.admin) {
+  if (!currentUser.admin && !currentUser.loading) {
     return <Redirect to="/register" />;
   }
 

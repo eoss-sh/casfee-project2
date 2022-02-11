@@ -60,16 +60,7 @@ export const InputRow = styled.section`
   padding-left: 5%;
 `;
 
-export const Selectors = styled.section`
-  display: flex;
-  flex-flow: column;
-  justify-content: space-around;
-  margin: 5% 0;
-
-  @media ${device.l} {
-    flex-flow: row wrap;
-  }
-`;
+export const Selectors = styled.section``;
 export const CourseSelector = styled.select`
   padding: 1%;
   min-height: 2rem;

@@ -7,21 +7,10 @@ import { fetchCourse } from "../SingleCourse/singleCourseSlice";
 import { ScorecardEntry } from "../../interfaces/scores";
 import { database } from "../../config/firebase";
 import logging from "../../config/logging";
-import {
-  CourseSelector,
-  FormContainer,
-  Input,
-  Selectors,
-} from "../../styles/forms";
-import {
-  ScorecardRow,
-  Scorecard,
-  ScorecardTitelRow,
-  ScorecardTitel,
-} from "../../styles/scorecard";
-import { Container } from "../../styles/styles";
-import { MainButton } from "../../styles/buttons";
+import { Table, Form, Button, Row, Col } from "react-bootstrap";
 import SmallHero from "../../components/SmallHero";
+import ConfirmModal from "../../components/ConfirmModal";
+import { BsCheckCircle } from "react-icons/bs";
 
 interface ScoreInputsInterface {
   [key: string]: ScorecardEntry;
@@ -33,8 +22,9 @@ const AddScore = () => {
   const courses = useAppSelector((state) => state.courses.courses);
   const user = useAppSelector((state) => state.auth.user);
   const course = useAppSelector((state) => state.course.course);
-  const [distance, setDistance] = useState("");
+  const [distance, setDistance] = useState("dist1");
   const [scorecard, setScorecard] = useState<ScoreInputsInterface>({});
+  const [showModal, setShowModal] = useState(false);
 
   // Function to select course from dropdown
   const handleSetSelectedCourse = (
@@ -108,6 +98,7 @@ const AddScore = () => {
 
   useEffect(() => {
     dispatch(fetchCoursesList());
+    dispatch(fetchCourse("3pjVPyi0SqPgQPeV6i47"));
   }, [dispatch]);
 
   return (
@@ -116,93 +107,130 @@ const AddScore = () => {
         title="Los geht's!"
         subtitle="Platz und Tee auswählen - und loslegen."
       />
-      <Container>
-        <Selectors>
-          <CourseSelector
-            name="course"
-            id="course"
-            onChange={(e) => setDistance(e.target.value)}
-          >
-            <option disabled selected value="">
-              -- Distanz auswählen --
-            </option>
-            <option value="dist1">Mens Champions</option>
-            <option value="dist2">Mens Medal</option>
-            <option value="dist3">Women Champions</option>
-            <option value="dist4">Women Medal</option>
-          </CourseSelector>
-          <CourseSelector
-            name="distance"
-            id="distance"
-            onChange={(e) => handleSetSelectedCourse(e, e.target.value)}
-          >
-            <option disabled selected value="">
-              -- Kurs auswählen --
-            </option>
-            {courses.map((course) => (
-              <option key={course.course.uid} value={course.course.uid}>
-                {course.course.name}
-              </option>
-            ))}
-          </CourseSelector>
-        </Selectors>
-        <FormContainer>
-          <Scorecard>
-            <ScorecardTitelRow columnsAmount={8}>
-              <ScorecardTitel showMobile={true}>No.</ScorecardTitel>
-              <ScorecardTitel showMobile={true}>Par</ScorecardTitel>
-              <ScorecardTitel showMobile={true}>HCP</ScorecardTitel>
-              <ScorecardTitel showMobile={true}>Distanz</ScorecardTitel>
-              <ScorecardTitel showMobile={false}>Score</ScorecardTitel>
-              <ScorecardTitel showMobile={false}>Putts</ScorecardTitel>
-              <ScorecardTitel showMobile={false}>GIR</ScorecardTitel>
-              <ScorecardTitel showMobile={false}>FIR</ScorecardTitel>
-            </ScorecardTitelRow>
-            {course.holes?.map((hole, index) => {
-              return (
-                <ScorecardRow key={index} columnsAmount={8}>
-                  <p>{hole.no}</p>
-                  <p>{hole.par}</p>
-                  <p>{hole.hcp}</p>
-                  {distance === "dist1" && <p>{hole.dist1}</p>}
-                  {distance === "dist2" && <p>{hole.dist2}</p>}
-                  {distance === "dist3" && <p>{hole.dist3}</p>}
-                  {distance === "dist4" && <p>{hole.dist4}</p>}
-                  <Input
-                    large
-                    type="number"
-                    name="score"
-                    placeholder="Score"
-                    onChange={(e) => handleScoreChange(e, hole.no as number)}
-                    value={scorecard?.[hole.no as number]?.score || 0}
-                  />
-                  <Input
-                    large
-                    type="number"
-                    name="putts"
-                    placeholder="Putts"
-                    onChange={(e) => handleScoreChange(e, hole.no as number)}
-                    value={scorecard?.[hole.no as number]?.putts || 0}
-                  />
-                  <input
-                    type="checkbox"
-                    name="gir"
-                    onChange={(e) => handleScoreChange(e, hole.no as number)}
-                    checked={scorecard?.[hole.no as number]?.gir}
-                  />
-                  <input
-                    type="checkbox"
-                    name="fir"
-                    onChange={(e) => handleScoreChange(e, hole.no as number)}
-                    checked={scorecard?.[hole.no as number]?.fir}
-                  />
-                </ScorecardRow>
-              );
-            })}
-            <MainButton onClick={() => addScore()}>Submit Score</MainButton>
-          </Scorecard>
-        </FormContainer>
-      </Container>
+      <div className="container addscore">
+        <section className="addscore-selectors">
+          <Row xs={1} lg={2}>
+            <Col>
+              <Form.Select
+                name="course"
+                onChange={(e) => handleSetSelectedCourse(e, e.target.value)}
+              >
+                {courses.map((course) => (
+                  <option key={course.course.uid} value={course.course.uid}>
+                    {course.course.name}
+                  </option>
+                ))}
+              </Form.Select>
+            </Col>
+            <Col>
+              <Form.Select
+                name="distance"
+                onChange={(e) => setDistance(e.target.value)}
+              >
+                <option value="dist1">Mens Champions</option>
+                <option value="dist2">Mens Medal</option>
+                <option value="dist3">Women Champions</option>
+                <option value="dist4">Women Medal</option>
+              </Form.Select>
+            </Col>
+          </Row>
+        </section>
+        <section className="addscore-scorecard">
+          <Table responsive>
+            <thead>
+              <tr>
+                <th>Nr.</th>
+                <th className="no-mobile">Par</th>
+                <th className="no-mobile">HCP</th>
+                <th className="no-mobile">Distanz</th>
+                <th>Schläge</th>
+                <th>Putts</th>
+                <th>FIR</th>
+                <th>GIR</th>
+              </tr>
+            </thead>
+            <tbody>
+              {course.holes?.map((hole, index) => {
+                return (
+                  <tr key={index}>
+                    <td>{hole.no}</td>
+                    <td className="no-mobile">{hole.par}</td>
+                    <td className="no-mobile">{hole.hcp}</td>
+                    {distance === "dist1" && (
+                      <td className="no-mobile">{hole.dist1}</td>
+                    )}
+                    {distance === "dist2" && (
+                      <td className="no-mobile">{hole.dist2}</td>
+                    )}
+                    {distance === "dist3" && (
+                      <td className="no-mobile">{hole.dist3}</td>
+                    )}
+                    {distance === "dist4" && (
+                      <td className="no-mobile">{hole.dist4}</td>
+                    )}
+                    <td>
+                      <input
+                        className="table-input table-input__small"
+                        type="number"
+                        name="score"
+                        placeholder="Score"
+                        onChange={(e) =>
+                          handleScoreChange(e, hole.no as number)
+                        }
+                        value={scorecard?.[hole.no as number]?.score || 0}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        className="table-input table-input__small"
+                        type="number"
+                        name="putts"
+                        placeholder="Putts"
+                        onChange={(e) =>
+                          handleScoreChange(e, hole.no as number)
+                        }
+                        value={scorecard?.[hole.no as number]?.putts || 0}
+                      />
+                    </td>
+                    <td>
+                      <Form.Check
+                        type="switch"
+                        name="gir"
+                        onChange={(e) =>
+                          handleScoreChange(e, hole.no as number)
+                        }
+                        checked={scorecard?.[hole.no as number]?.gir || false}
+                      />
+                    </td>
+                    <td>
+                      <Form.Check
+                        type="switch"
+                        name="fir"
+                        onChange={(e) =>
+                          handleScoreChange(e, hole.no as number)
+                        }
+                        checked={scorecard?.[hole.no as number]?.fir || false}
+                      />
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        </section>
+        <Button variant="primary" onClick={() => setShowModal(true)}>
+          Runde speichern
+        </Button>
+        <ConfirmModal
+          title="Runde speichern"
+          message="Möchtest du die Runde wirklich speichern? Gespeicherte Runden können nicht mehr geändert werden."
+          onClose={() => setShowModal(false)}
+          showModal={showModal}
+          onConfirm={() => addScore()}
+          icon={<BsCheckCircle />}
+          variant="primary"
+        />
+      </div>
     </>
   );
 };

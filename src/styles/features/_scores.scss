@@ -12,3 +12,16 @@
     }
   }
 }
+
+.addscore {
+  &-selectors {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    margin: 5% 0;
+
+    @include md {
+      flex-flow: row wrap;
+    }
+  }
+}

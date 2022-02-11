@@ -1,3 +1,6 @@
+// Specific Breakpoint for Removing Table Columns in Add Score
+$screen-sm-max: 540px;
+
 // Small tablets (portrait view)
 $screen-md-max: 768px;
 
@@ -9,6 +12,13 @@ $screen-xl-max: 1200px;
 
 // Large tablets and desktops
 $screen-xxl-max: 1400px;
+
+// Medium devices
+@mixin sm {
+  @media (min-width: #{$screen-sm-max}) {
+    @content;
+  }
+}
 
 // Medium devices
 @mixin md {

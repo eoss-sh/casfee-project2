@@ -1,0 +1,14 @@
+.bestscores {
+  &-list {
+    &__single {
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+      gap: 1rem;
+      &:not(:last-child) {
+        margin-bottom: 1rem;
+      }
+      list-style: none;
+    }
+  }
+}

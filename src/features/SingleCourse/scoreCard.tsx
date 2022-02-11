@@ -1,14 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../helpers/hooks";
-import {
-  Scorecard,
-  ScorecardRow,
-  ScorecardTitel,
-  ScorecardTitelRow,
-  ScorecardTotalRow,
-} from "../../styles/scorecard";
+import { Table } from "react-bootstrap";
 import { fetchCourse } from "./singleCourseSlice";
+import { BsTrophy } from "react-icons/bs";
+
 interface scoreCardProps {
   id: string;
 }
@@ -28,39 +24,47 @@ const ScoreCard = ({ id }: scoreCardProps) => {
     }, 0);
 
   return (
-    <Scorecard>
-      <ScorecardTitelRow columnsAmount={7}>
-        <ScorecardTitel>No.</ScorecardTitel>
-        <ScorecardTitel>Par</ScorecardTitel>
-        <ScorecardTitel>HCP</ScorecardTitel>
-        <ScorecardTitel>Distanz 1</ScorecardTitel>
-        <ScorecardTitel>Distanz 2</ScorecardTitel>
-        <ScorecardTitel>Distanz 3</ScorecardTitel>
-        <ScorecardTitel>Distanz 4</ScorecardTitel>
-      </ScorecardTitelRow>
-      {data.course.holes?.map((hole, index) => {
-        return (
-          <ScorecardRow key={index} columnsAmount={7}>
-            <p>{hole.no}</p>
-            <p>{hole.par}</p>
-            <p>{hole.hcp}</p>
-            <p>{hole.dist1}</p>
-            <p>{hole.dist2}</p>
-            <p>{hole.dist3}</p>
-            <p>{hole.dist4}</p>
-          </ScorecardRow>
-        );
-      })}
-      <ScorecardTotalRow columnsAmount={7}>
-        <ScorecardTitel></ScorecardTitel>
-        <ScorecardTitel>{getTotal("par")}</ScorecardTitel>
-        <ScorecardTitel></ScorecardTitel>
-        <ScorecardTitel>{getTotal("dist1")}</ScorecardTitel>
-        <ScorecardTitel>{getTotal("dist2")}</ScorecardTitel>
-        <ScorecardTitel>{getTotal("dist3")}</ScorecardTitel>
-        <ScorecardTitel>{getTotal("dist4")}</ScorecardTitel>
-      </ScorecardTotalRow>
-    </Scorecard>
+    <Table responsive>
+      <thead>
+        <tr>
+          <th>Nr.</th>
+          <th>Par</th>
+          <th>HCP</th>
+          <th>
+            Männer <BsTrophy />
+          </th>
+          <th>Männer</th>
+          <th>
+            Frauen <BsTrophy />
+          </th>
+          <th>Frauen</th>
+        </tr>
+      </thead>
+      <tbody>
+        {data.course.holes?.map((hole, index) => {
+          return (
+            <tr key={index}>
+              <td>{hole.no}</td>
+              <td>{hole.par}</td>
+              <td>{hole.hcp}</td>
+              <td>{hole.dist1}m</td>
+              <td>{hole.dist2}m</td>
+              <td>{hole.dist3}m</td>
+              <td>{hole.dist4}m</td>
+            </tr>
+          );
+        })}
+        <tr>
+          <td>Total</td>
+          <td>{getTotal("par")}</td>
+          <td></td>
+          <td>{getTotal("dist1")}m</td>
+          <td>{getTotal("dist2")}m</td>
+          <td>{getTotal("dist3")}m</td>
+          <td>{getTotal("dist4")}m</td>
+        </tr>
+      </tbody>
+    </Table>
   );
 };
 

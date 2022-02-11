@@ -7,11 +7,6 @@ import ScoreCard from "./scoreCard";
 import { fetchCourse } from "./singleCourseSlice";
 import BestScores from "../Scores/BestScores";
 import ParamTypes from "../../interfaces/params";
-import {
-  CourseDescription,
-  CourseTwoColumnsSection,
-} from "../../styles/course";
-import { Container } from "../../styles/styles";
 
 const SingleCourse = () => {
   const { id } = useParams<ParamTypes>();
@@ -25,13 +20,15 @@ const SingleCourse = () => {
   return (
     <>
       <Hero title={data.course.name} image={data.course.url} />
-      <Container>
-        <CourseDescription>{data.course.desc}</CourseDescription>
-        <CourseTwoColumnsSection>
+      <div className="container">
+        <section className="singlecourse">
+          <p className="singlecourse-description">{data.course.desc}</p>
+        </section>
+        <section className="singlecourse-stats">
           <ScoreCard id={id} />
           <BestScores />
-        </CourseTwoColumnsSection>
-      </Container>
+        </section>
+      </div>
     </>
   );
 };

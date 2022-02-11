@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchMultiScoresFunc } from "./scoresApi";
 import { Scores } from "../../interfaces/scores";
+import logging from "../../config/logging";
 
 interface fetchData {
   attribute: string;
@@ -16,6 +17,8 @@ const initialState: Scores = {
   averagePutts: 0,
   averageGIR: 0,
   averageFIR: 0,
+  error: "",
+  loading: false,
 };
 
 // Fetches multiple scores, all scores per user or all scores per course
@@ -55,13 +58,21 @@ const scoresReducer = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchMultiScores.fulfilled, (state, action) => {
-      state.scores = action.payload;
-    });
-    builder.addCase(fetchMultiScores.rejected, (state, action) => {
-      state.scores = [];
-      console.log(action.error);
-    });
+    builder
+      .addCase(fetchMultiScores.fulfilled, (state, action) => {
+        state.scores = action.payload;
+        state.loading = false;
+        state.error = "";
+      })
+      .addCase(fetchMultiScores.rejected, (state, action) => {
+        state.scores = [];
+        logging.error(action.error);
+        state.loading = false;
+      })
+      .addCase(fetchMultiScores.pending, (state) => {
+        state.loading = true;
+        state.scores = [];
+      });
   },
 });
 

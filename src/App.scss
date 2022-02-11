@@ -5,9 +5,17 @@ $theme-colors: (
   "theme": #233d4d,
 );
 
-@import "~bootstrap/scss/bootstrap";
+// General Layout and Varaibles
 @import "./styles/layout/container";
 @import "./styles/layout/grid";
+
+// Core Bootstrap Import
+@import "~bootstrap/scss/bootstrap";
+
+// Global Styles
+@import "./styles/global/typo";
+
+// Elements that are used in multiple components
 @import "./styles/elements/buttons";
 @import "./styles/elements/forms";
 @import "./styles/elements/various";
@@ -15,8 +23,10 @@ $theme-colors: (
 @import "./styles/elements/header";
 @import "./styles/elements/heros";
 @import "./styles/elements/spinner";
-@import "./styles/global/typo";
+
+//Features and Single Components
 @import "./styles/features/auth";
 @import "./styles/features/course";
 @import "./styles/features/allusers";
 @import "./styles/features/stats";
+@import "./styles/features/scores";

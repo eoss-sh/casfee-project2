@@ -18,6 +18,8 @@ export interface Scores {
   averagePutts: number;
   averageGIR: number;
   averageFIR: number;
+  error: string;
+  loading: boolean;
 }
 
 export interface ScorecardEntry {

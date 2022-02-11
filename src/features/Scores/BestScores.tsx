@@ -2,14 +2,14 @@ import React, { useEffect } from "react";
 import { fetchMultiScores } from "./scoresSlice";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../helpers/hooks";
-import { BestScore, TrophyIcon } from "../../styles/scores";
-import { Container } from "../../styles/styles";
 import UserData from "../../components/UserData";
-import { FaTrophy } from "react-icons/fa";
+import Spinner from "../../components/Spinner";
+import trophyIcon from "../../assets/champs.png";
+import { Card } from "react-bootstrap";
 
 const BestScores = () => {
   const dispatch = useDispatch();
-  const scores = useAppSelector((state) => state.scores.scores);
+  const scores = useAppSelector((state) => state.scores);
   const data = useAppSelector((state) => state.course);
 
   useEffect(() => {
@@ -25,23 +25,28 @@ const BestScores = () => {
   }, [dispatch, data.course.name]);
 
   return (
-    <>
-      <Container>
-        <TrophyIcon>
-          <FaTrophy />
-        </TrophyIcon>
-        {scores.map((score) => {
-          const roundDate = score.date?.toDate().toLocaleDateString();
-          return (
-            <BestScore key={score.id}>
-              <p>{roundDate}</p>
-              <UserData id={score.appUser} />
-              <p>{score.score}</p>
-            </BestScore>
-          );
-        })}
-      </Container>
-    </>
+    <Card className="bestscores stats-card">
+      <Card.Img className="stats-card__image" variant="top" src={trophyIcon} />
+      <Card.Body>
+        <Card.Title className="stats-card__title">Bests Scores</Card.Title>
+        <ul className="bestsocres-list">
+          {scores.loading ? (
+            <Spinner />
+          ) : (
+            scores.scores.map((score) => {
+              const roundDate = score.date?.toDate().toLocaleDateString();
+              return (
+                <li className="bestscores-list__single" key={score.id}>
+                  <p>{roundDate}</p>
+                  <UserData id={score.appUser} />
+                  <p>{score.score} Schläge</p>
+                </li>
+              );
+            })
+          )}
+        </ul>
+      </Card.Body>
+    </Card>
   );
 };
 

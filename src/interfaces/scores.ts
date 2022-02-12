@@ -41,3 +41,7 @@ export interface ScoreOverview {
   totalFIR: number;
   totalGIR: number;
 }
+
+export interface ScoreInputsInterface {
+  [key: string]: ScorecardEntry;
+}

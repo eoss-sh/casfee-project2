@@ -71,7 +71,7 @@ const Statistics = () => {
                       &empty; {stat.title}
                     </Card.Title>
                     <Card.Text className="stats-card__text">
-                      {stat.stat ? stat.stat : "71.2"}
+                      {stat.stat ? stat.stat : "-"}
                     </Card.Text>
                   </Card.Body>
                 </Card>

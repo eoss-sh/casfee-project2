@@ -40,6 +40,7 @@ export const loginWithUsernameAndPassword = createAsyncThunk(
       );
       history.push("/statistics");
       window.location.reload();
+      console.log("reloaded");
       return {
         email: userCreds.user?.email,
         uid: userCreds.user?.uid,

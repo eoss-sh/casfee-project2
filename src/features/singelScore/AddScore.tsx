@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useAppSelector } from "../../helpers/hooks";
+import { getTotalIR, getTotalScore } from "../../helpers/functions/totals";
 import { fetchCoursesList } from "../Courses/coursesSlice";
+import { addScore } from "./singleScoresApi";
 import { useDispatch } from "react-redux";
 import { fetchCourse } from "../SingleCourse/singleCourseSlice";
-import { ScorecardEntry } from "../../interfaces/scores";
-import { database } from "../../config/firebase";
-import logging from "../../config/logging";
+import { ScoreInputsInterface } from "../../interfaces/scores";
 import { Table, Form, Button, Row, Col } from "react-bootstrap";
 import SmallHero from "../../components/SmallHero";
 import ConfirmModal from "../../components/ConfirmModal";
 import { BsCheckCircle } from "react-icons/bs";
-
-interface ScoreInputsInterface {
-  [key: string]: ScorecardEntry;
-}
 
 const AddScore = () => {
   const dispatch = useDispatch();
@@ -53,48 +49,29 @@ const AddScore = () => {
     });
   };
 
-  // Function to get Totals of different types of score
-  const getTotalScore = (attribute: string) => {
-    return Object.values(scorecard).reduce(
-      (acc, hole: any) => acc + hole[attribute],
-      0
-    );
-  };
-
-  // Function to get Total of GIR an FIR
-  const getTotalIR = (attribute: string) => {
-    return Object.values(scorecard).filter(
-      (hole: any) => hole[attribute] === true
-    ).length;
-  };
-
   // Function to add a new scorecard to the database
-  const addScore = async () => {
-    const date = new Date();
-    const score = {
-      date: date,
-      course: course.name,
-      appUser: user.uid,
-      score: getTotalScore("score"),
-      totalPutts: getTotalScore("putts"),
-      totalGIR: getTotalIR("gir"),
-      totalFIR: getTotalIR("fir"),
-    };
-    logging.info(score);
-    try {
-      const result = await database.collection("scores").add(score);
-      for (let [no, score] of Object.entries(scorecard)) {
-        await database
-          .collection("scores")
-          .doc(result.id)
-          .collection("scorecard")
-          .add({ ...score, holeNo: parseInt(no, 10) });
-      }
-      history.push("/scores");
-    } catch (error) {
-      logging.error(error);
-    }
+  const handleAddScore = async () => {
+    addScore(
+      course.name,
+      user.uid,
+      getTotalScore("score", scorecard),
+      getTotalScore("putts", scorecard),
+      getTotalIR("gir", scorecard),
+      getTotalIR("fir", scorecard),
+      scorecard
+    );
+    window.localStorage.setItem("scorecard", "");
+    history.push("/scores");
   };
+
+  // Save current Score in Local Storage and retrieve it when the page is reloaded
+  useEffect(() => {
+    setScorecard(JSON.parse(localStorage.getItem("scorecard") || "{}"));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("scorecard", JSON.stringify(scorecard));
+  }, [scorecard]);
 
   useEffect(() => {
     dispatch(fetchCoursesList());
@@ -132,6 +109,16 @@ const AddScore = () => {
                 <option value="dist3">Women Champions</option>
                 <option value="dist4">Women Medal</option>
               </Form.Select>
+            </Col>
+            <Col>
+              <Button
+                variant="danger"
+                onClick={() => {
+                  setScorecard({});
+                }}
+              >
+                Reset
+              </Button>
             </Col>
           </Row>
         </section>
@@ -226,7 +213,7 @@ const AddScore = () => {
           message="Möchtest du die Runde wirklich speichern? Gespeicherte Runden können nicht mehr geändert werden."
           onClose={() => setShowModal(false)}
           showModal={showModal}
-          onConfirm={() => addScore()}
+          onConfirm={() => handleAddScore()}
           icon={<BsCheckCircle />}
           variant="primary"
         />

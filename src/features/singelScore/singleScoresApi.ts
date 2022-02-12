@@ -64,3 +64,8 @@ export const addScore = async (
     logging.error(error);
   }
 };
+
+// Function to delete socrecard data
+export const deleteSingleScoreFunc = async (id: string) => {
+  database.collection("scores").doc(id).delete();
+};

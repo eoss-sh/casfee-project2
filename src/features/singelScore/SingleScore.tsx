@@ -1,39 +1,38 @@
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams, useHistory, Link } from "react-router-dom";
 import { fetchSingleScore } from "./singleScoreSlice";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../helpers/hooks";
 import localDate from "../../helpers/functions/date";
-import { updateSingleScore } from "./singleScoreSlice";
+import { updateSingleScore, deleteSingleScore } from "./singleScoreSlice";
 import ParamTypes from "../../interfaces/params";
 import SmallHero from "../../components/SmallHero";
-import { Card, Row, Col, Button, Table } from "react-bootstrap";
-import scoreIcon from "../../assets/score.png";
-import firIcon from "../../assets/fir.png";
-import girIcon from "../../assets/gir.png";
-import puttsIcon from "../../assets/putts.png";
+import StatsCards from "../../components/StatsCards";
+import ConfirmModal from "../../components/ConfirmModal";
+import { Button, Table } from "react-bootstrap";
 import {
   BsHandThumbsUp,
   BsHandThumbsDown,
   BsCheckCircle,
   BsXCircle,
+  BsTrash,
 } from "react-icons/bs";
 
 const SingleScore = () => {
   const { id } = useParams<ParamTypes>();
   const dispatch = useDispatch();
+  const history = useHistory();
   const singleScore = useAppSelector((state) => state.singleScore);
   const reverseScoreCard = [...singleScore.score.scorecard];
-
-  const statCards = [
-    { stat: singleScore.score.score, title: "Score", icon: scoreIcon },
-    { stat: singleScore.score.totalPutts, title: "Putts", icon: puttsIcon },
-    { stat: singleScore.score.totalFIR, title: "FIR", icon: firIcon },
-    { stat: singleScore.score.totalGIR, title: "GIR", icon: girIcon },
-  ];
+  const [showModal, setShowModal] = useState(false);
 
   const submitUpdate = () => {
     dispatch(updateSingleScore({ id: id, data: singleScore.score.scorecard }));
+  };
+
+  const dispatchDelete = () => {
+    dispatch(deleteSingleScore(id));
+    history.push("/scores");
   };
 
   useEffect(() => {
@@ -47,29 +46,13 @@ const SingleScore = () => {
         subtitle={`gespielt am ${localDate(singleScore.score?.date.seconds)}`}
       />
       <div className="container">
-        <section className="stats">
-          <Row xs={2} md={2} lg={4}>
-            {statCards.map((stat, i) => (
-              <Col key={i}>
-                <Card className="stats-card">
-                  <Card.Img
-                    className="stats-card__image"
-                    variant="top"
-                    src={stat.icon}
-                  />
-                  <Card.Body>
-                    <Card.Title className="stats-card__title">
-                      &empty; {stat.title}
-                    </Card.Title>
-                    <Card.Text className="stats-card__text">
-                      {stat.stat ? stat.stat : "-"}
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        </section>
+        <StatsCards
+          score={singleScore.score.score || 0}
+          putts={singleScore.score.totalPutts || 0}
+          fir={singleScore.score.totalFIR || 0}
+          gir={singleScore.score.totalGIR || 0}
+          compare={false}
+        />
         <section className="scorecard">
           <Table responsive>
             <thead>
@@ -96,9 +79,25 @@ const SingleScore = () => {
             </tbody>
           </Table>
         </section>
-        <Button variant="primary" onClick={submitUpdate}>
+        <Link to="/scores" className="btn btn-primary">
+          Zurück
+        </Link>
+        <Button variant="secondary" onClick={submitUpdate}>
           Update
         </Button>
+        <Button variant="danger" onClick={() => setShowModal(true)}>
+          <BsTrash />
+          Löschen
+        </Button>
+        <ConfirmModal
+          title="Score löschen"
+          message="Möchtest du diesen Score wirklich löschen?"
+          onClose={() => setShowModal(false)}
+          showModal={showModal}
+          onConfirm={() => dispatchDelete()}
+          icon={<BsTrash />}
+          variant="danger"
+        />
       </div>
     </>
   );

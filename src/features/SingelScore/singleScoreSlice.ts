@@ -3,6 +3,7 @@ import {
   fetchSingleScoreFunc,
   fetchSingleScoreCardFunc,
   updateSingleScoreCardFunc,
+  deleteSingleScoreFunc,
 } from "./singleScoresApi";
 import Score from "../../interfaces/scores";
 import logging from "../../config/logging";
@@ -36,6 +37,7 @@ export const fetchSingleScore = createAsyncThunk(
   }
 );
 
+// Updates one single score with a specific ID
 export const updateSingleScore = createAsyncThunk(
   "singleScore/updateSingleScore",
   async (updateData: updateData) => {
@@ -45,6 +47,23 @@ export const updateSingleScore = createAsyncThunk(
       return result;
     } catch (error) {
       return error;
+    }
+  }
+);
+
+// Deletes one single score with a specific ID
+// Thunk to delete User
+export const deleteSingleScore = createAsyncThunk(
+  "singleScore/deleteSingleScore",
+  async (id: string | undefined) => {
+    try {
+      typeof id !== "string"
+        ? logging.error("NO ID GIVEN")
+        : await deleteSingleScoreFunc(id);
+
+      return "Score deleted";
+    } catch (error) {
+      logging.error(error);
     }
   }
 );
@@ -78,6 +97,13 @@ const singelScoreReducer = createSlice({
       })
       .addCase(updateSingleScore.rejected, (action) => {
         logging.error("Updating single score failed");
+      })
+      .addCase(deleteSingleScore.fulfilled, (state: Score) => {
+        logging.info("Deleted single score");
+        state = initialState;
+      })
+      .addCase(deleteSingleScore.rejected, (state: Score) => {
+        logging.error("Deleting single score failed");
       });
   },
 });

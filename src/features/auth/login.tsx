@@ -50,7 +50,7 @@ const LoginPage = () => {
           </FloatingLabel>
         </Form.Group>
         <small className="reset-password">
-          <Link to="/register">Passwort vergessen?</Link>
+          <Link to="/forgot">Passwort vergessen?</Link>
         </small>
         <Button
           id="login"

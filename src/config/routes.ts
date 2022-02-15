@@ -50,7 +50,7 @@ const routes: IRoute[] = [
     name: "Forgot PW Page",
     component: ForgotPwPage,
     exact: true,
-    protected: true,
+    protected: false,
     adminOnly: false,
   },
   {

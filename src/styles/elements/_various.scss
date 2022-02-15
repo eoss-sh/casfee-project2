@@ -1,3 +1,4 @@
+/* Seperator zwischen den Buttons auf Login, Register und Reset*/
 .or-seperator {
   display: flex;
   align-items: center;
@@ -17,4 +18,15 @@
   &__text {
     padding: 0 1rem;
   }
+}
+
+/* Border Radius für die Popups*/
+.modal-content {
+  border-radius: 2rem;
+}
+
+/* Border Radius und Padding für Alerts*/
+.alert {
+  padding: 2rem;
+  border-radius: 2rem;
 }

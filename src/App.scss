@@ -14,6 +14,8 @@ $theme-colors: (
 
 // Global Styles
 @import "./styles/global/typo";
+@import "./styles/global/colors";
+@import "./styles/global/resets_globals";
 
 // Elements that are used in multiple components
 @import "./styles/elements/buttons";

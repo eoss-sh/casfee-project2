@@ -8,12 +8,12 @@ import {
 } from "react-router-dom";
 import { auth } from "./config/firebase";
 import { login, logout } from "./features/Auth/authSlice";
-import GlobalStyle from "./styles/global";
 import Header from "./features/Header/Header";
 import Footer from "./components/Footer";
 import routes from "./config/routes";
 import AuthRoute from "./components/AuthRoute";
 import AdminRoute from "./components/AdminRoute";
+import NotFound from "./components/NotFound";
 import { getAdditionalUserInfo } from "./features/Auth/authApi";
 
 const App = () => {
@@ -44,7 +44,6 @@ const App = () => {
 
   return (
     <>
-      <GlobalStyle />
       <div className="App">
         <BrowserRouter>
           <Header />
@@ -74,6 +73,7 @@ const App = () => {
                 />
               );
             })}
+            <Route component={NotFound} />
           </Switch>
           <Footer />
         </BrowserRouter>

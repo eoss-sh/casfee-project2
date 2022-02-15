@@ -1,5 +1,3 @@
-import { SmallText } from "../../styles/type";
-
 export interface ErrorTextProps {
   error: string;
 }
@@ -9,7 +7,7 @@ const ErrorText = (props: ErrorTextProps) => {
 
   if (error === "") return null;
 
-  return <SmallText errorString>{error}</SmallText>;
+  return <small className="error">{error}</small>;
 };
 
 export default ErrorText;

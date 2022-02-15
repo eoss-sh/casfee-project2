@@ -1,4 +1,3 @@
-import React from "react";
 import IPage from "../interfaces/page";
 import ChangePwPage from "../features/Auth/change";
 import Profile from "../features/Auth/profileBlock";

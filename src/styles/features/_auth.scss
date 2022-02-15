@@ -36,7 +36,9 @@
   }
 
   .password-change__input-row {
-    align-items: center;
+    align-items: flex-start;
+    flex-direction: column;
+    --bs-gutter-x: unset;
     .btn-primary__change {
       width: 15rem;
     }

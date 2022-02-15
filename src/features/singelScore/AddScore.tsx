@@ -86,8 +86,9 @@ const AddScore = () => {
       />
       <div className="container addscore">
         <section className="addscore-selectors">
-          <Row xs={1} lg={2}>
-            <Col>
+          <Row xs={1} lg={3}>
+            <Col className="addscore-selectors__controls">
+              <p className="label">Platz auswählen</p>
               <Form.Select
                 name="course"
                 onChange={(e) => handleSetSelectedCourse(e, e.target.value)}
@@ -99,7 +100,8 @@ const AddScore = () => {
                 ))}
               </Form.Select>
             </Col>
-            <Col>
+            <Col className="addscore-selectors__controls">
+              <p className="label">Distanz auswählen</p>
               <Form.Select
                 name="distance"
                 onChange={(e) => setDistance(e.target.value)}
@@ -110,7 +112,7 @@ const AddScore = () => {
                 <option value="dist4">Women Medal</option>
               </Form.Select>
             </Col>
-            <Col>
+            <Col className="addscore-selectors__controls">
               <Button
                 variant="danger"
                 onClick={() => {

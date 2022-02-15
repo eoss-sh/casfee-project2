@@ -1,6 +1,3 @@
-import { createGlobalStyle } from "styled-components";
-
-const GlobalStyle = createGlobalStyle`
 /*---- RESETS ----*/
 /* Box sizing rules */
 *,
@@ -9,10 +6,9 @@ const GlobalStyle = createGlobalStyle`
   box-sizing: border-box;
 }
 
-
 /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
-ul[role='list'],
-ol[role='list'] {
+ul[role="list"],
+ol[role="list"] {
   list-style: none;
 }
 
@@ -63,37 +59,8 @@ select {
     scroll-behavior: auto !important;
   }
 }
-
-/*-- Custom Properties --*/
-
-:root {
-  --dark-green: #365d32;
-  --light-green: #A1C181;
-  --yellow: #FCCA46;
-  --light-blue: #3AAED8;
-  --dark-blue: #233D4D; 
-  --white: #fff;
-  --black: #000;
-  --dark-grey: #5f5e5e;
-  --light-grey: #e5e5e5;
-  --error: #f54242
-}
-
 /*-- Global Styles --*/
 
-
-
-// Selects
-select {
-  border: none;
-  background-color: lightgray;
-  border-radius: 30px;
-  padding-left: 1%;
+#root {
+  padding-bottom: 6rem;
 }
-option {
-  padding-left: 2%;
-}
-
-`;
-
-export default GlobalStyle;

@@ -1,48 +1,39 @@
-import React, { useState } from "react";
-import { Button } from "react-bootstrap";
-import { useHistory } from "react-router";
-import ErrorText from "../../components/ErrorText";
-import { auth } from "../../config/firebase";
-import logging from "../../config/logging";
-import { Form, Col, InputGroup, Row } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../helpers/hooks";
+import { changePassword, resetError } from "./authSlice";
+import { Form, Col, InputGroup, Row, Button, Alert } from "react-bootstrap";
 import { BiShowAlt } from "react-icons/bi";
 
 const ChangePwPage = () => {
   const [newPassword, setNewPassword] = useState<string>("");
-  const [error, setError] = useState<string>("");
   const [passwordShow, setPasswordShow] = useState<boolean>(false);
+  const [showPasswordAlert, setShowPasswordAlert] = useState<boolean>(false);
 
-  const history = useHistory();
+  const user = useAppSelector((state) => state.auth.user);
+
+  const dispatch = useDispatch();
 
   const togglePassword = () => {
     setPasswordShow(!passwordShow);
   };
 
-  const changePassword = () => {
-    if (error !== "") setError("");
-
-    const user = auth.currentUser;
-    user
-      ?.updatePassword(newPassword)
-      .then(() => {
-        logging.info("Passwort gäendert.");
-        history.push("/login");
-      })
-      .catch((error) => {
-        logging.error(error);
-        if (error.code.includes("auth/wrong-password")) {
-          setError("Das angegebene Passwort ist nicht korrekt.");
-        } else if (error.code.includes("auth/weak-password")) {
-          setError("Bitte verwenden Sie ein strengeres Passwort.");
-        } else if (error.code.includes("auth/user-not-found")) {
-          setError("Die eingegebene Email-Adresse existierst nicht.");
-        } else {
-          setError(
-            "Im Moment können Sie sich nicht anmelden. Bitte probieren Sie es später wieder."
-          );
-        }
-      });
+  const handleChangePassword = () => {
+    dispatch(changePassword(newPassword));
   };
+
+  const handleCloseModal = () => {
+    dispatch(resetError());
+    setShowPasswordAlert(false);
+    setNewPassword("");
+  };
+
+  useEffect(() => {
+    if (user.error) {
+      setShowPasswordAlert(true);
+    }
+  }, [user.error]);
+
   return (
     <section className="password-change">
       <div className="container">
@@ -63,12 +54,20 @@ const ChangePwPage = () => {
           </Form.Group>
           <Button
             className="btn-primary__change"
-            onClick={() => changePassword()}
+            onClick={() => handleChangePassword()}
           >
             Passwort ändern
           </Button>
         </Row>
-        <ErrorText error={error} />
+        {showPasswordAlert && (
+          <Alert
+            variant="danger"
+            onClose={() => handleCloseModal()}
+            dismissible
+          >
+            {user.error}
+          </Alert>
+        )}
       </div>
     </section>
   );

@@ -2,16 +2,8 @@ import React, { useState } from "react";
 import Uploader from "../../components/Uploader";
 import { database } from "../../config/firebase";
 import logging from "../../config/logging";
-import { MainButton } from "../../styles/buttons";
 import { hole } from "../../interfaces/course";
-import { FormContainer, Input, InputRow, Label } from "../../styles/forms";
-import { Icon } from "../../styles/elements";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
-import Button from "react-bootstrap/Button";
-import { Alert, Col } from "react-bootstrap";
-import Row from "react-bootstrap/Row";
-import Table from "react-bootstrap/Table";
+import { Col, Row, Table, Button, Form } from "react-bootstrap";
 
 interface HoleInputsInterface {
   [key: string]: hole;

@@ -150,7 +150,7 @@ const RegisterPage = () => {
             className="btn-secondary__register"
             onClick={() => signUpWithEmailAndPassword()}
           >
-            Anmelden
+            Registrieren
           </Button>
         </Form>
         <div className="or-seperator">

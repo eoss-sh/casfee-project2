@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { fetchMultiScores, calcAverage } from "../Scores/scoresSlice";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../helpers/hooks";
+import CustomTooltip from "./customTooltip";
 import {
   LineChart,
   Line,
@@ -58,7 +59,7 @@ const Statistics = () => {
             <LineChart data={scores}>
               <XAxis dataKey="date" />
               <YAxis />
-              <Tooltip />
+              <Tooltip content={CustomTooltip} position={{ y: 0 }} />
               <Line
                 type="monotone"
                 dataKey="score"

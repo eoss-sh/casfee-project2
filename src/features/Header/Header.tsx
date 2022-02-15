@@ -61,7 +61,7 @@ export default function Header() {
                 <>
                   <Nav.Item>
                     <LinkContainer to="/scores">
-                      <Nav.Link>Scores</Nav.Link>
+                      <Nav.Link>Ergebnisse</Nav.Link>
                     </LinkContainer>
                   </Nav.Item>
                   <Nav.Item>
@@ -71,7 +71,7 @@ export default function Header() {
                   </Nav.Item>
                   <Nav.Item>
                     <LinkContainer to="/add-score">
-                      <Button variant="secondary">Play</Button>
+                      <Button variant="secondary">Spielen!</Button>
                     </LinkContainer>
                   </Nav.Item>
                   <NavDropdown

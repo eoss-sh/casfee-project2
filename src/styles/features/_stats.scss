@@ -24,6 +24,18 @@
         margin-bottom: 2rem;
       }
     }
+    &__text-compare {
+      font-size: 0.65rem;
+    }
+    .btn {
+      margin-top: 0.6rem;
+    }
+  }
+  &-card.stats-card-red {
+    background-color: var(--error-light);
+  }
+  &-card.stats-card-green {
+    background-color: var(--light-green-light);
   }
 }
 
@@ -33,4 +45,17 @@
 
 .recharts-responsive-container {
   margin: 4rem auto 0 auto;
+  .recharts-tooltip-wrapper {
+    background-color: var(--white);
+    box-shadow: 0px 4px 24px rgb(0 0 0 / 10%);
+    border-radius: 2rem;
+    padding: 2rem;
+    pointer-events: visible !important; // is set inline and prevents the link from beeing clicked
+    .recharts-tooltip-item {
+      padding: 0.5rem;
+      &:last-child {
+        padding-bottom: 0.5rem;
+      }
+    }
+  }
 }

@@ -38,7 +38,7 @@ export const loginWithUsernameAndPassword = createAsyncThunk(
         "appUser",
         userCreds.user?.uid
       );
-      history.push("/statistics");
+      history.push("/");
       window.location.reload();
       console.log("reloaded");
       return {
@@ -108,12 +108,61 @@ export const deleteUser = createAsyncThunk(
   }
 );
 
+// Func to rest password
+export const resetPassword = createAsyncThunk(
+  "auth/resetPassword",
+  async (email: string, { rejectWithValue }) => {
+    try {
+      await auth.sendPasswordResetEmail(email);
+      return "Email sent";
+    } catch (error) {
+      logging.error(error);
+      const msg = error + "";
+      let output: string = "";
+      if (msg.includes("auth/user-not-found")) {
+        output = "Die eingegebene E-Mail-Adresse wurde nicht gefunden.";
+      } else {
+        output =
+          "Passwort zurücksetzen aktuell nicht möglich. Bitte probiere es später wieder.";
+      }
+      return rejectWithValue(output);
+    }
+  }
+);
+
+// Func to reset existing Password
+export const changePassword = createAsyncThunk(
+  "auth/changePassword",
+  async (newpassword: string, { rejectWithValue }) => {
+    try {
+      await auth.currentUser?.updatePassword(newpassword);
+      logging.info("Password changed");
+      history.push("/");
+      return "Password changed";
+    } catch (error) {
+      logging.error(error);
+      const msg = error + "";
+      let output: string = "";
+      if (msg.includes("auth/weak-password")) {
+        output = "Das angegebene Passwort ist nicht sicher genug.";
+      } else {
+        output =
+          "Passwort zurücksetzen aktuell nicht möglich. Bitte probiere es später wieder.";
+      }
+      return rejectWithValue(output);
+    }
+  }
+);
+
 const authReducer = createSlice({
   name: "auth",
   initialState,
   reducers: {
     login: (state, action) => {
       state.user = action.payload;
+    },
+    resetError: (state) => {
+      state.user.error = "";
     },
   },
   // Extra Reducers are Reducers that use outside logic as from a Asyn Func or A Thunk as is this case.
@@ -153,9 +202,11 @@ const authReducer = createSlice({
         state.user.url = action.payload?.url;
         state.user.name = action.payload?.name;
         state.user.hcp = action.payload?.hcp;
+        state.user.loading = false;
       })
       .addCase(updateUserData.rejected, (state: AuthState, action) => {
         state.user.error = action.payload;
+        state.user.loading = false;
       })
       .addCase(deleteUser.fulfilled, (state: AuthState) => {
         state.user = {
@@ -169,9 +220,21 @@ const authReducer = createSlice({
           loading: false,
         };
       })
-      .addCase(deleteUser.rejected, (state: AuthState, action) => {});
+      .addCase(deleteUser.rejected, (state: AuthState, action) => {})
+      .addCase(resetPassword.fulfilled, (state: AuthState) => {
+        state.user.error = "";
+      })
+      .addCase(resetPassword.rejected, (state: AuthState, action) => {
+        state.user.error = action.payload;
+      })
+      .addCase(changePassword.fulfilled, (state: AuthState) => {
+        state.user.error = "";
+      })
+      .addCase(changePassword.rejected, (state: AuthState, action) => {
+        state.user.error = action.payload;
+      });
   },
 });
 
-export const { login } = authReducer.actions;
+export const { login, resetError } = authReducer.actions;
 export default authReducer.reducer;

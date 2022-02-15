@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../helpers/hooks";
 import { useHistory } from "react-router-dom";
 import { updateUserData, deleteUser } from "./authSlice";
-import { Form, Row, Col, Button } from "react-bootstrap";
+import { Form, Row, Col, Button, Alert } from "react-bootstrap";
 import Uploader from "../../components/Uploader";
 import ConfirmModal from "../../components/ConfirmModal";
 import { BsTrash } from "react-icons/bs";
@@ -19,6 +19,7 @@ const Profile = () => {
   const [name, setName] = useState(user.name);
   const [showModal, setShowModal] = useState(false);
   const [email, setEmail] = useState(user.email);
+  const [showConfirmAlert, setShowConfirmAlert] = useState<boolean>(false);
 
   const types = ["image/png", "image/jpeg", "image/jpg"];
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,6 +38,7 @@ const Profile = () => {
         email,
       })
     );
+    setShowConfirmAlert(true);
     history.push("/profile");
   };
 
@@ -75,6 +77,7 @@ const Profile = () => {
             <Form.Group>
               <Form.Label>Handicap</Form.Label>
               <Form.Control
+                data-test="update-hcp"
                 type="number"
                 placeholder="Handicap"
                 value={hcp}
@@ -92,15 +95,13 @@ const Profile = () => {
             <Uploader image={image} setImage={setImage} setUrl={setUrl} />
           )}
         </Form.Group>
-
         <Button
           variant="primary"
           className="btn-primary"
           onClick={() => dispatchUpdate()}
         >
-          Update
+          Update Profil
         </Button>
-
         <Button
           variant="danger"
           className="btn-danger__delete"
@@ -110,6 +111,15 @@ const Profile = () => {
           Profil Löschen
         </Button>
       </Form>
+      {showConfirmAlert && (
+        <Alert
+          variant="primary"
+          onClose={() => setShowConfirmAlert(false)}
+          dismissible
+        >
+          Änderung wurde gespeichert!
+        </Alert>
+      )}
       <ConfirmModal
         title="Profil löschen"
         message="Möchtest du dein Profil wirklich löschen?"

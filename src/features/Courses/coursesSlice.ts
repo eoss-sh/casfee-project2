@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { database } from "../../config/firebase";
+import fetchCoursesFunc from "./coursesApi";
 import singelCourse from "../../interfaces/course";
 
 interface coursesState {
@@ -16,23 +16,7 @@ const initialState: coursesState = {
 export const fetchCoursesList = createAsyncThunk(
   "courses/fetchListOfCourses",
   async () => {
-    const coursesCollection: singelCourse[] = [];
-    const snapshot = await database.collection("courses").get();
-    snapshot.forEach((doc) => {
-      coursesCollection.push({
-        course: {
-          name: doc.data().name,
-          shortDesc: doc.data().shortDesc,
-          desc: doc.data().desc,
-          type: doc.data().type,
-          url: doc.data().url,
-          par: doc.data().par,
-          uid: doc.id,
-          error: "",
-        },
-      });
-    });
-    return coursesCollection;
+    return await fetchCoursesFunc();
   }
 );
 

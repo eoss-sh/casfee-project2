@@ -1,6 +1,7 @@
 ## CASFEE 2021 - Project 2
 
 ### Project Idea
+Die Idee des Projektes ist es ein einfache Möglichekit zum Aufzeichnen von Ergebnissen von Golfrunden bereitszustellen. Neben dem Aufzeichnen der Scores werden Statistiken und Auswertungen bez. der Scores dem User aufgezeigt. Zusätzlich soll durch Scores-Ranglisten pro Platz eine Art soziales NEtzwerk für Golfer geschaffen werden, welches auch den Vergleich von Scores erlaubt. 
 
 ### Technology
 - React

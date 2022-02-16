@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
 interface HeroProps {
@@ -22,9 +23,9 @@ const Hero = ({
         <h1 className="hero-title">{title}</h1>
         <h4 className="hero-subtitle">{subtitle}</h4>
         {buttonLink && (
-          <Button variant="secondary" href={buttonLink}>
-            {buttonText}
-          </Button>
+          <Link to={buttonLink}>
+            <Button variant="secondary">{buttonText}</Button>
+          </Link>
         )}
       </div>
     </section>

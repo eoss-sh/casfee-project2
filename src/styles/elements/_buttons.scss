@@ -41,3 +41,10 @@ button.btn svg {
 form .btn {
   margin-right: 10px;
 }
+
+.btn-back {
+  margin-right: 0;
+  @include md {
+    margin-right: 1.5rem;
+  }
+}

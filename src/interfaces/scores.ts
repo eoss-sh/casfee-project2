@@ -45,3 +45,14 @@ export interface ScoreOverview {
 export interface ScoreInputsInterface {
   [key: string]: ScorecardEntry;
 }
+
+export interface ScoreTotals {
+  score: number;
+  totalPutts: number;
+  totalFIR: number;
+  totalGIR: number;
+  id: string;
+  appUser: string;
+  course: string;
+  date: any;
+}

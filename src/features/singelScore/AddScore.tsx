@@ -73,6 +73,7 @@ const AddScore = () => {
     window.localStorage.setItem("scorecard", JSON.stringify(scorecard));
   }, [scorecard]);
 
+  // Fetchs Courselist from the database and adds one Course as default
   useEffect(() => {
     dispatch(fetchCoursesList());
     dispatch(fetchCourse("3pjVPyi0SqPgQPeV6i47"));
@@ -162,11 +163,13 @@ const AddScore = () => {
                         className="table-input table-input__small"
                         type="number"
                         name="score"
-                        placeholder="Score"
+                        placeholder="Schläge"
+                        min="0"
+                        required
                         onChange={(e) =>
                           handleScoreChange(e, hole.no as number)
                         }
-                        value={scorecard?.[hole.no as number]?.score || 0}
+                        value={scorecard?.[hole.no as number]?.score || ""}
                       />
                     </td>
                     <td>
@@ -175,10 +178,12 @@ const AddScore = () => {
                         type="number"
                         name="putts"
                         placeholder="Putts"
+                        min="0"
+                        required
                         onChange={(e) =>
                           handleScoreChange(e, hole.no as number)
                         }
-                        value={scorecard?.[hole.no as number]?.putts || 0}
+                        value={scorecard?.[hole.no as number]?.putts || ""}
                       />
                     </td>
                     <td>

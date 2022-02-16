@@ -2,10 +2,10 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../helpers/hooks";
 import { fetchCoursesList } from "./coursesSlice";
-import Hero from "../../components/Hero";
+
 import CourseCard from "./CourseCard";
 import SpinnerComp from "../../components/Spinner";
-import image from "./images/course1.jpg";
+
 import { Row } from "react-bootstrap";
 
 const Courses = () => {
@@ -19,13 +19,6 @@ const Courses = () => {
 
   return (
     <>
-      <Hero
-        image={image}
-        title="Messen - vergleichen - verbessern"
-        subtitle="Verbssere dein Golfspiel mit zuverlässigen Statistiken."
-        buttonLink="/register"
-        buttonText="Registrieren"
-      />
       {loading ? (
         <SpinnerComp />
       ) : (

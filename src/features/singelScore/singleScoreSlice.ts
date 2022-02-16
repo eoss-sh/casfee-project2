@@ -4,14 +4,16 @@ import {
   fetchSingleScoreCardFunc,
   updateSingleScoreCardFunc,
   deleteSingleScoreFunc,
+  updateScoreFunc,
 } from "./singleScoresApi";
+import { getTotalIR, getTotalScore } from "../../helpers/functions/totals";
 import Score from "../../interfaces/scores";
 import logging from "../../config/logging";
 import { ScorecardEntry } from "../../interfaces/scores";
 
 interface updateData {
   id: string;
-  data: ScorecardEntry[];
+  data: ScorecardEntry;
 }
 
 const initialState: Score = {
@@ -37,21 +39,39 @@ export const fetchSingleScore = createAsyncThunk(
   }
 );
 
-// Updates one single score with a specific ID
-export const updateSingleScore = createAsyncThunk(
-  "singleScore/updateSingleScore",
+// Updates one single score entry with a specific ID
+export const updateSingleScoreEntry = createAsyncThunk(
+  "singleScore/updateSingleScoreEntry",
   async (updateData: updateData) => {
-    try {
-      const { id, data } = updateData;
-      const result = await updateSingleScoreCardFunc(id, data);
-      return result;
-    } catch (error) {
-      return error;
-    }
+    const { id, data } = updateData;
+    const result = await updateSingleScoreCardFunc(id, data);
+    return result;
   }
 );
 
-// Deletes one single score with a specific ID
+// Update one score header with a specific ID
+export const updateSingleScore = createAsyncThunk(
+  "singleScore/updateSingleScore",
+  async (id: string) => {
+    const result = await fetchSingleScoreFunc(id);
+    const data = result.data();
+    const currentScoreCardData = await fetchSingleScoreCardFunc(id);
+    const newData = {
+      id: id,
+      score: getTotalScore("score", currentScoreCardData),
+      totalPutts: getTotalScore("putts", currentScoreCardData),
+      totalGIR: getTotalIR("gir", currentScoreCardData),
+      totalFIR: getTotalIR("fir", currentScoreCardData),
+      appUser: data?.appUser,
+      course: data?.course,
+      date: data?.date,
+    };
+    console.log(newData);
+    await updateScoreFunc(newData);
+    return newData;
+  }
+);
+
 // Thunk to delete User
 export const deleteSingleScore = createAsyncThunk(
   "singleScore/deleteSingleScore",
@@ -71,12 +91,7 @@ export const deleteSingleScore = createAsyncThunk(
 const singelScoreReducer = createSlice({
   name: "singleScore",
   initialState: initialState,
-  reducers: {
-    updateScore(state, action) {
-      console.log(action.payload);
-      state.score.scorecard[action.payload.index].putts = action.payload.value;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchSingleScore.fulfilled, (state: Score, action) => {
@@ -92,8 +107,20 @@ const singelScoreReducer = createSlice({
         logging.info("Fetching single score");
         state = initialState;
       })
-      .addCase(updateSingleScore.fulfilled, () => {
+      .addCase(updateSingleScoreEntry.fulfilled, (state: Score, action) => {
         logging.info("Updated single score");
+        state.score.scorecard[
+          state.score.scorecard.findIndex((x) => x.id === action.payload.id)
+        ] = action.payload;
+      })
+      .addCase(updateSingleScoreEntry.rejected, (action) => {
+        logging.error("Updating single score failed");
+      })
+      .addCase(updateSingleScore.fulfilled, (state: Score, action) => {
+        state.score.score = action.payload.score;
+        state.score.totalPutts = action.payload.totalPutts;
+        state.score.totalGIR = action.payload.totalGIR;
+        state.score.totalFIR = action.payload.totalFIR;
       })
       .addCase(updateSingleScore.rejected, (action) => {
         logging.error("Updating single score failed");
@@ -107,7 +134,5 @@ const singelScoreReducer = createSlice({
       });
   },
 });
-
-export const { updateScore } = singelScoreReducer.actions;
 
 export default singelScoreReducer.reducer;

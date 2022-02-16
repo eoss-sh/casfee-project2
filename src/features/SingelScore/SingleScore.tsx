@@ -2,19 +2,29 @@ import { useEffect, useState } from "react";
 import { useParams, useHistory, Link } from "react-router-dom";
 import {
   fetchSingleScore,
-  updateSingleScore,
   deleteSingleScore,
+  updateSingleScoreEntry,
+  updateSingleScore,
 } from "./singleScoreSlice";
 import { fetchMultiScores, calcAverage } from "../Scores/scoresSlice";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../helpers/hooks";
 import localDate from "../../helpers/functions/date";
 import ParamTypes from "../../interfaces/params";
+import UpdateModal from "./UpdateModal";
 import SmallHero from "../../components/SmallHero";
 import StatsCards from "../../components/StatsCards";
 import ConfirmModal from "../../components/ConfirmModal";
 import { Button, Table } from "react-bootstrap";
-import { BsCheckCircle, BsXCircle, BsTrash } from "react-icons/bs";
+import { BsCheckCircle, BsXCircle, BsTrash, BsPencil } from "react-icons/bs";
+import { ScorecardEntry } from "../../interfaces/scores";
+import logging from "../../config/logging";
+
+interface isopen {
+  isOpen: {
+    [key: string]: boolean;
+  };
+}
 
 const SingleScore = () => {
   const { id } = useParams<ParamTypes>();
@@ -25,15 +35,23 @@ const SingleScore = () => {
   const averageScore = useAppSelector((state) => state.scores.averageScore);
   const currentUser = useAppSelector((state) => state.auth.user);
   const reverseScoreCard = [...singleScore.score.scorecard];
-  const [showModal, setShowModal] = useState(false);
 
-  const submitUpdate = () => {
-    dispatch(updateSingleScore({ id: id, data: singleScore.score.scorecard }));
-  };
+  const [showModal, setShowModal] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState<isopen>({
+    isOpen: {},
+  });
 
   const dispatchDelete = () => {
     dispatch(deleteSingleScore(id));
     history.push("/scores");
+  };
+
+  const dispatchUpdate = (id: string, data: ScorecardEntry) => {
+    if (id) {
+      dispatch(updateSingleScoreEntry({ id: id, data: data }));
+      dispatch(updateSingleScore(id));
+      setShowUpdateModal({ isOpen: { [data.id as string]: false } });
+    } else logging.warn("No score ID found");
   };
 
   useEffect(() => {
@@ -83,31 +101,50 @@ const SingleScore = () => {
                 <th>Putts</th>
                 <th>GIR</th>
                 <th>FIR</th>
+                <th>Edit</th>
               </tr>
             </thead>
             <tbody>
               {reverseScoreCard.reverse().map((hole, i) => (
-                <tr key={i}>
+                <tr key={i} id={hole.id}>
                   <td>{hole.holeNo}</td>
                   <td>{hole.score}</td>
                   <td>{hole.putts}</td>
                   <td>{hole.gir ? <BsCheckCircle /> : <BsXCircle />}</td>
                   <td>{hole.fir ? <BsCheckCircle /> : <BsXCircle />}</td>
+                  <td>
+                    <BsPencil
+                      onClick={() => {
+                        setShowUpdateModal({
+                          isOpen: { [hole.id as string]: true },
+                        });
+                      }}
+                    />
+                    <UpdateModal
+                      showModal={showUpdateModal.isOpen[hole.id || 0]}
+                      onClose={() =>
+                        setShowUpdateModal({
+                          isOpen: { [hole.id as string]: false },
+                        })
+                      }
+                      score={hole}
+                      onConfirm={(data: ScorecardEntry) =>
+                        dispatchUpdate(id, data)
+                      }
+                    />
+                  </td>
                 </tr>
               ))}
             </tbody>
           </Table>
+          <Link to="/scores" className="btn btn-primary btn-back">
+            Zurück
+          </Link>
+          <Button variant="danger" onClick={() => setShowModal(true)}>
+            <BsTrash />
+            Löschen
+          </Button>
         </section>
-        <Link to="/scores" className="btn btn-primary">
-          Zurück
-        </Link>
-        <Button variant="secondary" onClick={submitUpdate}>
-          Update
-        </Button>
-        <Button variant="danger" onClick={() => setShowModal(true)}>
-          <BsTrash />
-          Löschen
-        </Button>
         <ConfirmModal
           title="Score löschen"
           message="Möchtest du diesen Score wirklich löschen?"

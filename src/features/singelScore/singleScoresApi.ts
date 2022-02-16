@@ -1,5 +1,9 @@
 import { database } from "../../config/firebase";
-import { ScorecardEntry, ScoreInputsInterface } from "../../interfaces/scores";
+import {
+  ScorecardEntry,
+  ScoreInputsInterface,
+  ScoreTotals,
+} from "../../interfaces/scores";
 import logging from "../../config/logging";
 
 // Fetch Single Score
@@ -9,25 +13,43 @@ export const fetchSingleScoreFunc = async (id: string) => {
 
 // Function to get scorecard data
 export const fetchSingleScoreCardFunc = async (id: string) => {
-  const snapShot = await database
+  const data = await database
     .collection("scores")
     .doc(id)
     .collection("scorecard")
     .get();
-  return snapShot.docs.map((doc) => doc.data());
+  return data.docs.map((doc) => {
+    const data = doc.data();
+    const id = doc.id;
+    return { ...data, id } as ScorecardEntry;
+  });
 };
 
-// Function to update scorecard data
+// Function to update scorecard data of single scorecard entry
 export const updateSingleScoreCardFunc = async (
   id: string,
-  data: ScorecardEntry[]
+  data: ScorecardEntry
 ) => {
-  return await database
+  await database
     .collection("scores")
     .doc(id)
     .collection("scorecard")
-    .doc("fX49ybMwZLTQbdEUm9Rq")
-    .set({ ...data[0], putts: data[0].putts });
+    .doc(data.id)
+    .update(data);
+  return data;
+};
+
+// Function to update score after scorecard entry has changed
+export const updateScoreFunc = async (data: ScoreTotals) => {
+  return await database.collection("scores").doc(data.id).set({
+    score: data.score,
+    totalPutts: data.totalPutts,
+    totalFIR: data.totalFIR,
+    totalGIR: data.totalGIR,
+    appUser: data.appUser,
+    course: data.course,
+    date: data.date,
+  });
 };
 
 // Function to add socrecard data

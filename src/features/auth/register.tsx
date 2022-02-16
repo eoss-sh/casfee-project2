@@ -50,7 +50,7 @@ const RegisterPage = () => {
       })
       .then((result) => {
         logging.info(result);
-        history.push("/login");
+        history.push("/");
       })
       .catch((err) => {
         const msg = err + "";

@@ -1,7 +1,7 @@
 .smallhero {
   display: flex;
   justify-content: center;
-  height: 20vh;
+  min-height: 20vh;
   background-color: var(--dark-blue);
   margin: 3.5rem 0;
   @include md {

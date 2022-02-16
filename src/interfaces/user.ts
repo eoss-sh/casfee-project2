@@ -3,12 +3,13 @@ export default interface User {
   name: string | undefined;
   url: string | undefined;
   id: string | undefined;
-  email: string | undefined | null;
+  email: string;
+  password?: string;
 }
 
 export interface AuthState {
   user: {
-    email: string | null | undefined;
+    email: string;
     uid: string | undefined;
     error: any;
     admin: boolean;

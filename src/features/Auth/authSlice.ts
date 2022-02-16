@@ -5,6 +5,7 @@ import {
   deleteUserFunc,
   getAdditionalUserInfo,
   updateUserDataFunc,
+  createAppUserFunc,
 } from "./authApi";
 import logging from "../../config/logging";
 import User, { AuthState, LoginData } from "../../interfaces/user";
@@ -40,9 +41,8 @@ export const loginWithUsernameAndPassword = createAsyncThunk(
       );
       history.push("/");
       window.location.reload();
-      console.log("reloaded");
       return {
-        email: userCreds.user?.email,
+        email: userCreds.user?.email || "",
         uid: userCreds.user?.uid,
         error: "",
         admin: tokens?.claims.admin,
@@ -70,7 +70,7 @@ export const loginWithUsernameAndPassword = createAsyncThunk(
     }
   }
 );
-// Thunk to logout
+// Thunk to logout the user manually from firebase
 export const logout = createAsyncThunk("auth/logout", async () => {
   try {
     await auth.signOut();
@@ -79,7 +79,7 @@ export const logout = createAsyncThunk("auth/logout", async () => {
   }
 });
 
-// Thunk to Update User Infos
+// Thunk to Update User Infos => does not affect the Auth-User but only the AppUser Data
 export const updateUserData = createAsyncThunk(
   "auth/updateUserData",
   async (data: User) => {
@@ -92,7 +92,7 @@ export const updateUserData = createAsyncThunk(
   }
 );
 
-// Thunk to delete User
+// Thunk to delete an AppUser and its related data. The Auth-User is not deleted
 export const deleteUser = createAsyncThunk(
   "auth/deleteUser",
   async (id: string | undefined) => {
@@ -108,7 +108,7 @@ export const deleteUser = createAsyncThunk(
   }
 );
 
-// Func to rest password
+// Func to rest password with email of a single user
 export const resetPassword = createAsyncThunk(
   "auth/resetPassword",
   async (email: string, { rejectWithValue }) => {
@@ -130,7 +130,7 @@ export const resetPassword = createAsyncThunk(
   }
 );
 
-// Func to reset existing Password
+// Func to reset existing Password => if entered Email exists, Reset Email will be sent to User
 export const changePassword = createAsyncThunk(
   "auth/changePassword",
   async (newpassword: string, { rejectWithValue }) => {
@@ -151,6 +151,19 @@ export const changePassword = createAsyncThunk(
       }
       return rejectWithValue(output);
     }
+  }
+);
+
+// Func to create a new User with Email and Password => after creation the AppUser Data will be added and User is forwarded to home
+export const createUser = createAsyncThunk(
+  "auth/createUser",
+  async (data: User) => {
+    const id = await auth.createUserWithEmailAndPassword(
+      data.email,
+      data.password || ""
+    );
+    const userData = await createAppUserFunc({ ...data, id: id.user?.uid });
+    return userData;
   }
 );
 
@@ -232,6 +245,12 @@ const authReducer = createSlice({
       })
       .addCase(changePassword.rejected, (state: AuthState, action) => {
         state.user.error = action.payload;
+      })
+      .addCase(createUser.fulfilled, (state: AuthState, action) => {
+        state.user.url = action.payload?.url;
+        state.user.name = action.payload?.name;
+        state.user.hcp = action.payload?.hcp;
+        state.user.loading = false;
       });
   },
 });

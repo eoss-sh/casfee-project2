@@ -40,12 +40,16 @@ export default function Header() {
                 <>
                   <Nav.Item>
                     <LinkContainer to="/register">
-                      <Button variant="secondary">Registrieren</Button>
+                      <Nav.Link className="btn btn-secondary btn-nav">
+                        Registrieren
+                      </Nav.Link>
                     </LinkContainer>
                   </Nav.Item>
                   <Nav.Item>
                     <LinkContainer to="/login">
-                      <Button variant="primary">Login</Button>
+                      <Nav.Link className="btn btn-primary btn-nav">
+                        Login
+                      </Nav.Link>
                     </LinkContainer>
                   </Nav.Item>
                 </>
@@ -71,7 +75,9 @@ export default function Header() {
                   </Nav.Item>
                   <Nav.Item>
                     <LinkContainer to="/add-score">
-                      <Button variant="secondary">Spielen!</Button>
+                      <Nav.Link className="btn btn-secondary btn-nav">
+                        Spielen!
+                      </Nav.Link>
                     </LinkContainer>
                   </Nav.Item>
                   <NavDropdown

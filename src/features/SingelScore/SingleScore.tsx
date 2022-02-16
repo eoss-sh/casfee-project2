@@ -108,12 +108,14 @@ const SingleScore = () => {
               {reverseScoreCard.reverse().map((hole, i) => (
                 <tr key={i} id={hole.id}>
                   <td>{hole.holeNo}</td>
-                  <td>{hole.score}</td>
+                  <td data-test={`score-${i}`}>{hole.score}</td>
                   <td>{hole.putts}</td>
                   <td>{hole.gir ? <BsCheckCircle /> : <BsXCircle />}</td>
                   <td>{hole.fir ? <BsCheckCircle /> : <BsXCircle />}</td>
                   <td>
                     <BsPencil
+                      className="scorecard-edit"
+                      data-test={`edit-score-${i}`}
                       onClick={() => {
                         setShowUpdateModal({
                           isOpen: { [hole.id as string]: true },

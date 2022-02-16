@@ -24,7 +24,7 @@ const ConfirmModal = (props: ConfirmModalProps) => {
         <Button variant="secondary" onClick={onClose}>
           Abbrechen
         </Button>
-        <Button variant={variant} onClick={onConfirm}>
+        <Button variant={variant} data-test="confirm" onClick={onConfirm}>
           {icon}
           Bestätigen
         </Button>

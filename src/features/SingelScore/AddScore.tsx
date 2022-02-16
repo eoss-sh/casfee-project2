@@ -161,6 +161,7 @@ const AddScore = () => {
                     <td>
                       <input
                         className="table-input table-input__small"
+                        data-test={`score-${hole.no}`}
                         type="number"
                         name="score"
                         placeholder="Schläge"
@@ -175,6 +176,7 @@ const AddScore = () => {
                     <td>
                       <input
                         className="table-input table-input__small"
+                        data-test={`putts-${hole.no}`}
                         type="number"
                         name="putts"
                         placeholder="Putts"
@@ -212,7 +214,11 @@ const AddScore = () => {
             </tbody>
           </Table>
         </section>
-        <Button variant="primary" onClick={() => setShowModal(true)}>
+        <Button
+          variant="primary"
+          data-test="add-score-submit"
+          onClick={() => setShowModal(true)}
+        >
           Runde speichern
         </Button>
         <ConfirmModal

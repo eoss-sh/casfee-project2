@@ -74,7 +74,9 @@ const UpdateModal = (props: UpdateModalProps) => {
         <Button variant="secondary" onClick={onClose}>
           Abbrechen
         </Button>
-        <Button onClick={() => onConfirm(newScore)}>Bestätigen</Button>
+        <Button data-test="confirm-update" onClick={() => onConfirm(newScore)}>
+          Bestätigen
+        </Button>
       </Modal.Footer>
     </Modal>
   );

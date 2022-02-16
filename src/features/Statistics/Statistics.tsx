@@ -13,6 +13,7 @@ import {
 } from "recharts";
 import SmallHero from "../../components/SmallHero";
 import StatsCards from "../../components/StatsCards";
+import Empty from "../../components/Empty";
 
 const Statistics = () => {
   const dispatch = useDispatch();
@@ -45,31 +46,35 @@ const Statistics = () => {
         title="Statistik"
         subtitle="Deine wichtigsten Statistiken im Überblick"
       />
-      <div className="container">
-        <StatsCards
-          score={averageScore}
-          putts={averagePutts}
-          fir={averageFIR}
-          gir={averageGIR}
-          compare={false}
-        />
-        <section className="chart">
-          <h2>Deine letzten Scores im Überblick</h2>
-          <ResponsiveContainer width="100%" height={600}>
-            <LineChart data={scores}>
-              <XAxis dataKey="date" />
-              <YAxis />
-              <Tooltip content={CustomTooltip} position={{ y: 0 }} />
-              <Line
-                type="monotone"
-                dataKey="score"
-                stroke="#233d4d"
-                strokeWidth={3}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </section>
-      </div>
+      {scores.length <= 0 ? (
+        <Empty />
+      ) : (
+        <div className="container">
+          <StatsCards
+            score={averageScore}
+            putts={averagePutts}
+            fir={averageFIR}
+            gir={averageGIR}
+            compare={false}
+          />
+          <section className="chart">
+            <h2>Deine letzten Scores im Überblick</h2>
+            <ResponsiveContainer width="100%" height={600}>
+              <LineChart data={scores}>
+                <XAxis dataKey="date" />
+                <YAxis />
+                <Tooltip content={CustomTooltip} position={{ y: 0 }} />
+                <Line
+                  type="monotone"
+                  dataKey="score"
+                  stroke="#233d4d"
+                  strokeWidth={3}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </section>
+        </div>
+      )}
     </>
   );
 };

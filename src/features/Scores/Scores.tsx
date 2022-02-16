@@ -5,6 +5,7 @@ import { useAppSelector } from "../../helpers/hooks";
 import SmallHero from "../../components/SmallHero";
 import Spinner from "../../components/Spinner";
 import ConfirmModal from "../../components/ConfirmModal";
+import Empty from "../../components/Empty";
 import { Link } from "react-router-dom";
 import { Button, Table } from "react-bootstrap";
 import { BsArrowRightCircle, BsTrash } from "react-icons/bs";
@@ -41,6 +42,8 @@ const Scores = () => {
       <div className="container">
         {scores.loading ? (
           <Spinner />
+        ) : scores.scores.length <= 0 ? (
+          <Empty />
         ) : (
           <Table responsive="sm">
             <thead>
@@ -67,13 +70,17 @@ const Scores = () => {
                     <td>{score.totalFIR}</td>
                     <td>{score.totalGIR}</td>
                     <td>
-                      <Link to={`singlescore/${score.id}`}>
+                      <Link
+                        data-test="get-single-score"
+                        to={`singlescore/${score.id}`}
+                      >
                         <BsArrowRightCircle />
                       </Link>
                     </td>
                     <td>
                       <Button
                         className="btn-table"
+                        data-test={`delete-score-${index}`}
                         onClick={() => {
                           setShowModal(true);
                           setScoreToDelete(score.id || "");

@@ -6,7 +6,18 @@
 }
 
 .courses-cards {
+  min-height: 71.25rem;
   margin-bottom: 10rem;
+  &__search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 6rem;
+    margin-bottom: 2rem;
+    .row {
+      width: 70vw;
+    }
+  }
   .card {
     box-shadow: 0px 4px 24px rgb(0 0 0 / 10%);
     border: none;

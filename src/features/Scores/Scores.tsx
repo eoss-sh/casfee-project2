@@ -44,7 +44,7 @@ const Scores = () => {
           <Spinner />
         ) : scores.scores.length <= 0 ? (
           <Empty
-            title="Das sieht ziemlich leer aus hier..."
+            title="Hier sieht es ziemlich leer aus..."
             content="Du hast noch keine Scores hinzugefügt"
             icon="score"
             buttonText="Spielen!"

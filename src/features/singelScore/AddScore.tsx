@@ -77,7 +77,7 @@ const AddScore = () => {
   // Fetchs Courselist from the database and adds one Course as default
   useEffect(() => {
     dispatch(fetchCoursesList());
-    dispatch(fetchCourse(courses[0].course.uid));
+    dispatch(fetchCourse("3pjVPyi0SqPgQPeV6i47"));
   }, [dispatch]);
 
   return (

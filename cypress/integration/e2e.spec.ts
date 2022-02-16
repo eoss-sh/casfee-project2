@@ -31,6 +31,6 @@ describe("e2e", () => {
     cy.visit("http://localhost:3000/profile");
     cy.get('[data-test="delete-user"]').click();
     cy.get('[data-test="confirm"]').click();
-    cy.get("h2").should("contain", "Login");
+    cy.get("h2").should("contain", "Willkommen zurück");
   });
 });

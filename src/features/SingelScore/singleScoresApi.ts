@@ -18,7 +18,16 @@ export const fetchSingleScoreCardFunc = async (id: string) => {
     .doc(id)
     .collection("scorecard")
     .get();
-  return data.docs.map((doc) => {
+  const sortedData = data.docs.sort((a, b) => {
+    if (a.data().holeNo < b.data().holeNo) {
+      return 1;
+    }
+    if (a.data().holeNo > b.data().holeNo) {
+      return -1;
+    }
+    return 0;
+  });
+  return sortedData.map((doc) => {
     const data = doc.data();
     const id = doc.id;
     return { ...data, id } as ScorecardEntry;

@@ -47,7 +47,13 @@ const Statistics = () => {
         subtitle="Deine wichtigsten Statistiken im Überblick"
       />
       {scores.length <= 0 ? (
-        <Empty />
+        <Empty
+          title="Das sieht ziemlich leer aus hier..."
+          content="Du hast noch keine Scores hinzugefügt"
+          icon="score"
+          buttonText="Spielen!"
+          buttonLink="/add-score"
+        />
       ) : (
         <div className="container">
           <StatsCards

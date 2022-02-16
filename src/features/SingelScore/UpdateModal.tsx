@@ -52,22 +52,28 @@ const UpdateModal = (props: UpdateModalProps) => {
               }
             />
           </Form.Group>
-          <Form.Check
-            type="switch"
-            name="gir"
-            onChange={(e) => {
-              setNewScore({ ...newScore, gir: e.target.checked });
-            }}
-            checked={newScore.gir || false}
-          />
-          <Form.Check
-            type="switch"
-            name="fir"
-            onChange={(e) => {
-              setNewScore({ ...newScore, fir: e.target.checked });
-            }}
-            checked={newScore.fir || false}
-          />
+        </Row>
+        <Row>
+          <Col>
+            <Form.Check
+              type="switch"
+              name="gir"
+              label="GIR"
+              onChange={(e) => {
+                setNewScore({ ...newScore, gir: e.target.checked });
+              }}
+              checked={newScore.gir || false}
+            />
+            <Form.Check
+              type="switch"
+              name="fir"
+              label="Fir"
+              onChange={(e) => {
+                setNewScore({ ...newScore, fir: e.target.checked });
+              }}
+              checked={newScore.fir || false}
+            />
+          </Col>
         </Row>
       </Modal.Body>
       <Modal.Footer>

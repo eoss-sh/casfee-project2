@@ -18,7 +18,15 @@ const fetchCoursesFunc = async () => {
       },
     });
   });
-  return coursesCollection;
+  return coursesCollection.sort((a, b) => {
+    if (a.course.name > b.course.name) {
+      return 1;
+    }
+    if (a.course.name < b.course.name) {
+      return -1;
+    }
+    return 0;
+  });
 };
 
 export default fetchCoursesFunc;

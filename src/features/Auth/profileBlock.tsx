@@ -105,6 +105,7 @@ const Profile = () => {
         <Button
           variant="danger"
           className="btn-danger__delete"
+          data-test="delete-user"
           onClick={() => setShowModal(!showModal)}
         >
           <BsTrash />

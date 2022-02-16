@@ -50,7 +50,7 @@ const SingleScore = () => {
     if (id) {
       dispatch(updateSingleScoreEntry({ id: id, data: data }));
       dispatch(updateSingleScore(id));
-      setShowUpdateModal({ isOpen: { [data.id as string]: false } });
+      setShowUpdateModal({ isOpen: { [data.holeNo as number]: false } });
     } else logging.warn("No score ID found");
   };
 
@@ -118,12 +118,12 @@ const SingleScore = () => {
                       data-test={`edit-score-${i}`}
                       onClick={() => {
                         setShowUpdateModal({
-                          isOpen: { [hole.id as string]: true },
+                          isOpen: { [hole.holeNo as number]: true },
                         });
                       }}
                     />
                     <UpdateModal
-                      showModal={showUpdateModal.isOpen[hole.id || 0]}
+                      showModal={showUpdateModal.isOpen[hole.holeNo || 20]}
                       onClose={() =>
                         setShowUpdateModal({
                           isOpen: { [hole.id as string]: false },

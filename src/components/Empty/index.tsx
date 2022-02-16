@@ -1,17 +1,29 @@
 import { Link } from "react-router-dom";
-import icon from "../../assets/score.png";
+import score from "../../assets/score.png";
+import champ from "../../assets/champs.png";
 
-const Empty = () => {
+interface EmptyProps {
+  icon: string;
+  title: string;
+  content: string;
+  buttonText?: string;
+  buttonLink?: string;
+}
+
+const Empty = (props: EmptyProps) => {
+  const { icon, title, content, buttonText, buttonLink } = props;
+
+  const ic = icon === champ ? champ : score;
   return (
     <section className="empty">
-      <img src={icon} alt="keine scores vorhanden" className="empty-icon" />
-      <h4 className="empty-title">Hier sieht es ziemlich leer aus...</h4>
-      <p className="empty-content">
-        Starte jetzt und erfasse deine erste Runde.
-      </p>
-      <Link className="btn btn-secondary" to={"/add-score"}>
-        Speielen!
-      </Link>
+      <img src={ic} alt="keine scores vorhanden" className="empty-icon" />
+      <h4 className="empty-title">{title}</h4>
+      <p className="empty-content">{content}</p>
+      {buttonLink && (
+        <Link className="btn btn-secondary" to={buttonLink}>
+          {buttonText}
+        </Link>
+      )}
     </section>
   );
 };

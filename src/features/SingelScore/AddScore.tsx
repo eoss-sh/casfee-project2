@@ -11,6 +11,7 @@ import { Table, Form, Button, Row, Col } from "react-bootstrap";
 import SmallHero from "../../components/SmallHero";
 import ConfirmModal from "../../components/ConfirmModal";
 import { BsCheckCircle } from "react-icons/bs";
+import Empty from "../../components/Empty";
 
 const AddScore = () => {
   const dispatch = useDispatch();
@@ -76,7 +77,7 @@ const AddScore = () => {
   // Fetchs Courselist from the database and adds one Course as default
   useEffect(() => {
     dispatch(fetchCoursesList());
-    dispatch(fetchCourse("3pjVPyi0SqPgQPeV6i47"));
+    dispatch(fetchCourse(courses[0].course.uid));
   }, [dispatch]);
 
   return (
@@ -125,111 +126,125 @@ const AddScore = () => {
             </Col>
           </Row>
         </section>
-        <section className="addscore-scorecard">
-          <Table responsive>
-            <thead>
-              <tr>
-                <th>Nr.</th>
-                <th className="no-mobile">Par</th>
-                <th className="no-mobile">HCP</th>
-                <th className="no-mobile">Distanz</th>
-                <th>Schläge</th>
-                <th>Putts</th>
-                <th>FIR</th>
-                <th>GIR</th>
-              </tr>
-            </thead>
-            <tbody>
-              {course.holes?.map((hole, index) => {
-                return (
-                  <tr key={index}>
-                    <td>{hole.no}</td>
-                    <td className="no-mobile">{hole.par}</td>
-                    <td className="no-mobile">{hole.hcp}</td>
-                    {distance === "dist1" && (
-                      <td className="no-mobile">{hole.dist1}</td>
-                    )}
-                    {distance === "dist2" && (
-                      <td className="no-mobile">{hole.dist2}</td>
-                    )}
-                    {distance === "dist3" && (
-                      <td className="no-mobile">{hole.dist3}</td>
-                    )}
-                    {distance === "dist4" && (
-                      <td className="no-mobile">{hole.dist4}</td>
-                    )}
-                    <td>
-                      <input
-                        className="table-input table-input__small"
-                        data-test={`score-${hole.no}`}
-                        type="number"
-                        name="score"
-                        placeholder="Schläge"
-                        min="0"
-                        required
-                        onChange={(e) =>
-                          handleScoreChange(e, hole.no as number)
-                        }
-                        value={scorecard?.[hole.no as number]?.score || ""}
-                      />
-                    </td>
-                    <td>
-                      <input
-                        className="table-input table-input__small"
-                        data-test={`putts-${hole.no}`}
-                        type="number"
-                        name="putts"
-                        placeholder="Putts"
-                        min="0"
-                        required
-                        onChange={(e) =>
-                          handleScoreChange(e, hole.no as number)
-                        }
-                        value={scorecard?.[hole.no as number]?.putts || ""}
-                      />
-                    </td>
-                    <td>
-                      <Form.Check
-                        type="switch"
-                        name="gir"
-                        onChange={(e) =>
-                          handleScoreChange(e, hole.no as number)
-                        }
-                        checked={scorecard?.[hole.no as number]?.gir || false}
-                      />
-                    </td>
-                    <td>
-                      <Form.Check
-                        type="switch"
-                        name="fir"
-                        onChange={(e) =>
-                          handleScoreChange(e, hole.no as number)
-                        }
-                        checked={scorecard?.[hole.no as number]?.fir || false}
-                      />
-                    </td>
+        {course.name === "" ? (
+          <Empty
+            title="Kein Platz ausgewählt"
+            content="Bitte wähle einen Platz aus dem Dropdown aus."
+            icon="champ"
+          />
+        ) : (
+          <>
+            <section className="addscore-scorecard">
+              <Table responsive>
+                <thead>
+                  <tr>
+                    <th>Nr.</th>
+                    <th className="no-mobile">Par</th>
+                    <th className="no-mobile">HCP</th>
+                    <th className="no-mobile">Distanz</th>
+                    <th>Schläge</th>
+                    <th>Putts</th>
+                    <th>FIR</th>
+                    <th>GIR</th>
                   </tr>
-                );
-              })}
-            </tbody>
-          </Table>
-        </section>
-        <Button
-          variant="primary"
-          data-test="add-score-submit"
-          onClick={() => setShowModal(true)}
-        >
-          Runde speichern
-        </Button>
-        <ConfirmModal
-          title="Runde speichern"
-          message="Möchtest du die Runde wirklich speichern? Gespeicherte Runden können nicht mehr geändert werden."
-          onClose={() => setShowModal(false)}
-          showModal={showModal}
-          onConfirm={() => handleAddScore()}
-          icon={<BsCheckCircle />}
-          variant="primary"
-        />
+                </thead>
+                <tbody>
+                  {course.holes?.map((hole, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>{hole.no}</td>
+                        <td className="no-mobile">{hole.par}</td>
+                        <td className="no-mobile">{hole.hcp}</td>
+                        {distance === "dist1" && (
+                          <td className="no-mobile">{hole.dist1}</td>
+                        )}
+                        {distance === "dist2" && (
+                          <td className="no-mobile">{hole.dist2}</td>
+                        )}
+                        {distance === "dist3" && (
+                          <td className="no-mobile">{hole.dist3}</td>
+                        )}
+                        {distance === "dist4" && (
+                          <td className="no-mobile">{hole.dist4}</td>
+                        )}
+                        <td>
+                          <input
+                            className="table-input table-input__small"
+                            data-test={`score-${hole.no}`}
+                            type="number"
+                            name="score"
+                            placeholder="Schläge"
+                            min="0"
+                            required
+                            onChange={(e) =>
+                              handleScoreChange(e, hole.no as number)
+                            }
+                            value={scorecard?.[hole.no as number]?.score || 0}
+                          />
+                        </td>
+                        <td>
+                          <input
+                            className="table-input table-input__small"
+                            data-test={`putts-${hole.no}`}
+                            type="number"
+                            name="putts"
+                            placeholder="Putts"
+                            min="0"
+                            required
+                            onChange={(e) =>
+                              handleScoreChange(e, hole.no as number)
+                            }
+                            value={scorecard?.[hole.no as number]?.putts || 0}
+                          />
+                        </td>
+                        <td>
+                          <Form.Check
+                            type="switch"
+                            name="gir"
+                            onChange={(e) =>
+                              handleScoreChange(e, hole.no as number)
+                            }
+                            checked={
+                              scorecard?.[hole.no as number]?.gir || false
+                            }
+                          />
+                        </td>
+                        <td>
+                          <Form.Check
+                            type="switch"
+                            name="fir"
+                            onChange={(e) =>
+                              handleScoreChange(e, hole.no as number)
+                            }
+                            checked={
+                              scorecard?.[hole.no as number]?.fir || false
+                            }
+                          />
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </Table>
+            </section>
+            <Button
+              variant="primary"
+              data-test="add-score-submit"
+              onClick={() => setShowModal(true)}
+            >
+              Runde speichern
+            </Button>
+            <ConfirmModal
+              title="Runde speichern"
+              message="Möchtest du die Runde wirklich speichern? Gespeicherte Runden können nicht mehr geändert werden."
+              onClose={() => setShowModal(false)}
+              showModal={showModal}
+              onConfirm={() => handleAddScore()}
+              icon={<BsCheckCircle />}
+              variant="primary"
+            />
+          </>
+        )}
       </div>
     </>
   );

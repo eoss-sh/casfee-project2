@@ -43,7 +43,13 @@ const Scores = () => {
         {scores.loading ? (
           <Spinner />
         ) : scores.scores.length <= 0 ? (
-          <Empty />
+          <Empty
+            title="Das sieht ziemlich leer aus hier..."
+            content="Du hast noch keine Scores hinzugefügt"
+            icon="score"
+            buttonText="Spielen!"
+            buttonLink="/add-score"
+          />
         ) : (
           <Table responsive="sm">
             <thead>
@@ -71,7 +77,7 @@ const Scores = () => {
                     <td>{score.totalGIR}</td>
                     <td>
                       <Link
-                        data-test="get-single-score"
+                        data-test={`get-single-score-${index}`}
                         to={`singlescore/${score.id}`}
                       >
                         <BsArrowRightCircle />

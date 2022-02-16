@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { auth } from "../../config/firebase";
+import { auth, database } from "../../config/firebase";
 import { createBrowserHistory } from "history";
 import {
   deleteUserFunc,
@@ -100,7 +100,7 @@ export const deleteUser = createAsyncThunk(
       typeof id !== "string"
         ? logging.error("NO ID GIVEN")
         : await deleteUserFunc(id);
-
+      auth.currentUser?.delete();
       return "User deleted";
     } catch (error) {
       logging.error(error);
